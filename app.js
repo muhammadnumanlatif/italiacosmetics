@@ -767,7 +767,13 @@
       const addBtn = target.closest('[data-add-to-cart]');
       if (addBtn) { addToCart(Number(addBtn.getAttribute('data-add-to-cart'))); return; }
       const wishBtn = target.closest('[data-wishlist-toggle]');
-      if (wishBtn) { toggleWishlistItem(Number(wishBtn.getAttribute('data-wishlist-toggle'))); return; }
+      if (wishBtn) {
+        const id = Number(wishBtn.getAttribute('data-wishlist-toggle'));
+        toggleWishlistItem(id);
+        const icon = wishBtn.querySelector('i');
+        if (icon) icon.className = isInWishlist(id) ? 'fas fa-heart' : 'far fa-heart';
+        return;
+      }
       const navBtn = target.closest('[data-navigate]');
       if (navBtn) { navigate(navBtn.getAttribute('data-navigate')); return; }
       if (target.closest('button') || target.closest('.btn')) return;
@@ -1611,7 +1617,7 @@
                   <i class="fas fa-shopping-bag"></i> Add to Cart
                 </button>
                 <button class="btn btn-wishlist" data-wishlist-toggle="${p.id}">
-                  <i class="far fa-heart"></i>
+                  <i class="${isInWishlist(p.id) ? 'fas' : 'far'} fa-heart"></i>
                 </button>
               </div>
               <div class="product-usp">

@@ -2531,6 +2531,7 @@
 .product-details-info .product-actions .btn { flex: 1; min-width: 180px; }
 .product-details-info .btn-wishlist { background: none; border: 1.5px solid var(--purple); border-radius: var(--radius-md); padding: 12px 20px; cursor: pointer; color: var(--purple); font-size: 18px; min-width: 52px; transition: all 0.2s; }
 .product-details-info .btn-wishlist:hover { background: var(--lavender); }
+.product-details-info .btn-wishlist .fas.fa-heart { color: var(--pink); }
 .product-details-info .product-usp { margin-top: 24px; padding: 16px; background: var(--lavender); border-radius: var(--radius-md); display: flex; gap: 24px; flex-wrap: wrap; font-size: 13px; color: var(--muted); }
 .product-details-info .product-usp i { color: var(--purple); margin-right: 6px; }
 
