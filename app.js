@@ -1149,12 +1149,13 @@
             country: data.country || 'PK'
           },
           line_items: cart.map(item => ({
+            product_id: item.id,
             name: item.name,
             quantity: item.qty,
+            price: String(item.price),
             subtotal: String(item.price * item.qty),
             total: String(item.price * item.qty),
             meta_data: [
-              { key: 'Product ID (Frontend)', value: String(item.id) },
               { key: 'Brand', value: item.brand }
             ]
           })),
