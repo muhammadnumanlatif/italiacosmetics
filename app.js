@@ -102,11 +102,22 @@
       renderBlog();
       if (document.getElementById('page-shop')?.classList.contains('active')) renderShop();
 
-      // ── After products load, render detail page if user landed directly on it ──
+      // ── Re-render product details if active (handles initial load AND fallback→API transition) ──
       const _activeDetail = document.getElementById('page-product-details');
       if (_activeDetail && _activeDetail.classList.contains('active')) {
         const _id = new URLSearchParams(location.search).get('id');
-        if (_id) renderProductDetails(_id);
+        if (_id) {
+          // If fallback ID was used, try to match by name
+          const oldP = fallbackProducts.find(p => String(p.id) === _id);
+          if (oldP) {
+            const matched = products.find(p => p.name === oldP.name);
+            if (matched) {
+              navigate('product-details', matched.id);
+              return;
+            }
+          }
+          renderProductDetails(_id);
+        }
       }
     }
 
@@ -460,7 +471,8 @@
     }
 
     function addToCart(id) {
-      const p = products.find(x => x.id === id);
+      const allProds = products.concat(fallbackProducts);
+      const p = allProds.find(x => x.id === id);
       if (!p) return;
       const existing = cart.find(item => item.id === id);
       if (existing) {
@@ -572,7 +584,7 @@
 
     function isInWishlist(id) { return wishlist.includes(id); }
 
-    function getWishlistProducts() { return products.filter(p => wishlist.includes(p.id)); }
+    function getWishlistProducts() { return products.concat(fallbackProducts).filter(p => wishlist.includes(p.id)); }
 
     function toggleWishlist() {
       const overlay = document.getElementById('wishlistOverlay');
@@ -1522,7 +1534,7 @@
 
         // Try local cache first, then fetch directly from WC API
         const idStr = String(id);
-        let p = products.find(prod => String(prod.id) === idStr);
+        let p = products.find(prod => String(prod.id) === idStr) || fallbackProducts.find(prod => String(prod.id) === idStr);
 
         if (!p) {
           try {
