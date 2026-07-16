@@ -763,16 +763,17 @@
 
     // Event delegation for product card, buttons, and navigation clicks
     document.addEventListener('click', function(e) {
-      const addBtn = e.target.closest('[data-add-to-cart]');
-      if (addBtn) { addToCart(addBtn.getAttribute('data-add-to-cart')); return; }
-      const wishBtn = e.target.closest('[data-wishlist-toggle]');
-      if (wishBtn) { toggleWishlistItem(wishBtn.getAttribute('data-wishlist-toggle')); return; }
-      const navBtn = e.target.closest('[data-navigate]');
+      const target = e.target;
+      const addBtn = target.closest('[data-add-to-cart]');
+      if (addBtn) { addToCart(Number(addBtn.getAttribute('data-add-to-cart'))); return; }
+      const wishBtn = target.closest('[data-wishlist-toggle]');
+      if (wishBtn) { toggleWishlistItem(Number(wishBtn.getAttribute('data-wishlist-toggle'))); return; }
+      const navBtn = target.closest('[data-navigate]');
       if (navBtn) { navigate(navBtn.getAttribute('data-navigate')); return; }
-      if (e.target.closest('button') || e.target.closest('.btn')) return;
-      const card = e.target.closest('[data-product-id]');
+      if (target.closest('button') || target.closest('.btn')) return;
+      const card = target.closest('[data-product-id]');
       if (card) {
-        const id = card.getAttribute('data-product-id');
+        const id = Number(card.getAttribute('data-product-id'));
         if (id) navigate('product-details', id);
       }
     });
@@ -1540,7 +1541,7 @@
                 cat: catMap[cat] || cat,
                 badge: attrs.badge || '',
                 rating: parseInt(attrs.rating) || 5,
-                img: wp.images?.[0]?.src || '',
+                img: wp.images?.[0]?.src || (wp.meta_data?.find(m => m.key === 'product_image_url')?.value) || '',
                 origPrice: attrs.orig_price ? parseFloat(attrs.orig_price) : null,
                 total_sales: parseInt(wp.total_sales) || 0
               };
