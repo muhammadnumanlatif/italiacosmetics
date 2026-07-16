@@ -1,0 +1,18 @@
+# Development files
+*.py
+*.xlsx
+*.pdf
+*.csv
+image.png
+
+# Deploy package
+/italiacosmetics-DEPLOY/
+italiacosmetics-DEPLOY.zip
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/

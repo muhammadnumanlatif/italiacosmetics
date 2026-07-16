@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Italia Cosmetics — Premium Professional Haircare & Skincare</title>
+  <meta name="description"
+    content="Italia Cosmetics: premium haircare and skincare from Maxylook, Genus, Versum, and UNA. Shop professional salon-grade beauty products online.">
+  <meta name="keywords"
+    content="Premium haircare, Genus hair products, Versum hair 2.0, Maxylook cosmetics, UNA Rolland USA, buy professional hair cosmetics online">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#d4af37">
+
+  <!-- Favicon Suite -->
+  <link rel="icon" type="image/x-icon"             href="favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16"  href="favicon-16.png">
+  <link rel="icon" type="image/png" sizes="32x32"  href="favicon-32.png">
+  <link rel="icon" type="image/svg+xml"            href="ic_logo.svg">
+  <link rel="apple-touch-icon" sizes="180x180"     href="apple-touch-icon.png">
+
+  <!-- Windows Tile -->
+  <meta name="msapplication-TileImage" content="mstile-150.png">
+  <meta name="msapplication-TileColor" content="#d4af37">
+
+  <!-- Open Graph / Social Sharing -->
+  <meta property="og:type"        content="website">
+  <meta property="og:title"       content="Italia Cosmetics — Premium Professional Haircare & Skincare">
+  <meta property="og:description" content="Italia Cosmetics: premium haircare and skincare from Maxylook, Genus, Versum, and UNA. Shop professional salon-grade beauty products online.">
+  <meta property="og:image"       content="og-image.png">
+  <meta property="og:image:width"  content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card"       content="summary_large_image">
+  <meta name="twitter:image"      content="og-image.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+  <div class="announcement-bar">
+    <div class="container">
+      <div>Free shipping on orders over 5000 PKR — Use code ITALIA10</div>
+      <div class="announcement-bar-links">
+        <a href="/track-order" onclick="return navigate('track-order')">Track Order</a> <span class="separator">|</span>
+        <a href="/help" onclick="return navigate('help')">Help</a> <span class="separator">|</span>
+        <a href="/my-account" onclick="return navigate('my-account')">My Account</a>
+      </div>
+    </div>
+  </div>
+
+  <header class="header">
+    <div class="container header-inner">
+      <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Menu"><i
+          class="fas fa-bars"></i></button>
+      <a href="/home" class="logo logo-link" onclick="return navigate('home')" aria-label="Italia Cosmetics Home">
+        <img src="ic_logo.svg" alt="Italia Cosmetics" class="logo-img">
+      </a>
+      <nav class="nav">
+        <a href="/home" onclick="return navigate('home')" class="active" data-page="home">Home</a>
+        <a href="/shop" onclick="return navigate('shop')" data-page="shop">Shop</a>
+        <a href="/brands" onclick="return navigate('brands')" data-page="brands">Brands</a>
+        <a href="/about" onclick="return navigate('about')" data-page="about">About</a>
+        <a href="/blog" onclick="return navigate('blog')" data-page="blog">Blog</a>
+        <a href="/contact" onclick="return navigate('contact')" data-page="contact">Contact</a>
+      </nav>
+      <div class="header-actions">
+        <button onclick="openSearch()" aria-label="Search"><i class="fas fa-search"></i></button>
+        <button onclick="toggleWishlist()" aria-label="Wishlist"><i class="far fa-heart"></i><span class="cart-count wishlist-count" id="wishlistCount" style="display:none">0</span></button>
+        <button onclick="toggleCart()" aria-label="Cart"><i
+            class="fas fa-shopping-bag"></i><span class="cart-count" id="cartCount">0</span></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Search Overlay -->
+  <div class="search-overlay" id="searchOverlay" onclick="closeSearch(event)">
+    <div class="search-modal" onclick="event.stopPropagation()">
+      <div class="search-header">
+        <h3>Search Products</h3>
+        <button class="search-close" onclick="closeSearch()"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="search-input-wrap">
+        <i class="fas fa-search"></i>
+        <input type="text" id="searchInput" placeholder="Search by name, brand, or category..." oninput="doSearch(this.value)" autofocus>
+      </div>
+      <div class="search-results" id="searchResults">
+        <div class="search-hint">Type at least 2 characters to search</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Wishlist Drawer -->
+  <div class="cart-overlay" id="wishlistOverlay" onclick="toggleWishlist()"></div>
+  <div class="cart-drawer wishlist-drawer" id="wishlistDrawer">
+    <div class="cart-drawer-header">
+      <h3>Wishlist (<span id="wishlistCountTitle">0</span>)</h3>
+      <button class="cart-drawer-close" onclick="toggleWishlist()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="cart-drawer-items" id="wishlistItems">
+      <div class="cart-drawer-empty"><i class="far fa-heart"></i><p>Your wishlist is empty</p></div>
+    </div>
+    <div class="cart-drawer-footer" id="wishlistFooter" style="display:none">
+      <button class="checkout-btn" onclick="toggleWishlist();navigate('shop')">Shop Now</button>
+    </div>
+  </div>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-header">
+      <span class="logo logo-link">
+        <img src="ic_logo.svg" alt="Italia Cosmetics" class="logo-img logo-img--mobile-menu">
+      </span>
+      <button class="mobile-menu-close" onclick="toggleMobileMenu()"><i class="fas fa-times"></i></button>
+    </div>
+    <nav class="mobile-nav">
+      <a href="/home" onclick="navigate('home');toggleMobileMenu()">Home</a>
+      <a href="/shop" onclick="navigate('shop');toggleMobileMenu()">Shop</a>
+      <a href="/brands" onclick="navigate('brands');toggleMobileMenu()">Brands</a>
+      <a href="/about" onclick="navigate('about');toggleMobileMenu()">About</a>
+      <a href="/blog" onclick="navigate('blog');toggleMobileMenu()">Blog</a>
+      <a href="/contact" onclick="navigate('contact');toggleMobileMenu()">Contact</a>
+      <div style="height:1px;background:#eee;margin:10px 0;"></div>
+      <a href="/track-order" onclick="navigate('track-order');toggleMobileMenu()">Track Order</a>
+      <a href="/help" onclick="navigate('help');toggleMobileMenu()">Help</a>
+      <a href="/my-account" onclick="navigate('my-account');toggleMobileMenu()">My Account</a>
+    </nav>
+  </div>
+
+  <main>
+    <!-- ============ HOME PAGE ============ -->
+    <section class="page active" id="page-home">
+      <section class="hero">
+        <div class="container">
+          <div class="hero-grid">
+            <div class="hero-content">
+              <h1>Where Italian <em>Beauty</em> Meets Professional <em>Excellence</em></h1>
+              <p>Discover a curated selection of the world's finest professional haircare and skincare brands —
+                Maxylook, Genus, Versum, and UNA. Salon-grade quality, delivered to your door.</p>
+              <div class="hero-buttons">
+                <button class="btn btn-primary btn-lg" onclick="navigate('shop')">Shop Now</button>
+                <button class="btn btn-secondary btn-lg" onclick="navigate('brands')">Explore Brands</button>
+              </div>
+            </div>
+            <div class="hero-visual">
+              <div class="hero-circle"></div>
+              <div class="hero-circle"></div>
+              <div class="hero-products">
+                <div class="hero-product"><i class="fas fa-wind"></i><span>Shampoo</span><small>Hydrating</small></div>
+                <div class="hero-product"><i class="fas fa-oil-can"></i><span>Serum</span><small>Repair</small></div>
+                <div class="hero-product"><i class="fas fa-spray-can"></i><span>Mask</span><small>Nourish</small></div>
+                <div class="hero-product"><i class="fas fa-fill-drip"></i><span>Oil</span><small>Shine</small></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="trust-bar" data-wp-page="home" data-wp-field="trust">
+        <div class="container">
+          <div class="trust-grid fade-up">
+            <div class="trust-item fade-up-delay-1"><i class="fas fa-lock"></i>
+              <h4>Premium Quality</h4>
+              <p>High quality products</p>
+            </div>
+            <div class="trust-item fade-up-delay-2"><i class="fas fa-paw"></i>
+              <h4>Cruelty Free</h4>
+              <p>Not tested on animals</p>
+            </div>
+            <div class="trust-item fade-up-delay-3"><i class="fas fa-leaf"></i>
+              <h4>Natural Ingredients</h4>
+              <p>For healthy skin</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="section-header fade-up">
+            <h2>Shop by <span class="accent">Category</span></h2>
+            <p>Explore our wide range of professional beauty products for your specific needs.</p>
+          </div>
+          <div class="category-grid fade-up">
+            <div class="category-card fade-up-delay-1" onclick="navigate('shop');filterCategory('Shampoo')">
+              <div class="category-card-img"><i class="fas fa-wind"></i></div>
+              <div class="category-card-body">
+                <h3>Shampoo</h3>
+              </div>
+            </div>
+            <div class="category-card fade-up-delay-2" onclick="navigate('shop');filterCategory('Mask')">
+              <div class="category-card-img"><i class="fas fa-spray-can"></i></div>
+              <div class="category-card-body">
+                <h3>Mask</h3>
+              </div>
+            </div>
+            <div class="category-card fade-up-delay-3" onclick="navigate('shop');filterCategory('Treatment')">
+              <div class="category-card-img"><i class="fas fa-flask"></i></div>
+              <div class="category-card-body">
+                <h3>Treatment</h3>
+              </div>
+            </div>
+            <div class="category-card fade-up-delay-4" onclick="navigate('shop');filterCategory('Serum')">
+              <div class="category-card-img"><i class="fas fa-oil-can"></i></div>
+              <div class="category-card-body">
+                <h3>Serum / Oil</h3>
+              </div>
+            </div>
+            <div class="category-card" onclick="navigate('shop');filterCategory('Styling')">
+              <div class="category-card-img"><i class="fas fa-fill-drip"></i></div>
+              <div class="category-card-body">
+                <h3>Styling</h3>
+              </div>
+            </div>
+            <div class="category-card" onclick="navigate('shop');filterCategory('Kit')">
+              <div class="category-card-img"><i class="fas fa-box"></i></div>
+              <div class="category-card-body">
+                <h3>Kits / Sets</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" data-wp-post-type="brand">
+        <div class="container">
+          <div class="section-header fade-up">
+            <h2>Shop by <span class="accent">Brand</span></h2>
+            <p>Explore our curated collection of the world's finest professional beauty brands.</p>
+          </div>
+          <div class="brand-grid fade-up" id="brandCardGrid">
+            <!-- Brand cards injected via JS -->
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-lavender">
+        <div class="container">
+          <div class="section-header fade-up">
+            <h2>Best <span class="accent">Sellers</span></h2>
+            <p>Our most-loved professional products, chosen by beauty experts and salon professionals.</p>
+          </div>
+          <div class="product-grid fade-up" id="bestSellerGrid"></div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="promo-grid fade-up">
+            <div class="promo-card promo-purple">
+              <h3>New In: Versum 2.0</h3>
+              <p>Discover the next generation of professional haircare with advanced lamellar technology.</p><button
+                class="btn btn-white btn-sm" onclick="navigate('shop')">Shop Now</button>
+            </div>
+            <div class="promo-card promo-pink">
+              <h3>Spring Hair Rescue</h3>
+              <p>Up to 25% off selected Maxylook masks and serums. Restore, nourish, shine.</p><button
+                class="btn btn-white btn-sm" onclick="navigate('shop')">Shop Sale</button>
+            </div>
+            <div class="promo-card promo-gold">
+              <h3>Free Consultation</h3>
+              <p>Not sure what you need? Chat with our beauty experts for a personalized routine.</p><button
+                class="btn btn-dark btn-sm" style="background:var(--charcoal);color:var(--white)"
+                onclick="navigate('contact')">Book Now</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="featured-section section">
+        <div class="container">
+          <div class="featured-header">
+            FEATURED PRODUCTS STYLE
+          </div>
+          <div class="featured-grid fade-up" id="featuredGrid">
+            <!-- Featured products injected via JS -->
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-lavender" data-wp-post-type="testimonial">
+        <div class="container">
+          <div class="section-header fade-up">
+            <h2>What Our <span class="accent">Clients Say</span></h2>
+            <p>Trusted by beauty professionals and enthusiasts worldwide.</p>
+          </div>
+          <div class="testimonial-marquee fade-up" id="testimonialMarquee">
+            <div class="testimonial-track" id="testimonialTrack">
+              <!-- Testimonials injected via JS -->
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- ============ SHOP PAGE ============ -->
+    <section class="page" id="page-shop">
+      <div class="page-title-bar">
+        <div class="container">
+          <h1>Shop All Products</h1>
+          <p>Browse our complete inventory of professional beauty products</p>
+        </div>
+      </div>
+      <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleShopSidebar()"></div>
+      <section class="section">
+        <div class="container">
+          <div class="shop-layout fade-up">
+            <aside class="shop-sidebar" id="shopSidebar">
+              <div
+                class="flex-between" style="margin-bottom:var(--spacing-xs)">
+                <h3>Filters</h3>
+                <button style="background:none;border:none;font-size:18px;cursor:pointer" class="sidebar-close-btn"
+                  onclick="toggleShopSidebar()"><i class="fas fa-times"></i></button>
+              </div>
+              <div class="filter-group">
+                <h4>Brand</h4>
+                <label><input type="checkbox" value="Maxylook" onchange="applyFilters()"> Maxylook</label>
+                <label><input type="checkbox" value="Genus" onchange="applyFilters()"> Genus</label>
+                <label><input type="checkbox" value="Versum" onchange="applyFilters()"> Versum</label>
+                <label><input type="checkbox" value="UNA" onchange="applyFilters()"> UNA</label>
+              </div>
+              <div class="filter-group">
+                <h4>Category</h4>
+                <label><input type="checkbox" value="Shampoo" onchange="applyFilters()" data-filter="category">
+                  Shampoo</label>
+                <label><input type="checkbox" value="Mask" onchange="applyFilters()" data-filter="category">
+                  Mask</label>
+                <label><input type="checkbox" value="Treatment" onchange="applyFilters()" data-filter="category">
+                  Treatment</label>
+                <label><input type="checkbox" value="Serum" onchange="applyFilters()" data-filter="category"> Serum /
+                  Oil</label>
+                <label><input type="checkbox" value="Styling" onchange="applyFilters()" data-filter="category">
+                  Styling</label>
+                <label><input type="checkbox" value="Kit" onchange="applyFilters()" data-filter="category"> Kits /
+                  Sets</label>
+              </div>
+              <div class="filter-group">
+                <h4>Price Range</h4>
+                <label><input type="radio" name="price-range" value="" checked onchange="applyFilters()"> All Prices</label>
+                <label><input type="radio" name="price-range" value="0-10000" onchange="applyFilters()"> Under 10,000 PKR</label>
+                <label><input type="radio" name="price-range" value="10000-20000" onchange="applyFilters()"> 10,000 - 20,000 PKR</label>
+                <label><input type="radio" name="price-range" value="20000-30000" onchange="applyFilters()"> 20,000 - 30,000 PKR</label>
+                <label><input type="radio" name="price-range" value="30000-" onchange="applyFilters()"> Over 30,000 PKR</label>
+              </div>
+              <button class="btn btn-secondary btn-sm" style="width:100%" onclick="clearFilters()">Clear All
+                Filters</button>
+            </aside>
+            <div>
+              <div class="shop-header">
+                <div>
+                  <h2>All Products</h2><span class="result-count" id="resultCount">0 products</span>
+                </div>
+                <div style="display:flex;gap:8px;align-items:center">
+                  <button class="filter-toggle-btn" onclick="toggleShopSidebar()"><i class="fas fa-sliders-h"></i>
+                    Filters</button>
+                  <select class="shop-sort" id="sortSelect" onchange="applyFilters()">
+                    <option value="featured">Featured</option>
+                    <option value="price-low">Price: Low to High</option>
+                    <option value="price-high">Price: High to Low</option>
+                    <option value="name">Name: A-Z</option>
+                  </select>
+                </div>
+              </div>
+              <div class="product-grid" id="shopGrid"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- ============ CHECKOUT PAGE ============ -->
+    <section class="page" id="page-checkout">
+      <div class="page-title-bar">
+        <div class="container">
+          <h1>Checkout</h1>
+          <p>Complete your order</p>
+        </div>
+      </div>
+      <section class="section">
+        <div class="container">
+          <div class="checkout-layout" id="checkoutLayout">
+            <div class="checkout-empty" id="checkoutEmpty">
+              <i class="fas fa-shopping-bag"></i>
+              <h3>Your cart is empty</h3>
+              <p>Add some products before checking out.</p>
+              <button class="btn btn-primary" onclick="navigate('shop')">Shop Now</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- ============ THANK YOU PAGE ============ -->
+    <section class="page" id="page-thankyou">
+      <div class="page-title-bar">
+        <div class="container">
+          <h1>Thank You!</h1>
+          <p>Your order has been successfully placed</p>
+        </div>
+      </div>
+      <section class="section">
+        <div class="container flex-center">
+          <div class="card-outline text-center container-sm" style="box-shadow: 0 8px 30px rgba(0,0,0,0.08); padding: 48px 24px;">
+            <div id="thankYouContent"></div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- ============ BRANDS PAGE ============ -->
+    <section class="page" id="page-brands">
+      <div class="page-title-bar">
+        <div class="container">
+          <h1>Our Brands</h1>
+          <p>Discover the stories behind the world's finest professional beauty brands</p>
+        </div>
+      </div>
+      <section class="section">
+        <div class="container">
+          <div class="brand-hero-card fade-up" style="border:1px solid var(--hairline)">
+            <div class="brand-hero-inner">
+              <div class="brand-hero-visual" style="background:linear-gradient(135deg,#8B5FBF,#A07DD6)">Maxylook</div>
+              <div class="brand-hero-info">
+                <h3>Maxylook — Feed Your Hair</h3>
+                <p>Italian excellence in professional haircare. Maxylook harnesses the power of superfoods — Collagen,
+                  Macadamia, Argan, Protein, and Fresh Mint — to nourish the hair ecosystem. Every product is a
+                  manifestation of health, strength, and beauty. From the protecting shampoos of the Collagen line to
+                  the anti-frizz power of Arganway, Maxylook transforms hair care into a ritual of well-being.</p>
+                <button class="btn btn-primary btn-sm" onclick="navigate('shop');filterBrand('Maxylook')">Shop
+                  Maxylook</button>
+              </div>
+            </div>
+          </div>
+          <div class="brand-hero-card fade-up" style="border:1px solid var(--hairline)">
+            <div class="brand-hero-inner">
+              <div class="brand-hero-visual" style="background:linear-gradient(135deg,#232323,#3A3A3A)">Genus</div>
+              <div class="brand-hero-info">
+                <h3>Genus — Professional Haircare Worldwide</h3>
+                <p>One of the most important players in the professional hair market with global distribution coverage.
+                  Genus offers targeted solutions through specialized lines: Argan (hydration), Intense Restoring
+                  (repair), Hyaluronic Acid (color protection), Keratin (restructuring), Milk (nourishment), and Energy
+                  (vitality). A reference point in the cosmetic sector internationally.</p>
+                <button class="btn btn-primary btn-sm" onclick="navigate('shop');filterBrand('Genus')">Shop
+                  Genus</button>
+              </div>
+            </div>
+          </div>
+          <div class="brand-hero-card fade-up" style="border:1px solid var(--hairline)">
+            <div class="brand-hero-inner">
+              <div class="brand-hero-visual"
+                style="background:linear-gradient(135deg,#D4AF37,#E8C84A);color:var(--charcoal)">Versum</div>
+              <div class="brand-hero-info">
+                <h3>Versum Hair 2.0 — Science Meets Beauty</h3>
+                <p>Elevate your hair care routine with VERSUM HAIR. Where science meets beauty to deliver exceptional
+                  results. The new line features advanced collections: Hydrator (moisture), Charcoal Detox
+                  (purification), Active Bloom (reinforcing), Soft Touch (anti-frizz), R-tech (reconstruction), and
+                  age-defying lamellar elixirs. Every product is designed to transform your hair.</p>
+                <button class="btn btn-primary btn-sm" onclick="navigate('shop');filterBrand('Versum')">Shop
+                  Versum</button>
+              </div>
+            </div>
+          </div>
+          <div class="brand-hero-card fade-up" style="border:1px solid var(--hairline)">
+            <div class="brand-hero-inner">
+              <div class="brand-hero-visual" style="background:linear-gradient(135deg,#F37AA2,#E05A86)">UNA</div>
+              <div class="brand-hero-info">
+                <h3>UNA Rolland USA — High-Performance Treatment</h3>
+                <p>UNA hair is dedicated to high-quality, effective, and gentle hair care. Specializing in anti-hair
+                  loss systems (Stop Loss), deep repair (Fortify), intense hydration (Hydro-In), and specialty
+                  treatments (Garlic Treatment, Coconut Oil Mask, Etnika). Trusted by salons for visible results — every
+                  product delivers professional-grade performance you can feel.</p>
+                <button class="btn btn-primary btn-sm" onclick="navigate('shop');filterBrand('UNA')">Shop UNA</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- ============ ABOUT PAGE ============ -->
+    <section class="page" id="page-about">
+      <section class="about-hero">
+        <div class="container">
+          <h1>Our Story</h1>
+          <p>Italia Cosmetics was founded with a single belief: that everyone deserves access to professional-grade
+            beauty. We partner directly with the world's most respected haircare brands to bring salon-quality products
+            to your home.</p>
+        </div>
+      </section>
+      <section class="section">
+        <div class="container">
+          <div class="about-story">
+            <div class="about-story-img">
+              <img src="ic_logo.svg" alt="Italia Cosmetics" class="about-story-logo">
+            </div>
+            <div class="about-story-text">
+              <h2>Curating Excellence Since 2018</h2>
+              <p>Born from a passion for Italian beauty and professional craftsmanship, Italia Cosmetics set out to
+                bridge the gap between salon-exclusive products and beauty enthusiasts. We believed that the
+                transformative power of professional haircare shouldn't be limited to salon shelves.</p>
+              <p>Today, we represent four of the most respected names in professional beauty — Maxylook, Genus, Versum,
+                and UNA — serving thousands of satisfied customers across Europe and beyond. Every product in our
+                collection is vetted by our team of beauty professionals for quality, efficacy, and safety.</p>
+              <button class="btn btn-primary" onclick="navigate('shop')">Explore Our Collection</button>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="section section-lavender">
+        <div class="container">
+          <div class="section-header fade-up">
+            <h2>Why <span class="accent">Choose Us</span></h2>
+          </div>
+          <div class="values-grid fade-up">
+            <div class="value-card"><i class="fas fa-certificate"></i>
+              <h4>100% Authentic</h4>
+              <p>Direct from official distributors</p>
+            </div>
+            <div class="value-card"><i class="fas fa-star"></i>
+              <h4>Expert Curated</h4>
+              <p>Selected by beauty professionals</p>
+            </div>
+            <div class="value-card"><i class="fas fa-leaf"></i>
+              <h4>Clean Formulas</h4>
+              <p>Salon-grade, safe ingredients</p>
+            </div>
+            <div class="value-card"><i class="fas fa-heart"></i>
+              <h4>Customer First</h4>
+              <p>30-day satisfaction guarantee</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- ============ BLOG PAGE ============ -->
+    <section class="page" id="page-blog">
+      <div class="page-title-bar">
+        <div class="container">
+          <h1>Beauty Journal</h1>
+          <p>Expert tips, styling guides, and brand spotlights</p>
+        </div>
+      </div>
+      <section class="section">
+        <div class="container">
+          <div class="blog-grid">
+            <div class="blog-posts fade-up" id="blogPosts">
+              <article class="blog-card">
+                <div class="blog-card-img" style="background:linear-gradient(135deg,var(--purple),var(--purple-dark))">
+                  <i class="fas fa-wind"></i></div>
+                <div class="blog-card-body">
+                  <div class="blog-card-meta"><span><i class="far fa-calendar"></i> Jun 28, 2026</span><span><i
+                        class="far fa-user"></i> Italia Team</span></div>
+                  <h3>The Ultimate Guide to Professional Hair Masks</h3>
+                  <p>Not all hair masks are created equal. From collagen-infused treatments to protein-rich formulas,
+                    discover which mask is right for your hair type and concerns.</p>
+                  <button class="btn btn-secondary btn-sm">Read More</button>
+                </div>
+              </article>
+              <article class="blog-card">
+                <div class="blog-card-img" style="background:linear-gradient(135deg,var(--pink),var(--pink-dark))"><i
+                    class="fas fa-oil-can"></i></div>
+                <div class="blog-card-body">
+                  <div class="blog-card-meta"><span><i class="far fa-calendar"></i> Jun 15, 2026</span><span><i
+                        class="far fa-user"></i> Italia Team</span></div>
+                  <h3>Versum Hair 2.0: A New Era in Haircare Science</h3>
+                  <p>We dive deep into the revolutionary lamellar technology behind Versum's new line. Age-defying
+                    elixirs, charcoal detox, and the science of beautiful hair.</p>
+                  <button class="btn btn-secondary btn-sm">Read More</button>
+                </div>
+              </article>
+              <article class="blog-card">
+                <div class="blog-card-img"
+                  style="background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--charcoal)"><i
+                    class="fas fa-leaf"></i></div>
+                <div class="blog-card-body">
+                  <div class="blog-card-meta"><span><i class="far fa-calendar"></i> Jun 2, 2026</span><span><i
+                        class="far fa-user"></i> Italia Team</span></div>
+                  <h3>Superfoods for Your Hair: The Maxylook Philosophy</h3>
+                  <p>Collagen, Macadamia, Argan, Quinoa Protein — how superfood ingredients are transforming
+                    professional haircare and why your hair needs them.</p>
+                  <button class="btn btn-secondary btn-sm">Read More</button>
+                </div>
+              </article>
+              <article class="blog-card">
+                <div class="blog-card-img"
+                  style="background:linear-gradient(135deg,var(--charcoal),var(--charcoal-soft))"><i
+                    class="fas fa-shield-alt"></i></div>
+                <div class="blog-card-body">
+                  <div class="blog-card-meta"><span><i class="far fa-calendar"></i> May 20, 2026</span><span><i
+                        class="far fa-user"></i> Italia Team</span></div>
+                  <h3>How to Build a Professional Hair Care Routine</h3>
+                  <p>Step-by-step guide to creating a salon-grade haircare routine at home. From cleansing to treatment
+                    to styling — what professionals recommend.</p>
+                  <button class="btn btn-secondary btn-sm">Read More</button>
+                </div>
+              </article>
+            </div>
+            <aside class="blog-sidebar">
+              <div class="sidebar-widget">
+                <h4>Popular Posts</h4>
+                <div class="popular-post">
+                  <div
+                    style="width:60px;height:60px;border-radius:var(--radius-sm);background:var(--lavender);display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--purple)">
+                    <i class="fas fa-wind"></i></div>
+                  <div>
+                    <h5>The Ultimate Guide to Professional Hair Masks</h5><span>Jun 28, 2026</span>
+                  </div>
+                </div>
+                <div class="popular-post">
+                  <div
+                    style="width:60px;height:60px;border-radius:var(--radius-sm);background:var(--lavender);display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--purple)">
+                    <i class="fas fa-oil-can"></i></div>
+                  <div>
+                    <h5>Versum Hair 2.0: A New Era in Haircare Science</h5><span>Jun 15, 2026</span>
+                  </div>
+                </div>
+                <div class="popular-post">
+                  <div
+                    style="width:60px;height:60px;border-radius:var(--radius-sm);background:var(--lavender);display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--purple)">
+                    <i class="fas fa-leaf"></i></div>
+                  <div>
+                    <h5>Superfoods for Your Hair: The Maxylook Philosophy</h5><span>Jun 2, 2026</span>
+                  </div>
+                </div>
+              </div>
+              <div class="sidebar-widget">
+                <h4>Newsletter</h4>
+                <p style="font-size:13px;color:var(--muted);margin-bottom:var(--spacing-xs)">Get 10% off your first
+                  order and receive expert beauty tips straight to your inbox.</p>
+                <form class="newsletter-inline" onsubmit="submitNewsletter(event)">
+                  <input type="email" name="your-email" placeholder="Your email" required>
+                  <button class="btn btn-primary btn-sm" type="submit">Subscribe</button>
+                </form>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- ============ CONTACT PAGE ============ -->
+    <section class="page" id="page-contact">
+      <div class="page-title-bar">
+        <div class="container">
+          <h1>Get in Touch</h1>
+          <p>We'd love to hear from you. Reach out with questions, orders, or beauty advice.</p>
+        </div>
+      </div>
+      <section class="section">
+        <div class="container">
+          <div class="contact-layout">
+            <div>
+              <div class="contact-info-card">
+                <h3>Contact Information</h3>
+                <div class="contact-item"><i class="fas fa-map-marker-alt"></i>
+                  <div>
+                    <h4>Visit Us</h4>
+                    <p>Lahore, Pakistan</p>
+                  </div>
+                </div>
+                <div class="contact-item"><i class="fas fa-phone-alt"></i>
+                  <div>
+                    <h4>Call Us</h4>
+                    <p>03379912300</p>
+                  </div>
+                </div>
+                <div class="contact-item"><i class="fas fa-envelope"></i>
+                  <div>
+                    <h4>Email</h4>
+                    <p>support@italiacosmetics.com</p>
+                  </div>
+                </div>
+                <div class="contact-item"><i class="fas fa-clock"></i>
+                  <div>
+                    <h4>Business Hours</h4>
+                    <p>Monday – Friday: 9:00 – 18:00<br>Saturday: 10:00 – 16:00<br>Sunday: Closed</p>
+                  </div>
+                </div>
+                <div style="display:flex;gap:10px;margin-top:var(--spacing-sm)">
+                  <a href="https://www.instagram.com/italiacosmeticslahore/"
+                    style="width:40px;height:40px;border-radius:50%;background:var(--purple);color:var(--white);display:flex;align-items:center;justify-content:center;font-size:18px;transition:opacity 0.2s"
+                    onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'"><i
+                      class="fab fa-instagram"></i></a>
+                  <a href="https://www.facebook.com/italiacosmeticsofficial"
+                    style="width:40px;height:40px;border-radius:50%;background:var(--purple);color:var(--white);display:flex;align-items:center;justify-content:center;font-size:18px;transition:opacity 0.2s"
+                    onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'"><i
+                      class="fab fa-facebook-f"></i></a>
+                  <a href="#"
+                    style="width:40px;height:40px;border-radius:50%;background:var(--purple);color:var(--white);display:flex;align-items:center;justify-content:center;font-size:18px;transition:opacity 0.2s"
+                    onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'"><i
+                      class="fab fa-youtube"></i></a>
+                  <a href="https://www.tiktok.com/@italiacosmeticsofficial"
+                    style="width:40px;height:40px;border-radius:50%;background:var(--purple);color:var(--white);display:flex;align-items:center;justify-content:center;font-size:18px;transition:opacity 0.2s"
+                    onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'"><i
+                      class="fab fa-tiktok"></i></a>
+                </div>
+              </div>
+              <div style="margin-top:var(--spacing-sm)">
+                <h3
+                  style="font-family:var(--font-display);font-size:20px;font-weight:700;margin-bottom:var(--spacing-xs)">
+                  Frequently Asked Questions</h3>
+                <div class="faq-item">
+                  <div class="faq-question" onclick="toggleFaq(this)">What payment methods do you accept? <i
+                      class="fas fa-chevron-down" style="font-size:12px;transition:transform 0.3s"></i></div>
+                  <div class="faq-answer">We accept all major credit cards (Visa, Mastercard, American Express), PayPal,
+                    Apple Pay, and Google Pay. All transactions are securely processed.</div>
+                </div>
+                <div class="faq-item">
+                  <div class="faq-question" onclick="toggleFaq(this)">How long does shipping take? <i
+                      class="fas fa-chevron-down" style="font-size:12px;transition:transform 0.3s"></i></div>
+                  <div class="faq-answer">Standard shipping takes 3-5 business days within Italy and 5-10 business days
+                    for international orders. Express shipping is available at checkout.</div>
+                </div>
+                <div class="faq-item">
+                  <div class="faq-question" onclick="toggleFaq(this)">Can I return a product? <i
+                      class="fas fa-chevron-down" style="font-size:12px;transition:transform 0.3s"></i></div>
+                  <div class="faq-answer">Yes! We offer a 30-day satisfaction guarantee. If you're not happy with your
+                    purchase, contact us for a full refund or exchange.</div>
+                </div>
+                <div class="faq-item">
+                  <div class="faq-question" onclick="toggleFaq(this)">Are your products authentic? <i
+                      class="fas fa-chevron-down" style="font-size:12px;transition:transform 0.3s"></i></div>
+                  <div class="faq-answer">Absolutely. We source directly from official brand distributors. Every product
+                    is 100% authentic and covered by manufacturer warranty.</div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <form class="contact-form" onsubmit="submitContact(event)">
+                <h3>Send Us a Message</h3>
+                <div class="form-group"><label>Name</label><input type="text" name="your-name" placeholder="Your full name" required>
+                </div>
+                <div class="form-group"><label>Email</label><input type="email" name="your-email" placeholder="your@email.com" required>
+                </div>
+                <div class="form-group"><label>Subject</label><select name="your-subject">
+                    <option>General Inquiry</option>
+                    <option>Order Support</option>
+                    <option>Wholesale / Distributor</option>
+                    <option>Product Question</option>
+                    <option>Other</option>
+                  </select></div>
+                <div class="form-group"><label>Message</label><textarea name="your-message" placeholder="How can we help you?"
+                    required></textarea></div>
+                <button class="btn btn-primary" type="submit">Send Message</button>
+                <div class="cf7-msg" style="display:none;margin-top:var(--spacing-xs);padding:10px 14px;border-radius:var(--radius-md);font-size:13px;text-align:center;"></div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+    <section class="page" id="page-track-order">
+      <div class="page-title-bar">
+        <div class="container">
+          <h1>Track Your Order</h1>
+          <p>Enter your order number and email to check your shipment status.</p>
+        </div>
+      </div>
+      <section class="section">
+        <div class="container container-sm">
+          <div class="card-outline">
+            <div class="form-group">
+              <label>Order Number</label>
+              <input type="text" id="trackOrderId" placeholder="e.g. IC-12345">
+            </div>
+            <div class="form-group">
+              <label>Email Address</label>
+              <input type="email" id="trackEmail" placeholder="your@email.com">
+            </div>
+            <button class="btn btn-primary" style="width:100%;text-transform:uppercase;" onclick="trackOrder()">TRACK ORDER</button>
+          </div>
+        </div>
+      </section>
+    </section>
+    <section class="page" id="page-help">
+      <div class="page-title-bar">
+        <div class="container">
+          <h1>Help Center</h1>
+          <p>Find answers and support for all your questions.</p>
+        </div>
+      </div>
+      <section class="section">
+        <div class="container container-narrow">
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:var(--spacing-sm);">
+            <div class="value-card" onclick="navigate('faq')">
+              <i class="fas fa-question-circle"></i>
+              <h4>FAQ</h4>
+              <p>Frequently asked questions</p>
+            </div>
+            <div class="value-card" onclick="navigate('shipping')">
+              <i class="fas fa-truck"></i>
+              <h4>Shipping Info</h4>
+              <p>Delivery times & costs</p>
+            </div>
+            <div class="value-card" onclick="navigate('returns')">
+              <i class="fas fa-undo"></i>
+              <h4>Returns</h4>
+              <p>Our return policy</p>
+            </div>
+            <div class="value-card" onclick="navigate('contact')">
+              <i class="fas fa-envelope"></i>
+              <h4>Contact Us</h4>
+              <p>Get in touch with our team</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+    <section class="page" id="page-my-account">
+      <div class="page-title-bar">
+        <div class="container">
+          <h1>My Account</h1>
+          <p id="pageAuthSubtitle">Create an account to place orders, track shipments, and more.</p>
+        </div>
+      </div>
+      <section class="section">
+        <div class="container container-xs">
+          <div class="card-outline" id="authContainer">
+            <h3 id="authTitle" style="text-align:center;margin-bottom:var(--spacing-sm);">Create Account</h3>
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" id="authEmail" placeholder="your@email.com">
+            </div>
+            <div class="form-group">
+              <label>Password</label>
+              <input type="password" id="authPass" placeholder="Enter password">
+            </div>
+            <button class="btn btn-primary" id="authBtn" style="width:100%;margin-bottom:var(--spacing-xs);text-transform:uppercase;" onclick="handleAuth()">CREATE ACCOUNT</button>
+            <p style="text-align:center;font-size:13px;color:var(--muted);" id="authToggleText">
+              Already have an account? <a href="#" onclick="toggleAuthMode(); return false;" style="color:var(--purple);font-weight:600;">Sign In</a>
+            </p>
+          </div>
+        </div>
+      </section>
+    </section>
+    <section class="page" id="page-faq">
+      <section class="page-header">
+        <div class="container">
+          <h1>Frequently Asked Questions</h1>
+          <p>Find answers to common questions about our products and services.</p>
+        </div>
+      </section>
+      <section class="section">
+        <div class="container container-narrow leading-loose">
+          <h3 style="color:var(--purple);margin-bottom:10px;">Are your products authentic?</h3>
+          <p style="margin-bottom:20px;">Yes, all our products from Maxylook, Genus, Versum, and UNA are 100% authentic, imported directly from Italy. We guarantee the highest professional salon-grade quality across all our haircare and skincare lines.</p>
+          <h3 style="color:var(--purple);margin-bottom:10px;">Do you offer wholesale?</h3>
+          <p style="margin-bottom:20px;">Yes, we offer exclusive wholesale pricing for salons, professional stylists, and authorized distributors. Please use our contact form or email us at support@italiacosmetics.com with your business details to inquire.</p>
+          <h3 style="color:var(--purple);margin-bottom:10px;">What payment methods do you accept?</h3>
+          <p style="margin-bottom:20px;">Currently, we exclusively offer <strong>Cash on Delivery (COD)</strong> to ensure a safe and trustworthy shopping experience. You can comfortably pay the courier directly when your order is delivered to your doorstep.</p>
+          <h3 style="color:var(--purple);margin-bottom:10px;">How can I track my order?</h3>
+          <p style="margin-bottom:20px;">Once your order is dispatched, you will receive an SMS and an email with your courier tracking number. You can use this number on the courier's website to monitor your shipment's progress in real time.</p>
+          <h3 style="color:var(--purple);margin-bottom:10px;">How do I know which product is right for my hair?</h3>
+          <p style="margin-bottom:20px;">Our website categorizes products by brand and hair concern. If you need personalized advice, feel free to reach out to our support team via WhatsApp with details about your hair type, and we'll recommend the perfect professional regimen for you.</p>
+        </div>
+      </section>
+    </section>
+    <section class="page" id="page-shipping">
+      <section class="page-header">
+        <div class="container">
+          <h1>Shipping Information</h1>
+          <p>Fast and reliable delivery across Pakistan.</p>
+        </div>
+      </section>
+      <section class="section">
+        <div class="container container-narrow leading-loose">
+          <h3 style="color:var(--purple);margin-bottom:10px;">Delivery Areas & Options</h3>
+          <p style="margin-bottom:20px;">We proudly offer <strong>Cash on Delivery (COD)</strong> across Pakistan, operating primarily from our main fulfillment center in Lahore. We are committed to providing a seamless and secure shopping experience for all our customers.</p>
+          <h3 style="color:var(--purple);margin-bottom:10px;">Shipping Times</h3>
+          <p style="margin-bottom:20px;">Orders placed before 2:00 PM are processed on the same day. Our estimated delivery times are:</p>
+          <ul style="margin-bottom:20px;padding-left:20px;list-style-type:disc;">
+            <li><strong>Within Lahore:</strong> 1 - 2 business days.</li>
+            <li><strong>Rest of Pakistan:</strong> 3 - 5 business days.</li>
+          </ul>
+          <h3 style="color:var(--purple);margin-bottom:10px;">Shipping Charges</h3>
+          <p style="margin-bottom:20px;">We charge a standard flat rate for delivery. However, we are delighted to offer <strong>Free Delivery on all orders above PKR 5,000</strong>.</p>
+          <h3 style="color:var(--purple);margin-bottom:10px;">Order Tracking</h3>
+          <p style="margin-bottom:20px;">Upon dispatch, a tracking link will be shared via email and SMS. Please ensure your contact details are accurate during checkout to receive these updates without delay.</p>
+        </div>
+      </section>
+    </section>
+    <section class="page" id="page-returns">
+      <section class="page-header">
+        <div class="container">
+          <h1>Returns Policy</h1>
+          <p>Hassle-free returns under certain conditions.</p>
+        </div>
+      </section>
+      <section class="section">
+        <div class="container container-narrow leading-loose">
+          <h3 style="color:var(--purple);margin-bottom:10px;">7-Day Satisfaction Guarantee</h3>
+          <p style="margin-bottom:20px;">Your satisfaction is our top priority. We offer a <strong>7-day satisfaction guarantee</strong> on all our professional products. If you are not completely satisfied with your purchase, we are here to help.</p>
+          <h3 style="color:var(--purple);margin-bottom:10px;">Return Conditions</h3>
+          <p style="margin-bottom:20px;">We accept returns and exchanges strictly <strong>if the product is not damaged, unopened, and in its original pristine packaging</strong>. Due to the hygienic nature of cosmetic and haircare products, opened items cannot be accepted for return or exchange unless they arrived damaged or defective.</p>
+          <h3 style="color:var(--purple);margin-bottom:10px;">How to Initiate a Return</h3>
+          <p style="margin-bottom:20px;">To start a return process, please contact our support team at <strong>support@italiacosmetics.com</strong> or via WhatsApp at <strong>00923379912300</strong> within 7 days of receiving your order. Provide your order number and photographic evidence if the product was damaged during transit.</p>
+          <h3 style="color:var(--purple);margin-bottom:10px;">Refund Process</h3>
+          <p style="margin-bottom:20px;">Once we receive and inspect your returned item, we will notify you of the approval or rejection of your refund. Approved refunds will be processed via bank transfer or mobile wallet within 5-7 business days.</p>
+        </div>
+      </section>
+    </section>
+    <section class="page" id="page-privacy">
+      <section class="page-header">
+        <div class="container">
+          <h1>Privacy Policy</h1>
+          <p>Your data is secure with us.</p>
+        </div>
+      </section>
+      <section class="section">
+        <div class="container container-narrow leading-loose">
+          <p style="margin-bottom:20px;">At Italia Cosmetics, we are deeply committed to protecting your privacy and ensuring that your personal data is handled securely and transparently in accordance with modern digital privacy standards.</p>
+          <h3 style="color:var(--purple);margin-bottom:10px;">Information We Collect</h3>
+          <p style="margin-bottom:20px;">When you place an order or create an account, we collect essential information required to fulfill your purchase, including your name, shipping address, email address, and phone number. We do not store sensitive payment information directly on our servers, as all transactions are handled via Cash on Delivery or secure third-party processors.</p>
+          <h3 style="color:var(--purple);margin-bottom:10px;">How We Use Your Data</h3>
+          <p style="margin-bottom:20px;">Your data is used strictly for processing orders, providing customer support, and, if you opt-in, sending you exclusive promotional offers and updates about new products. We never sell or trade your personal information to external marketing agencies.</p>
+          <h3 style="color:var(--purple);margin-bottom:10px;">Data Security</h3>
+          <p style="margin-bottom:20px;">We employ robust security measures to protect your personal information against unauthorized access, alteration, or disclosure. Our website utilizes standard SSL encryption to ensure your browsing experience is secure.</p>
+          <h3 style="color:var(--purple);margin-bottom:10px;">Contact Information</h3>
+          <p>If you have any questions regarding our Privacy Policy or your data, please reach out to us:</p>
+          <ul style="margin-top:10px;line-height:2;">
+            <li><strong>Website:</strong> <a href="https://italiacosmetics.com/" target="_blank" style="color:var(--pink);font-weight:600;">https://italiacosmetics.com/</a></li>
+            <li><strong>Email:</strong> <a href="mailto:support@italiacosmetics.com" style="color:var(--pink);font-weight:600;">support@italiacosmetics.com</a></li>
+            <li><strong>WhatsApp:</strong> <strong style="color:var(--purple);">00923379912300</strong></li>
+          </ul>
+        </div>
+      </section>
+    </section>
+
+    <!-- Product Details Page -->
+    <section class="page" id="page-product-details">
+      <div class="container" style="padding: 40px 20px;">
+        <button class="btn btn-secondary btn-sm" onclick="history.back()" style="margin-bottom: 20px;"><i class="fas fa-arrow-left"></i> Back</button>
+        <div id="productDetailsContainer">
+          <!-- Rendered dynamically via JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Single Blog Page -->
+    <section class="page" id="page-single-blog">
+      <div class="container" style="padding: 40px 20px;">
+        <button class="btn btn-secondary btn-sm" onclick="history.back()" style="margin-bottom: 20px;"><i class="fas fa-arrow-left"></i> Back</button>
+        <div id="singleBlogContainer">
+          <!-- Rendered dynamically via JS -->
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo logo-link footer-logo">
+            <img src="ic_logo.svg" alt="Italia Cosmetics" class="logo-img logo-img--footer">
+          </div>
+          <p>Your destination for professional Italian beauty. We curate the world's finest haircare and skincare brands
+            — Maxylook, Genus, Versum, and UNA — so you can experience salon-grade quality at home.</p>
+          <div class="footer-social">
+            <a href="https://www.instagram.com/italiacosmeticslahore/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.facebook.com/italiacosmeticsofficial" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="https://www.tiktok.com/@italiacosmeticsofficial" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Shop</h4>
+          <a href="/shop" onclick="navigate('shop'); document.querySelectorAll('#shopSidebar input[type=\'checkbox\']').forEach(cb => cb.checked = false); applyFilters(); window.scrollTo({top:0, behavior:'smooth'}); return false;">All Products</a>
+          <a href="/shop" onclick="filterBrand('Maxylook'); window.scrollTo({top:0, behavior:'smooth'}); return false;">Maxylook</a>
+          <a href="/shop" onclick="filterBrand('Genus'); window.scrollTo({top:0, behavior:'smooth'}); return false;">Genus</a>
+          <a href="/shop" onclick="filterBrand('Versum'); window.scrollTo({top:0, behavior:'smooth'}); return false;">Versum 2.0</a>
+          <a href="/shop" onclick="filterBrand('UNA'); window.scrollTo({top:0, behavior:'smooth'}); return false;">UNA</a>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <a href="/about" onclick="return navigate('about')">About Us</a>
+          <a href="/brands" onclick="return navigate('brands')">Our Brands</a>
+          <a href="/blog" onclick="return navigate('blog')">Blog</a>
+          <a href="/contact" onclick="return navigate('contact')">Contact</a>
+        </div>
+        <div class="footer-col">
+          <h4>Support</h4>
+          <a href="/help" onclick="return navigate('help')">Help Center</a>
+          <a href="/faq" onclick="return navigate('faq')">FAQ</a>
+          <a href="/track-order" onclick="return navigate('track-order')">Track Order</a>
+          <a href="/shipping" onclick="return navigate('shipping')">Shipping</a>
+          <a href="/returns" onclick="return navigate('returns')">Returns</a>
+          <a href="/my-account" onclick="return navigate('my-account')">My Account</a>
+          <a href="/privacy" onclick="return navigate('privacy')">Privacy</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        &copy; 2026 Italia Cosmetics. All rights reserved. Made with <i class="fas fa-heart"
+          style="color:var(--pink)"></i> in Milan.
+      </div>
+    </div>
+  </footer>
+
+  <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+  <div class="cart-drawer" id="cartDrawer">
+    <div class="cart-drawer-header">
+      <h3>Shopping Cart</h3>
+      <button class="cart-drawer-close" onclick="toggleCart()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="cart-drawer-items" id="cartItems">
+      <div class="cart-drawer-empty" id="cartEmpty">
+        <i class="fas fa-shopping-bag"></i>
+        <p>Your cart is empty</p>
+      </div>
+    </div>
+    <div class="cart-drawer-footer" id="cartFooter" style="display:none">
+      <div class="cart-total-row">
+        <span class="cart-total-label">Total</span>
+        <span id="cartTotal">PKR 0</span>
+      </div>
+      <button class="checkout-btn" onclick="navigate('checkout');toggleCart()">Proceed to Checkout</button>
+    </div>
+  </div>
+  <div class="toast" id="toast"></div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

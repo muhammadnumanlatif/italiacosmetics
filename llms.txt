@@ -1,0 +1,440 @@
+# Italia Cosmetics - AI Context
+
+Welcome to the LLM index for Italia Cosmetics. We are a premium beauty supplier specializing in Genus, Versum, Maxylook, and UNA.
+
+## Products
+- **SCULPTING GLAZE- UNA styling** (Category: Product) - PKR 25727.702000000005
+  Professional UNA Rolland USA product.
+  URL: https://italiacosmetics.com/#product-237
+
+- **UNA Daily Treatments Set** (Category: Product) - PKR 25727.702000000005
+  Professional UNA Rolland USA product.
+  URL: https://italiacosmetics.com/#product-236
+
+- **UNA Pre/Post Technical Services Set** (Category: Product) - PKR 16744.327599999997
+  Professional UNA Rolland USA product.
+  URL: https://italiacosmetics.com/#product-235
+
+- **UNA Hydro-In Dry and Frizzy Hair Set** (Category: Product) - PKR 11556.144600000001
+  Professional UNA Rolland USA product.
+  URL: https://italiacosmetics.com/#product-234
+
+- **UNA Restoration Radiance Kit: Transforming Damaged Tresses to Brilliance** (Category: Product) - PKR 81035.1542
+  Professional UNA Rolland USA product.
+  URL: https://italiacosmetics.com/#product-233
+
+- **UNA Balancing Kit for Oily Skin and Hair** (Category: Product) - PKR 81035.1542
+  Professional UNA Rolland USA product.
+  URL: https://italiacosmetics.com/#product-232
+
+- **Purifying Shampoo - UNA Pure Purifying** (Category: Product) - PKR 13688.2746
+  Professional UNA Rolland USA product.
+  URL: https://italiacosmetics.com/#product-231
+
+- **NORMALIZING TREATMENT- UNA Balancing** (Category: Product) - PKR 16744.327599999997
+  Professional UNA Rolland USA product.
+  URL: https://italiacosmetics.com/#product-230
+
+- **DAILY GENTLE SHAMPOO- UNA Daily Cure** (Category: Product) - PKR 7036.029
+  Professional UNA Rolland USA product.
+  URL: https://italiacosmetics.com/#product-229
+
+- **SESAME OIL HAIR MASK-UNA  Hair Food** (Category: Product) - PKR 13858.845
+  Professional UNA Rolland USA product.
+  URL: https://italiacosmetics.com/#product-228
+
+- **MOISTURIZING OIL HAIR TREATMENT- UNA Hydro** (Category: Product) - PKR 30134.104000000003
+  Professional UNA Rolland USA product.
+  URL: https://italiacosmetics.com/#product-227
+
+- **Acid Hair Conditioner - UNA  Post Chem Chemieally Treated Hair** (Category: Product) - PKR 7107.099999999999
+  Professional UNA Rolland USA product.
+  URL: https://italiacosmetics.com/#product-226
+
+- **Neutralizing  Shampoo - UNA  Post Chem Chemieally Treated Hair** (Category: Product) - PKR 13688.2746
+  Professional UNA Rolland USA product.
+  URL: https://italiacosmetics.com/#product-225
+
+- **PROTEIN HAIR TREATMENT NOURISHING MASK- UNA Hair Food** (Category: Product) - PKR 13858.845
+  Professional UNA Rolland USA product.
+  URL: https://italiacosmetics.com/#product-224
+
+- **JOJOBA OIL HAIR MASK- UNA Hair Food** (Category: Product) - PKR 13858.845
+  Professional UNA Rolland USA product.
+  URL: https://italiacosmetics.com/#product-223
+
+- **ACID CONDITIONER 1000ML - UNA** (Category: Product) - PKR 15564.548999999997
+  Professional UNA Rolland USA product.
+  URL: https://italiacosmetics.com/#product-222
+
+- **SPRAY SHINE - UNA  finish** (Category: Product) - PKR 32266.233999999997
+  Professional UNA Rolland USA product.
+  URL: https://italiacosmetics.com/#product-221
+
+- **Hair Detangler - UNA Hydro In For Dry Hair** (Category: Product) - PKR 11556.144600000001
+  Professional UNA Rolland USA product.
+  URL: https://italiacosmetics.com/#product-220
+
+- **Energizing shampoo - UNA FORTIFY Energizing** (Category: Product) - PKR 13688.2746
+  Professional UNA Rolland USA product.
+  URL: https://italiacosmetics.com/#product-219
+
+- **OXYGENATING TREATMENT- UNA stop loss 12 vials** (Category: Product) - PKR 30134.104000000003
+  Professional UNA Rolland USA product.
+  URL: https://italiacosmetics.com/#product-218
+
+- **Silker - UNA FINISH Styling & Defining** (Category: Product) - PKR 16744.327599999997
+  Professional UNA Rolland USA product.
+  URL: https://italiacosmetics.com/#product-217
+
+- **VITAMINS HAIR TREATMENT- MOISTURIZING MASK- UNA hair food** (Category: Product) - PKR 13858.845
+  Professional UNA Rolland USA product.
+  URL: https://italiacosmetics.com/#product-216
+
+- **Drop Restructurizing Hair Treatment - UNA FORTIFY Energizing** (Category: Product) - PKR 30134.104000000003
+  Professional UNA Rolland USA product.
+  URL: https://italiacosmetics.com/#product-215
+
+- **Daily Hydro Active Hair Conditioner - UNA  Daily Cure** (Category: Product) - PKR 13261.848599999998
+  Professional UNA Rolland USA product.
+  URL: https://italiacosmetics.com/#product-214
+
+- **Vials Restructurizing treatment - UNA FORTIFY I Energizing** (Category: Product) - PKR 30134.104000000003
+  Professional UNA Rolland USA product.
+  URL: https://italiacosmetics.com/#product-213
+
+- **COCONUT OIL HAIR MASK - UNA ETNIKA** (Category: Product) - PKR 13858.845
+  Professional UNA Rolland USA product.
+  URL: https://italiacosmetics.com/#product-212
+
+- **FREEZING SPRAY- UNA  finish** (Category: Product) - PKR 25727.702000000005
+  Professional UNA Rolland USA product.
+  URL: https://italiacosmetics.com/#product-211
+
+- **GARLIC TREATMENT- UNA Hair Food** (Category: Product) - PKR 17170.7536
+  Professional UNA Rolland USA product.
+  URL: https://italiacosmetics.com/#product-210
+
+- **Re-Build Theraphy Mask - UNA REPAIR** (Category: Product) - PKR 13858.845
+  Professional UNA Rolland USA product.
+  URL: https://italiacosmetics.com/#product-209
+
+- **lntensive Protein Hair Treatment - UNA FORTIFY - Energizing** (Category: Product) - PKR 30134.104000000003
+  Professional UNA Rolland USA product.
+  URL: https://italiacosmetics.com/#product-208
+
+- **Pure Gloss Polisher - UNA Fish Styling & Defining** (Category: Product) - PKR 18904.886000000002
+  Professional UNA Rolland USA product.
+  URL: https://italiacosmetics.com/#product-207
+
+- **Designing Oil Non Oil - UNA FINISH Styling** (Category: Product) - PKR 18904.886000000002
+  Professional UNA Rolland USA product.
+  URL: https://italiacosmetics.com/#product-206
+
+- **Vitamin Leave-in  Hair Treatment - UNA Post Chem** (Category: Product) - PKR 11556.144600000001
+  Professional UNA Rolland USA product.
+  URL: https://italiacosmetics.com/#product-205
+
+- **DUAL-PHASE TREATMENT- UNA** (Category: Product) - PKR 25727.702000000005
+  Professional UNA Rolland USA product.
+  URL: https://italiacosmetics.com/#product-204
+
+- **Hydrating Shampoo -UNA  Hydro In For Dry Hair** (Category: Product) - PKR 13688.2746
+  Professional UNA Rolland USA product.
+  URL: https://italiacosmetics.com/#product-203
+
+- **Revitalizing Hair Conditioner - UNA Fortify Energizing** (Category: Product) - PKR 14143.128999999999
+  Professional UNA Rolland USA product.
+  URL: https://italiacosmetics.com/#product-202
+
+- **Moisturizing Hair Mask - UNA HYDRO-IN For Dry Hair** (Category: Product) - PKR 13858.845
+  Professional UNA Rolland USA product.
+  URL: https://italiacosmetics.com/#product-201
+
+- **UNA Stop Loss Anti Hair Loss System Set: Defend and Restore for Stronger, Healthier Hair** (Category: Product) - PKR 13261.848599999998
+  Professional UNA Rolland USA product.
+  URL: https://italiacosmetics.com/#product-200
+
+- **COMPENSATING SHAMPOO- UNA Stop Loss** (Category: Product) - PKR 7036.029
+  Professional UNA Rolland USA product.
+  URL: https://italiacosmetics.com/#product-199
+
+- **Drop Oxygenating Scalp Treatment - UNA stop loss** (Category: Product) - PKR 30134.104000000003
+  Professional UNA Rolland USA product.
+  URL: https://italiacosmetics.com/#product-198
+
+- **Easy Tech Advance Maintaining Mask** (Category: Product) - PKR 13858.845
+  Professional Versum product from the Easy Tech line.
+  URL: https://italiacosmetics.com/#product-197
+
+- **Easy Tech Advance Maintaining Shampoo** (Category: Product) - PKR 7036.029
+  Professional Versum product from the Easy Tech line.
+  URL: https://italiacosmetics.com/#product-196
+
+- **Easy Tech Advance Preparing Shampoo** (Category: Product) - PKR 7036.029
+  Professional Versum product from the Easy Tech line.
+  URL: https://italiacosmetics.com/#product-195
+
+- **Easy Tech Advance Performing Mask** (Category: Product) - PKR 13858.845
+  Professional Versum product from the Easy Tech line.
+  URL: https://italiacosmetics.com/#product-194
+
+- **Easy Tech Advance Performing Shampoo** (Category: Product) - PKR 7036.029
+  Professional Versum product from the Easy Tech line.
+  URL: https://italiacosmetics.com/#product-193
+
+- **Easy Tech Advance Extra Silver** (Category: Product) - PKR 8286.8786
+  Professional Versum product from the Easy Tech line.
+  URL: https://italiacosmetics.com/#product-192
+
+- **Est 1024X593** (Category: Product) - PKR 22.5
+  Professional Versum product from the Easy Tech line.
+  URL: https://italiacosmetics.com/#product-191
+
+- **B Tech** (Category: Product) - PKR 42258.8166
+  Professional Versum product from the Alchemist line.
+  URL: https://italiacosmetics.com/#product-190
+
+- **Pink Foam** (Category: Product) - PKR 7107.099999999999
+  Professional Versum product from the Alchemist line.
+  URL: https://italiacosmetics.com/#product-189
+
+- **Filler** (Category: Product) - PKR 63366.90359999999
+  Professional Versum product from the Alchemist line.
+  URL: https://italiacosmetics.com/#product-188
+
+- **Reconstructing Finalizer** (Category: Product) - PKR 54298.244000000006
+  Professional Versum product from the Alchemist line.
+  URL: https://italiacosmetics.com/#product-187
+
+- **Treatment** (Category: Product) - PKR 30134.104000000003
+  Professional Versum product from the Alchemist line.
+  URL: https://italiacosmetics.com/#product-186
+
+- **Alchemist Shampoo** (Category: Product) - PKR 14143.128999999999
+  Professional Versum product from the Alchemist line.
+  URL: https://italiacosmetics.com/#product-185
+
+- **Conditioning Leave In Cream** (Category: Product) - PKR 14398.9846
+  Professional Versum product from the Elements line.
+  URL: https://italiacosmetics.com/#product-184
+
+- **Multi Action 15In1** (Category: Product) - PKR 18052.033999999996
+  Professional Versum product from the Elements line.
+  URL: https://italiacosmetics.com/#product-183
+
+- **Trifasico** (Category: Product) - PKR 22.5
+  Professional Versum product from the Elements line.
+  URL: https://italiacosmetics.com/#product-182
+
+- **Age Defying Lamellar Elixir** (Category: Product) - PKR 25343.918599999997
+  Professional Versum product from the Elements line.
+  URL: https://italiacosmetics.com/#product-181
+
+- **Age Defying Mask** (Category: Product) - PKR 12906.4936
+  Professional Versum product from the Elements line.
+  URL: https://italiacosmetics.com/#product-180
+
+- **Age Defying Shampoo** (Category: Product) - PKR 26225.199
+  Professional Versum product from the Elements line.
+  URL: https://italiacosmetics.com/#product-179
+
+- **Moisturizing Mask** (Category: Product) - PKR 28001.974
+  Professional Versum product from the Elements line.
+  URL: https://italiacosmetics.com/#product-178
+
+- **Moisturizing Shampoo** (Category: Product) - PKR 26225.199
+  Professional Versum product from the Elements line.
+  URL: https://italiacosmetics.com/#product-177
+
+- **Softening Boost** (Category: Product) - PKR 32522.089599999996
+  Professional Versum product from the Elements line.
+  URL: https://italiacosmetics.com/#product-176
+
+- **Anti Frizz Mask** (Category: Product) - PKR 12906.4936
+  Professional Versum product from the Elements line.
+  URL: https://italiacosmetics.com/#product-175
+
+- **Repairing Mask** (Category: Product) - PKR 16801.1844
+  Professional Versum product from the Elements line.
+  URL: https://italiacosmetics.com/#product-174
+
+- **Softening Shampoo** (Category: Product) - PKR 24306.282
+  Professional Versum product from the Elements line.
+  URL: https://italiacosmetics.com/#product-173
+
+- **Elmk 1024X593** (Category: Product) - PKR 22.5
+  Professional Versum product from the Elements line.
+  URL: https://italiacosmetics.com/#product-172
+
+- **Trikology Reinforcing Lotion** (Category: Product) - PKR 36175.138999999996
+  Professional Versum product from the Trikology line.
+  URL: https://italiacosmetics.com/#product-171
+
+- **Trikology Reinforcing Shampoo** (Category: Product) - PKR 26296.269999999997
+  Professional Versum product from the Trikology line.
+  URL: https://italiacosmetics.com/#product-170
+
+- **Charcoal Detox Mask** (Category: Product) - PKR 11300.288999999999
+  Professional Versum product from the Trikology line.
+  URL: https://italiacosmetics.com/#product-169
+
+- **Charcoal Detox Shampoo 1** (Category: Product) - PKR 14853.839
+  Professional Versum product from the Trikology line.
+  URL: https://italiacosmetics.com/#product-168
+
+- **Charcoal Detox Peeling** (Category: Product) - PKR 22.5
+  Professional Versum product from the Trikology line.
+  URL: https://italiacosmetics.com/#product-167
+
+- **Tk 1024X593** (Category: Product) - PKR 22.5
+  Professional Versum product from the Trikology line.
+  URL: https://italiacosmetics.com/#product-166
+
+- **Artis Polishing Spray** (Category: Product) - PKR 8812.804
+  Professional Versum product from the Artis line.
+  URL: https://italiacosmetics.com/#product-165
+
+- **Artis Crystal Drops** (Category: Product) - PKR 24448.424
+  Professional Versum product from the Artis line.
+  URL: https://italiacosmetics.com/#product-164
+
+- **Artis Mediterranean Oil** (Category: Product) - PKR 19231.8126
+  Professional Versum product from the Artis line.
+  URL: https://italiacosmetics.com/#product-163
+
+- **Artis Volume Booster** (Category: Product) - PKR 8997.5886
+  Professional Versum product from the Artis line.
+  URL: https://italiacosmetics.com/#product-162
+
+- **Artis Total Relaxer** (Category: Product) - PKR 22.5
+  Professional Versum product from the Artis line.
+  URL: https://italiacosmetics.com/#product-161
+
+- **Artis Termal Protector** (Category: Product) - PKR 15038.623599999997
+  Professional Versum product from the Artis line.
+  URL: https://italiacosmetics.com/#product-160
+
+- **Artis Strong Hold Mousse 1** (Category: Product) - PKR 17170.7536
+  Professional Versum product from the Artis line.
+  URL: https://italiacosmetics.com/#product-159
+
+- **Artis Curls Definer** (Category: Product) - PKR 16275.258999999998
+  Professional Versum product from the Artis line.
+  URL: https://italiacosmetics.com/#product-158
+
+- **Artis Gel** (Category: Product) - PKR 10916.5056
+  Professional Versum product from the Artis line.
+  URL: https://italiacosmetics.com/#product-157
+
+- **Artis Shaping Matt Pomade** (Category: Product) - PKR 22.5
+  Professional Versum product from the Artis line.
+  URL: https://italiacosmetics.com/#product-156
+
+- **Artis Bright Wax** (Category: Product) - PKR 21676.654999999995
+  Professional Versum product from the Artis line.
+  URL: https://italiacosmetics.com/#product-155
+
+- **Artis Quick Texturizer** (Category: Product) - PKR 22.5
+  Professional Versum product from the Artis line.
+  URL: https://italiacosmetics.com/#product-154
+
+- **Artis Thermal Shield Spray** (Category: Product) - PKR 32266.233999999997
+  Professional Versum product from the Artis line.
+  URL: https://italiacosmetics.com/#product-153
+
+- **Artis Weather Protector** (Category: Product) - PKR 15038.623599999997
+  Professional Versum product from the Artis line.
+  URL: https://italiacosmetics.com/#product-152
+
+- **Artis Supreme Shine Spray** (Category: Product) - PKR 32266.233999999997
+  Professional Versum product from the Artis line.
+  URL: https://italiacosmetics.com/#product-151
+
+- **Artis Sculpting Spray** (Category: Product) - PKR 8812.804
+  Professional Versum product from the Artis line.
+  URL: https://italiacosmetics.com/#product-150
+
+- **Ar 1024X593** (Category: Product) - PKR 22.5
+  Professional Versum product from the Artis line.
+  URL: https://italiacosmetics.com/#product-149
+
+- **Sun Shine Solar Oil** (Category: Product) - PKR 19231.8126
+  Professional Versum product from the Sun Shine line.
+  URL: https://italiacosmetics.com/#product-148
+
+- **Sun Shine Mask** (Category: Product) - PKR 13858.845
+  Professional Versum product from the Sun Shine line.
+  URL: https://italiacosmetics.com/#product-147
+
+- **Sun Shine Shampoo** (Category: Product) - PKR 14143.128999999999
+  Professional Versum product from the Sun Shine line.
+  URL: https://italiacosmetics.com/#product-146
+
+- **Es 1024X593** (Category: Product) - PKR 8528.519999999999
+  Professional Versum product from the Sun Shine line.
+  URL: https://italiacosmetics.com/#product-145
+
+- **Gradient Tone Gold** (Category: Product) - PKR 18592.173600000002
+  Professional Versum product from the Gradient Tone line.
+  URL: https://italiacosmetics.com/#product-144
+
+- **Gradient Tone Beige** (Category: Product) - PKR 18592.173600000002
+  Professional Versum product from the Gradient Tone line.
+  URL: https://italiacosmetics.com/#product-143
+
+- **Gradient Tone Chocolate** (Category: Product) - PKR 18592.173600000002
+  Professional Versum product from the Gradient Tone line.
+  URL: https://italiacosmetics.com/#product-142
+
+- **Gradient Tone Black** (Category: Product) - PKR 18592.173600000002
+  Professional Versum product from the Gradient Tone line.
+  URL: https://italiacosmetics.com/#product-141
+
+- **Gradient Tone Copper** (Category: Product) - PKR 18592.173600000002
+  Professional Versum product from the Gradient Tone line.
+  URL: https://italiacosmetics.com/#product-140
+
+- **Gradient Tone Caramel** (Category: Product) - PKR 13261.848599999998
+  Professional Versum product from the Gradient Tone line.
+  URL: https://italiacosmetics.com/#product-139
+
+- **Gradient Tone Red** (Category: Product) - PKR 18592.173600000002
+  Professional Versum product from the Gradient Tone line.
+  URL: https://italiacosmetics.com/#product-138
+
+## Pages
+- **About Us**
+  URL: https://italiacosmetics.com/#about
+
+- **My account**
+  URL: https://italiacosmetics.com/#my-account
+
+- **Checkout**
+  URL: https://italiacosmetics.com/#checkout
+
+- **Cart**
+  URL: https://italiacosmetics.com/#cart
+
+- **Shop**
+  URL: https://italiacosmetics.com/#shop
+
+- **Sample Page**
+  URL: https://italiacosmetics.com/#sample-page
+
+## Blog Posts
+- **How to Build a Professional Hair Care Routine**
+  URL: https://italiacosmetics.com/#post-344
+
+- **Superfoods for Your Hair: The Maxylook Philosophy**
+  URL: https://italiacosmetics.com/#post-343
+
+- **Versum Hair 2.0: A New Era in Haircare Science**
+  URL: https://italiacosmetics.com/#post-342
+
+- **The Ultimate Guide to Professional Hair Masks**
+  URL: https://italiacosmetics.com/#post-341
+
+- **Hello world!**
+  URL: https://italiacosmetics.com/#post-1
+
