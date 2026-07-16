@@ -105,9 +105,7 @@
       // ── After products load, render detail page if user landed directly on it ──
       const _activeDetail = document.getElementById('page-product-details');
       if (_activeDetail && _activeDetail.classList.contains('active')) {
-        const _hashDetail = location.hash.replace('#', '');
-        const _queryDetail = _hashDetail.includes('?') ? _hashDetail.split('?')[1] : location.search.replace('?', '');
-        const _id = new URLSearchParams(_queryDetail).get('id');
+        const _id = new URLSearchParams(location.search).get('id');
         if (_id) renderProductDetails(_id);
       }
     }
@@ -701,8 +699,20 @@
     // ==================== NAVIGATION ====================
     let currentFilter = {};
 
+    function getPageFromUrl() {
+      const params = new URLSearchParams(location.search);
+      const page = params.get('page') || location.pathname.replace(/^\//, '') || 'home';
+      const id = params.get('id') || null;
+      const hash = location.hash.replace('#', '');
+      if (hash && page === 'home') {
+        const [hp, hq] = hash.split('?');
+        const hpParams = new URLSearchParams(hq || '');
+        return { page: hp || 'home', id: hpParams.get('id') || null };
+      }
+      return { page, id };
+    }
+
     function navigate(page, id = null) {
-      // SEO Updates for static pages
       const pageTitles = {
         'home': 'Premium Professional Haircare & Skincare',
         'shop': 'Shop Professional Hair Cosmetics',
@@ -735,42 +745,35 @@
       if (page === 'product-details' && id) { if (typeof renderProductDetails === 'function') renderProductDetails(id); }
       if (page === 'single-blog' && id) { if (typeof renderSingleBlog === 'function') renderSingleBlog(id); }
       
-      let hash = page;
-      if (id) hash += '?id=' + id;
-      const newHash = '#' + hash;
-      if (location.hash !== newHash) {
-        if (page === 'home' && !id) {
-          if (location.hash) history.pushState(null, '', '/');
-        } else {
-          location.hash = hash;
-        }
+      let url = '/';
+      if (page !== 'home' || id) {
+        url = '/?page=' + page;
+        if (id) url += '&id=' + id;
       }
+      if (location.pathname + location.search !== url) history.pushState(null, '', url);
       return false;
     }
 
     window.addEventListener('popstate', () => {
-      const hash = location.hash.replace('#', '') || 'home';
-      const [hashPage, hashQuery] = hash.split('?');
-      const params = new URLSearchParams(hashQuery || '');
-      const id = params.get('id');
-      if (document.getElementById('page-' + hashPage)) navigate(hashPage, id);
+      const { page, id } = getPageFromUrl();
+      if (document.getElementById('page-' + page)) navigate(page, id);
     });
 
+    // Legacy hash support — convert to query param URL
     window.addEventListener('hashchange', () => {
-      const hash = location.hash.replace('#', '') || 'home';
-      const [hashPage, hashQuery] = hash.split('?');
-      const params = new URLSearchParams(hashQuery || '');
-      const id = params.get('id');
-      if (document.getElementById('page-' + hashPage)) navigate(hashPage, id);
+      if (location.hash) {
+        const hash = location.hash.replace('#', '');
+        const [hp, hq] = hash.split('?');
+        const hqp = new URLSearchParams(hq || '');
+        navigate(hp || 'home', hqp.get('id'));
+      }
     });
 
-    // Initial hash-based navigation
-    if (location.hash) {
+    if (location.hash && !location.search.includes('page=')) {
       const hash = location.hash.replace('#', '');
-      const [hashPage, hashQuery] = hash.split('?');
-      const params = new URLSearchParams(hashQuery || '');
-      const id = params.get('id');
-      if (document.getElementById('page-' + hashPage)) setTimeout(() => navigate(hashPage, id), 50);
+      const [hp, hq] = hash.split('?');
+      const hqp = new URLSearchParams(hq || '');
+      if (document.getElementById('page-' + hp)) setTimeout(() => navigate(hp || 'home', hqp.get('id')), 50);
     }
 
     function toggleMobileMenu() {
@@ -1440,16 +1443,13 @@
       renderTestimonials();
       renderBlog();
 
-      // ── Resolve starting page from hash ──
-      const _initHash = location.hash.replace('#', '') || '';
-      const [_initPathRaw, _initQueryRaw] = _initHash.split('?');
-      const _initPath = _initPathRaw || location.pathname.replace(/^\//, '') || 'home';
-      const _initParams = new URLSearchParams(_initQueryRaw || location.search.replace('?', ''));
-      const _initId = _initParams.get('id');
+      // ── Resolve starting page from URL ──
+      const _init = getPageFromUrl();
+      const _initPath = _init.page;
+      const _initId = _init.id;
       const _initPageEl = document.getElementById('page-' + _initPath);
 
       if (_initPageEl && _initPath !== 'home') {
-        // Activate the correct page immediately (before async fetch)
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         _initPageEl.classList.add('active');
       }

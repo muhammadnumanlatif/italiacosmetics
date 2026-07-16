@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <script>if(location.pathname!=='/'&&!location.hash){location.replace('/#'+location.pathname.replace(/^\//,'')+location.search)}</script>
+  <script>if(location.pathname!=='/'&&!location.search.includes('page=')){var p=location.pathname.replace(/^\//,'');var q=location.search.replace('?','');location.replace('/?page='+p+(q?'&'+q:''))}</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Italia Cosmetics — Premium Professional Haircare & Skincare</title>
