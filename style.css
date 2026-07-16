@@ -240,6 +240,103 @@
       width: 100%
     }
 
+    .nav-item {
+      position: relative
+    }
+
+    .nav-item > a {
+      padding: 24px 0
+    }
+
+    .mega-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--white);
+      border: 1px solid var(--hairline);
+      border-radius: var(--radius-md);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+      padding: 24px;
+      gap: 32px;
+      min-width: 520px;
+      z-index: 100;
+      grid-template-columns: 1fr 1fr
+    }
+
+    .nav-item.has-mega:hover .mega-menu,
+    .nav-item.has-mega:focus-within .mega-menu {
+      display: grid
+    }
+
+    .mega-col h4 {
+      font-family: var(--font-display);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px
+    }
+
+    .mega-col a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 0;
+      font-size: 13px;
+      font-weight: 500;
+      text-transform: none;
+      letter-spacing: 0;
+      color: var(--charcoal);
+      transition: color 0.2s;
+      text-decoration: none
+    }
+
+    .mega-col a:hover {
+      color: var(--purple)
+    }
+
+    .mega-col a i {
+      width: 18px;
+      font-size: 12px;
+      color: var(--purple)
+    }
+
+    .mega-col a::after { display: none }
+
+    .mega-col p {
+      font-size: 12px;
+      line-height: 1.5;
+      color: var(--muted);
+      margin-bottom: 16px
+    }
+
+    .mega-brand {
+      display: block;
+      padding: 14px 16px !important;
+      border-radius: var(--radius-sm);
+      color: #fff !important;
+      font-weight: 700 !important;
+      font-size: 14px !important;
+      margin-bottom: 8px;
+      text-transform: uppercase !important;
+      letter-spacing: 1px !important
+    }
+
+    .mega-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px !important;
+      font-weight: 700 !important;
+      color: var(--purple) !important;
+      text-transform: uppercase !important
+    }
+
+    .mega-cta i { font-size: 11px !important }
+
     .header-actions {
       display: flex;
       align-items: center;
@@ -648,6 +745,30 @@
     }
 
     .mobile-nav a:hover {
+      color: var(--purple)
+    }
+
+    .mobile-nav-item > a {
+      font-weight: 700
+    }
+
+    .mobile-sub {
+      padding-left: 16px;
+      border-left: 2px solid var(--lavender);
+      margin: 4px 0 8px
+    }
+
+    .mobile-sub a {
+      font-size: 13px;
+      padding: 8px 0;
+      text-transform: none;
+      letter-spacing: 0;
+      font-weight: 500;
+      border-bottom: none;
+      color: var(--muted)
+    }
+
+    .mobile-sub a:hover {
       color: var(--purple)
     }
 

@@ -64,8 +64,43 @@
       </a>
       <nav class="nav">
         <a href="/home" onclick="return navigate('home')" class="active" data-page="home">Home</a>
-        <a href="/shop" onclick="return navigate('shop')" data-page="shop">Shop</a>
-        <a href="/brands" onclick="return navigate('brands')" data-page="brands">Brands</a>
+        <div class="nav-item has-mega">
+          <a href="/shop" onclick="return navigate('shop')" data-page="shop">Shop</a>
+          <div class="mega-menu">
+            <div class="mega-col">
+              <h4>Categories</h4>
+              <a href="#" onclick="return filterCategory('Shampoo')"><i class="fas fa-wind"></i> Shampoo</a>
+              <a href="#" onclick="return filterCategory('Mask')"><i class="fas fa-spray-can"></i> Mask</a>
+              <a href="#" onclick="return filterCategory('Treatment')"><i class="fas fa-flask"></i> Treatment</a>
+              <a href="#" onclick="return filterCategory('Serum')"><i class="fas fa-oil-can"></i> Serum</a>
+              <a href="#" onclick="return filterCategory('Styling')"><i class="fas fa-fill-drip"></i> Styling</a>
+              <a href="#" onclick="return filterCategory('Kit')"><i class="fas fa-box"></i> Kits &amp; Sets</a>
+            </div>
+            <div class="mega-col">
+              <h4>Brands</h4>
+              <a href="#" onclick="return filterBrand('Maxylook')">Maxylook</a>
+              <a href="#" onclick="return filterBrand('Genus')">Genus</a>
+              <a href="#" onclick="return filterBrand('Versum')">Versum</a>
+              <a href="#" onclick="return filterBrand('UNA')">UNA</a>
+            </div>
+          </div>
+        </div>
+        <div class="nav-item has-mega">
+          <a href="/brands" onclick="return navigate('brands')" data-page="brands">Brands</a>
+          <div class="mega-menu">
+            <div class="mega-col">
+              <a href="#" onclick="return navigate('brands')" class="mega-brand" style="background:linear-gradient(135deg,#8B5FBF,#A07DD6)">Maxylook</a>
+              <a href="#" onclick="return navigate('brands')" class="mega-brand" style="background:linear-gradient(135deg,#232323,#3A3A3A)">Genus</a>
+              <a href="#" onclick="return navigate('brands')" class="mega-brand" style="background:linear-gradient(135deg,#D4AF37,#E8C84A);color:var(--charcoal)">Versum</a>
+              <a href="#" onclick="return navigate('brands')" class="mega-brand" style="background:linear-gradient(135deg,#F37AA2,#E05A86)">UNA</a>
+            </div>
+            <div class="mega-col">
+              <h4>Why Italia Cosmetics?</h4>
+              <p>We bring you the world's finest professional haircare brands — salon-grade quality, delivered to your door.</p>
+              <a href="/brands" onclick="return navigate('brands')" class="mega-cta">Explore All Brands <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </div>
         <a href="/about" onclick="return navigate('about')" data-page="about">About</a>
         <a href="/blog" onclick="return navigate('blog')" data-page="blog">Blog</a>
         <a href="/contact" onclick="return navigate('contact')" data-page="contact">Contact</a>
@@ -120,8 +155,26 @@
     </div>
     <nav class="mobile-nav">
       <a href="/home" onclick="navigate('home');toggleMobileMenu()" data-page="home">Home</a>
-      <a href="/shop" onclick="navigate('shop');toggleMobileMenu()" data-page="shop">Shop</a>
-      <a href="/brands" onclick="navigate('brands');toggleMobileMenu()" data-page="brands">Brands</a>
+      <div class="mobile-nav-item">
+        <a href="/shop" onclick="navigate('shop');toggleMobileMenu()" data-page="shop">Shop</a>
+        <div class="mobile-sub">
+          <a href="#" onclick="navigate('shop');toggleMobileMenu();setTimeout(()=>filterCategory('Shampoo'),100)" data-page="shop">Shampoo</a>
+          <a href="#" onclick="navigate('shop');toggleMobileMenu();setTimeout(()=>filterCategory('Mask'),100)" data-page="shop">Mask</a>
+          <a href="#" onclick="navigate('shop');toggleMobileMenu();setTimeout(()=>filterCategory('Treatment'),100)" data-page="shop">Treatment</a>
+          <a href="#" onclick="navigate('shop');toggleMobileMenu();setTimeout(()=>filterCategory('Serum'),100)" data-page="shop">Serum</a>
+          <a href="#" onclick="navigate('shop');toggleMobileMenu();setTimeout(()=>filterCategory('Styling'),100)" data-page="shop">Styling</a>
+          <a href="#" onclick="navigate('shop');toggleMobileMenu();setTimeout(()=>filterCategory('Kit'),100)" data-page="shop">Kits &amp; Sets</a>
+        </div>
+      </div>
+      <div class="mobile-nav-item">
+        <a href="/brands" onclick="navigate('brands');toggleMobileMenu()" data-page="brands">Brands</a>
+        <div class="mobile-sub">
+          <a href="#" onclick="navigate('shop');toggleMobileMenu();setTimeout(()=>filterBrand('Maxylook'),100)" data-page="shop">Maxylook</a>
+          <a href="#" onclick="navigate('shop');toggleMobileMenu();setTimeout(()=>filterBrand('Genus'),100)" data-page="shop">Genus</a>
+          <a href="#" onclick="navigate('shop');toggleMobileMenu();setTimeout(()=>filterBrand('Versum'),100)" data-page="shop">Versum</a>
+          <a href="#" onclick="navigate('shop');toggleMobileMenu();setTimeout(()=>filterBrand('UNA'),100)" data-page="shop">UNA</a>
+        </div>
+      </div>
       <a href="/about" onclick="navigate('about');toggleMobileMenu()" data-page="about">About</a>
       <a href="/blog" onclick="navigate('blog');toggleMobileMenu()" data-page="blog">Blog</a>
       <a href="/contact" onclick="navigate('contact');toggleMobileMenu()" data-page="contact">Contact</a>
