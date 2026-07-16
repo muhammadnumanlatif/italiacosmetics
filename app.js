@@ -1516,27 +1516,28 @@
       if (!container) return;
 
       try {
-        // Show skeleton while loading
-        container.innerHTML = `
-          <div class="product-details-layout fade-up" style="animation:none;opacity:1;">
-            <div class="product-details-img" style="background:var(--lavender);border-radius:var(--radius-lg);height:400px;display:flex;align-items:center;justify-content:center;">
-              <i class="fas fa-spinner fa-spin" style="font-size:48px;color:var(--purple);"></i>
-            </div>
-            <div class="product-details-info">
-              <div style="height:16px;background:#eee;border-radius:4px;width:100px;margin-bottom:12px;"></div>
-              <div style="height:32px;background:#eee;border-radius:4px;width:80%;margin-bottom:16px;"></div>
-              <div style="height:14px;background:#eee;border-radius:4px;width:120px;margin-bottom:20px;"></div>
-              <div style="height:28px;background:#eee;border-radius:4px;width:140px;margin-bottom:16px;"></div>
-              <div style="height:14px;background:#eee;border-radius:4px;width:100%;margin-bottom:8px;"></div>
-              <div style="height:14px;background:#eee;border-radius:4px;width:90%;margin-bottom:8px;"></div>
-            </div>
-          </div>`;
-
-        // Try local cache first, then fetch directly from WC API
         const idStr = String(id);
+
+        // Check local data first — skip skeleton if found instantly
         let p = products.find(prod => String(prod.id) === idStr) || fallbackProducts.find(prod => String(prod.id) === idStr);
 
         if (!p) {
+          // Show skeleton only when we need to wait for the API
+          container.innerHTML = `
+            <div class="product-details-layout fade-up" style="animation:none;opacity:1;">
+              <div class="product-details-img" style="background:var(--lavender);border-radius:var(--radius-lg);height:400px;display:flex;align-items:center;justify-content:center;">
+                <i class="fas fa-spinner fa-spin" style="font-size:48px;color:var(--purple);"></i>
+              </div>
+              <div class="product-details-info">
+                <div style="height:16px;background:#eee;border-radius:4px;width:100px;margin-bottom:12px;"></div>
+                <div style="height:32px;background:#eee;border-radius:4px;width:80%;margin-bottom:16px;"></div>
+                <div style="height:14px;background:#eee;border-radius:4px;width:120px;margin-bottom:20px;"></div>
+                <div style="height:28px;background:#eee;border-radius:4px;width:140px;margin-bottom:16px;"></div>
+                <div style="height:14px;background:#eee;border-radius:4px;width:100%;margin-bottom:8px;"></div>
+                <div style="height:14px;background:#eee;border-radius:4px;width:90%;margin-bottom:8px;"></div>
+              </div>
+            </div>`;
+
           try {
             const auth = btoa('admin:zDcn LLc9 ftiw o1Tf LiSb 71q5');
             const res = await fetch(WP.wc + '/products/' + id + '?_fields=id,name,description,price,attributes,images,categories,meta_data,total_sales', {
@@ -1568,7 +1569,6 @@
         }
 
         if (!p) {
-          // Last resort: search fallbackProducts
           p = fallbackProducts.find(prod => String(prod.id) === idStr);
         }
 
