@@ -1,4 +1,4 @@
-const CACHE_NAME = 'italia-v4';
+const CACHE_NAME = 'italia-v5';
 const ASSETS = [
   '/',
   '/index.html',
@@ -32,8 +32,8 @@ self.addEventListener('activate', (e) => {
 });
 
 self.addEventListener('fetch', (e) => {
-  // Network First for WP/WC API calls, Cache First for static assets
-  if (e.request.url.includes('/wp-json/') || e.request.url.includes('api.italiacosmetics.com')) {
+  // Network First for API, JS, CSS — always get latest code
+  if (e.request.url.includes('/wp-json/') || e.request.url.includes('api.italiacosmetics.com') || e.request.url.endsWith('/app.js') || e.request.url.endsWith('/style.css')) {
     e.respondWith(
       fetch(e.request).catch(() => caches.match(e.request))
     );
