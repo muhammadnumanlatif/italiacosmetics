@@ -522,7 +522,7 @@
       container.innerHTML = cart.map(item => `
         <div class="cart-drawer-item">
           <div class="cart-item-img">
-            ${item.img ? `<img src="${item.img}" alt="${item.name}">` : '<i class="fas fa-product-hunt"></i>'}
+            ${item.img ? `<img src="${item.img}" alt="${item.name}">` : '<i class="fas fa-gift"></i>'}
           </div>
           <div class="cart-item-info">
             <div class="cart-item-name">${item.name}</div>
@@ -539,14 +539,16 @@
       `).join('');
 
       footer.style.display = 'block';
-      totalEl.textContent = 'PKR ' + getCartTotal().toFixed(0);
+      const curr = cart[0]?.currency || 'PKR';
+      totalEl.textContent = curr + ' ' + getCartTotal().toFixed(0);
     }
 
     function updateCartUI() {
       const count = getCartCount();
       document.getElementById('cartCount').textContent = count;
       if (document.getElementById('cartDrawer').classList.contains('open')) renderCartDrawer();
-      if (document.getElementById('checkoutSummaryContainer')) renderCheckoutSummary();
+      const chkPage = document.getElementById('page-checkout');
+      if (chkPage && chkPage.classList.contains('active')) renderCheckout();
     }
 
     // ==================== WISHLIST ====================
@@ -820,7 +822,7 @@
       return `
     <div class="product-card fade-up ${delayClass}">
       <div class="product-card-img" style="cursor:pointer;" onclick="navigate('product-details', ${p.id})">
-        ${p.img ? `<img src="${p.img}" alt="${p.name}" style="width:100%;height:100%;object-fit:contain;position:absolute;top:0;left:0;z-index:1;mix-blend-mode:multiply;">` : `<i class="fas ${icon}"></i>`}
+        ${p.img ? `<img src="${p.img}" alt="${p.name}" style="width:100%;height:100%;object-fit:contain;position:absolute;top:0;left:0;z-index:1;">` : `<i class="fas ${icon}"></i>`}
         ${badgeHTML}
         <span class="brand-tag" style="z-index:2;">${p.brand}</span>
       </div>
@@ -1005,8 +1007,8 @@
         container.innerHTML = `
           <i class="fas fa-check-circle" style="font-size: 64px; color: var(--success); margin-bottom: 24px;"></i>
           <h2 style="font-family: 'Playfair Display', serif; margin-bottom: 16px;">Order Confirmed!</h2>
-          <p style="color: var(--text-light); margin-bottom: 8px;">Your order <strong>#${orderId}</strong> has been successfully placed.</p>
-          <p style="color: var(--text-light); margin-bottom: 32px; font-size: 14px;">We'll process it right away and contact you with shipping details.</p>
+          <p style="color: var(--muted); margin-bottom: 8px;">Your order <strong>#${orderId}</strong> has been successfully placed.</p>
+          <p style="color: var(--muted); margin-bottom: 32px; font-size: 14px;">We'll process it right away and contact you with shipping details.</p>
           <button class="btn btn-primary" style="width: 100%" onclick="navigate('home')">Continue Shopping</button>
         `;
       }

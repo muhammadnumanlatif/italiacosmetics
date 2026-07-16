@@ -1127,6 +1127,7 @@
       position: absolute;
       top: 10px;
       left: 10px;
+      z-index: 2;
       padding: 4px 10px;
       font-size: 9px;
       font-weight: 700;
