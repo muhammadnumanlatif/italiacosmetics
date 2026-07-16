@@ -1547,38 +1547,38 @@
         ? `<span class="orig" style="text-decoration:line-through;color:#999;font-size:1rem;margin-left:10px;">${p.currency} ${p.origPrice.toFixed(2)}</span>`
         : '';
       const priceDisplay = p.currency + ' ' + p.price.toFixed(2);
-      const badgeHTML = p.badge ? `<span class="badge-${p.badge}" style="display:inline-block;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700;text-transform:uppercase;margin-bottom:12px;background:var(--gold);color:#fff;">${p.badge === 'best' ? 'Best Seller' : p.badge === 'new' ? 'New Arrival' : p.badge}</span>` : '';
+      const badgeStyles = { 'best': 'background:var(--gold);color:var(--charcoal);', 'new': 'background:var(--purple);color:#fff;', 'sale': 'background:var(--pink);color:#fff;' };
+      const badgeLabels = { 'best': 'Best Seller', 'new': 'New Arrival', 'sale': 'Sale' };
+      const badgeHTML = p.badge ? `<span style="display:inline-block;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700;text-transform:uppercase;margin-bottom:12px;${badgeStyles[p.badge] || 'background:var(--gold);color:var(--charcoal);'}">${badgeLabels[p.badge] || p.badge}</span>` : '';
 
       container.innerHTML = `
         <div class="product-details-layout fade-up">
           <div class="product-details-img">
             ${p.img
-              ? `<img src="${p.img}" alt="${p.name}" style="width:100%;height:100%;object-fit:contain;border-radius:var(--radius-lg);">`
-              : `<div style="width:100%;height:400px;background:var(--lavender);border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:center;"><i class="fas ${icon}" style="font-size:100px;color:var(--purple);"></i></div>`
+              ? `<img src="${p.img}" alt="${p.name}" style="max-width:100%;max-height:360px;object-fit:contain;">`
+              : `<i class="fas ${icon}" style="font-size:100px;color:var(--purple);"></i>`
             }
           </div>
           <div class="product-details-info">
             ${badgeHTML}
-            <span class="brand" style="color:var(--purple);font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:1px;">${p.line || p.brand}</span>
-            <h1 style="font-family:var(--font-display);font-size:2rem;margin:8px 0 4px;color:var(--charcoal);">${p.name}</h1>
-            <p style="color:var(--muted);font-size:13px;margin-bottom:12px;">By <strong>${p.brand}</strong> &nbsp;|&nbsp; ${p.cat}</p>
-            <div class="stars" style="margin-bottom:16px;">${starsHTML}<span style="color:var(--muted);font-size:13px;margin-left:6px;">(${p.rating}.0)</span></div>
-            <div class="price" style="font-size:2rem;font-weight:700;color:var(--charcoal);margin-bottom:16px;">${priceDisplay}${origHTML}</div>
-            ${p.desc ? `<p style="color:var(--muted);line-height:1.7;margin-bottom:24px;font-size:14px;">${p.desc}</p>` : ''}
-            <div style="display:flex;gap:12px;flex-wrap:wrap;">
-              <button class="btn btn-primary" onclick="addToCart(${p.id})" style="flex:1;min-width:180px;">
+            <div class="brand">${p.line || p.brand}</div>
+            <h1>${p.name}</h1>
+            <p class="product-subtitle">By <strong>${p.brand}</strong> &nbsp;|&nbsp; ${p.cat}</p>
+            <div class="stars">${starsHTML}<span class="rating-num">(${p.rating}.0)</span></div>
+            <div class="price">${priceDisplay}${origHTML}</div>
+            ${p.desc ? `<p class="product-desc">${p.desc}</p>` : ''}
+            <div class="product-actions">
+              <button class="btn btn-primary" onclick="addToCart(${p.id})">
                 <i class="fas fa-shopping-bag"></i> Add to Cart
               </button>
-              <button class="btn btn-secondary" onclick="toggleWishlistItem(${p.id})" style="flex:0;">
+              <button class="btn btn-wishlist" onclick="toggleWishlistItem(${p.id})">
                 <i class="far fa-heart"></i>
               </button>
             </div>
-            <div style="margin-top:24px;padding:16px;background:var(--lavender);border-radius:var(--radius-md);">
-              <div style="display:flex;gap:24px;flex-wrap:wrap;font-size:13px;color:var(--muted);">
-                <span><i class="fas fa-truck" style="color:var(--purple);margin-right:6px;"></i>Free shipping over PKR 5,000</span>
-                <span><i class="fas fa-shield-alt" style="color:var(--purple);margin-right:6px;"></i>100% Authentic</span>
-                <span><i class="fas fa-undo" style="color:var(--purple);margin-right:6px;"></i>Easy returns</span>
-              </div>
+            <div class="product-usp">
+              <span><i class="fas fa-truck"></i>Free shipping over PKR 5,000</span>
+              <span><i class="fas fa-shield-alt"></i>100% Authentic</span>
+              <span><i class="fas fa-undo"></i>Easy returns</span>
             </div>
           </div>
         </div>`;
