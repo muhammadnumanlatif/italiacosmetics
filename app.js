@@ -761,6 +761,22 @@
       if (document.getElementById('page-' + page)) navigate(page, id);
     });
 
+    // Event delegation for product card, buttons, and navigation clicks
+    document.addEventListener('click', function(e) {
+      const addBtn = e.target.closest('[data-add-to-cart]');
+      if (addBtn) { addToCart(addBtn.getAttribute('data-add-to-cart')); return; }
+      const wishBtn = e.target.closest('[data-wishlist-toggle]');
+      if (wishBtn) { toggleWishlistItem(wishBtn.getAttribute('data-wishlist-toggle')); return; }
+      const navBtn = e.target.closest('[data-navigate]');
+      if (navBtn) { navigate(navBtn.getAttribute('data-navigate')); return; }
+      if (e.target.closest('button') || e.target.closest('.btn')) return;
+      const card = e.target.closest('[data-product-id]');
+      if (card) {
+        const id = card.getAttribute('data-product-id');
+        if (id) navigate('product-details', id);
+      }
+    });
+
     // Legacy hash support — convert to query param URL
     window.addEventListener('hashchange', () => {
       if (location.hash) {
@@ -821,14 +837,14 @@
       const priceDisplay = p.currency + ' ' + p.price.toFixed(2);
       return `
     <div class="product-card fade-up ${delayClass}">
-      <div class="product-card-img" style="cursor:pointer;" onclick="navigate('product-details', ${p.id})">
+      <div class="product-card-img" data-product-id="${p.id}" style="cursor:pointer;">
         ${p.img ? `<img src="${p.img}" alt="${p.name}" style="width:100%;height:100%;object-fit:contain;position:absolute;top:0;left:0;z-index:1;">` : `<i class="fas ${icon}"></i>`}
         ${badgeHTML}
         <span class="brand-tag" style="z-index:2;">${p.brand}</span>
       </div>
       <div class="product-card-body">
         <div class="product-card-brand">${p.line || p.brand}</div>
-        <div class="product-card-title" style="cursor:pointer;" onclick="navigate('product-details', ${p.id})">${p.name}</div>
+        <div class="product-card-title" data-product-id="${p.id}" style="cursor:pointer;">${p.name}</div>
         <div class="stars">${starsHTML}</div>
         <div class="product-card-price">${priceDisplay} ${origHTML}</div>
         <button class="btn btn-primary btn-sm" onclick="addToCart(${p.id})"><i class="fas fa-shopping-bag"></i> Add to Cart</button>
@@ -1480,113 +1496,137 @@
       const container = document.getElementById('productDetailsContainer');
       if (!container) return;
 
-      // Show skeleton while loading
-      container.innerHTML = `
-        <div class="product-details-layout fade-up" style="animation:none;opacity:1;">
-          <div class="product-details-img" style="background:var(--lavender);border-radius:var(--radius-lg);height:400px;display:flex;align-items:center;justify-content:center;">
-            <i class="fas fa-spinner fa-spin" style="font-size:48px;color:var(--purple);"></i>
-          </div>
-          <div class="product-details-info">
-            <div style="height:16px;background:#eee;border-radius:4px;width:100px;margin-bottom:12px;"></div>
-            <div style="height:32px;background:#eee;border-radius:4px;width:80%;margin-bottom:16px;"></div>
-            <div style="height:14px;background:#eee;border-radius:4px;width:120px;margin-bottom:20px;"></div>
-            <div style="height:28px;background:#eee;border-radius:4px;width:140px;margin-bottom:16px;"></div>
-            <div style="height:14px;background:#eee;border-radius:4px;width:100%;margin-bottom:8px;"></div>
-            <div style="height:14px;background:#eee;border-radius:4px;width:90%;margin-bottom:8px;"></div>
-          </div>
-        </div>`;
-
-      // Try local cache first, then fetch directly from WC API
-      let p = products.find(prod => String(prod.id) === String(id));
-
-      if (!p) {
-        try {
-          const auth = btoa('admin:zDcn LLc9 ftiw o1Tf LiSb 71q5');
-          const res = await fetch(WP.wc + '/products/' + id + '?_fields=id,name,description,price,attributes,images,categories,meta_data,total_sales', {
-            headers: { 'Authorization': 'Basic ' + auth }
-          });
-          if (res.ok) {
-            const wp = await res.json();
-            const attrs = {};
-            (wp.attributes || []).forEach(a => { attrs[a.name.toLowerCase()] = a.options?.[0] || ''; });
-            const cat = wp.categories?.[0]?.name || 'Product';
-            const catMap = { 'Shampoo': 'Shampoo', 'Mask': 'Mask', 'Treatment': 'Treatment', 'Serum': 'Serum', 'Styling': 'Styling', 'Kit': 'Kit' };
-            p = {
-              id: wp.id,
-              brand: attrs.brand || 'Italia Cosmetics',
-              name: wp.name || 'Product',
-              line: attrs.line || attrs.product_line || '',
-              desc: wp.description?.replace(/<[^>]*>/g, '') || '',
-              price: parseFloat(wp.price) || 0,
-              currency: (attrs.currency === '$' || attrs.currency === 'USD') ? 'PKR' : (attrs.currency || 'PKR'),
-              cat: catMap[cat] || cat,
-              badge: attrs.badge || '',
-              rating: parseInt(attrs.rating) || 5,
-              img: wp.images?.[0]?.src || '',
-              origPrice: attrs.orig_price ? parseFloat(attrs.orig_price) : null,
-              total_sales: parseInt(wp.total_sales) || 0
-            };
-          }
-        } catch (e) { console.warn('Direct product fetch failed:', e.message); }
-      }
-
-      if (!p) {
+      try {
+        // Show skeleton while loading
         container.innerHTML = `
-          <div style="text-align:center;padding:60px 20px;">
-            <i class="fas fa-box-open" style="font-size:64px;color:#ccc;margin-bottom:20px;"></i>
-            <h2 style="color:var(--charcoal);">Product Not Found</h2>
-            <p style="color:var(--muted);margin-bottom:24px;">This product may no longer be available.</p>
-            <button class="btn btn-primary" onclick="navigate('shop')">Browse All Products</button>
+          <div class="product-details-layout fade-up" style="animation:none;opacity:1;">
+            <div class="product-details-img" style="background:var(--lavender);border-radius:var(--radius-lg);height:400px;display:flex;align-items:center;justify-content:center;">
+              <i class="fas fa-spinner fa-spin" style="font-size:48px;color:var(--purple);"></i>
+            </div>
+            <div class="product-details-info">
+              <div style="height:16px;background:#eee;border-radius:4px;width:100px;margin-bottom:12px;"></div>
+              <div style="height:32px;background:#eee;border-radius:4px;width:80%;margin-bottom:16px;"></div>
+              <div style="height:14px;background:#eee;border-radius:4px;width:120px;margin-bottom:20px;"></div>
+              <div style="height:28px;background:#eee;border-radius:4px;width:140px;margin-bottom:16px;"></div>
+              <div style="height:14px;background:#eee;border-radius:4px;width:100%;margin-bottom:8px;"></div>
+              <div style="height:14px;background:#eee;border-radius:4px;width:90%;margin-bottom:8px;"></div>
+            </div>
           </div>`;
-        return;
-      }
 
-      const iconMap = { 'Shampoo': 'fa-wind', 'Mask': 'fa-spray-can', 'Treatment': 'fa-flask', 'Serum': 'fa-oil-can', 'Styling': 'fa-fill-drip', 'Kit': 'fa-box' };
-      const icon = iconMap[p.cat] || 'fa-product-hunt';
-      const starsHTML = Array.from({ length: 5 }, (_, i) => i < p.rating
-        ? '<i class="fas fa-star" style="color:var(--gold);"></i>'
-        : '<i class="far fa-star" style="color:#ddd;"></i>').join('');
-      const origHTML = p.origPrice
-        ? `<span class="orig" style="text-decoration:line-through;color:#999;font-size:1rem;margin-left:10px;">${p.currency} ${p.origPrice.toFixed(2)}</span>`
-        : '';
-      const priceDisplay = p.currency + ' ' + p.price.toFixed(2);
-      const badgeStyles = { 'best': 'background:var(--gold);color:var(--charcoal);', 'new': 'background:var(--purple);color:#fff;', 'sale': 'background:var(--pink);color:#fff;' };
-      const badgeLabels = { 'best': 'Best Seller', 'new': 'New Arrival', 'sale': 'Sale' };
-      const badgeHTML = p.badge ? `<span style="display:inline-block;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700;text-transform:uppercase;margin-bottom:12px;${badgeStyles[p.badge] || 'background:var(--gold);color:var(--charcoal);'}">${badgeLabels[p.badge] || p.badge}</span>` : '';
+        // Try local cache first, then fetch directly from WC API
+        const idStr = String(id);
+        let p = products.find(prod => String(prod.id) === idStr);
 
-      container.innerHTML = `
-        <div class="product-details-layout fade-up">
-          <div class="product-details-img">
-            ${p.img
-              ? `<img src="${p.img}" alt="${p.name}" style="max-width:100%;max-height:360px;object-fit:contain;">`
-              : `<i class="fas ${icon}" style="font-size:100px;color:var(--purple);"></i>`
+        if (!p) {
+          try {
+            const auth = btoa('admin:zDcn LLc9 ftiw o1Tf LiSb 71q5');
+            const res = await fetch(WP.wc + '/products/' + id + '?_fields=id,name,description,price,attributes,images,categories,meta_data,total_sales', {
+              headers: { 'Authorization': 'Basic ' + auth }
+            });
+            if (res.ok) {
+              const wp = await res.json();
+              const attrs = {};
+              (wp.attributes || []).forEach(a => { attrs[a.name.toLowerCase()] = a.options?.[0] || ''; });
+              const cat = wp.categories?.[0]?.name || 'Product';
+              const catMap = { 'Shampoo': 'Shampoo', 'Mask': 'Mask', 'Treatment': 'Treatment', 'Serum': 'Serum', 'Styling': 'Styling', 'Kit': 'Kit' };
+              p = {
+                id: wp.id,
+                brand: attrs.brand || 'Italia Cosmetics',
+                name: wp.name || 'Product',
+                line: attrs.line || attrs.product_line || '',
+                desc: wp.description?.replace(/<[^>]*>/g, '') || '',
+                price: parseFloat(wp.price) || 0,
+                currency: (attrs.currency === '$' || attrs.currency === 'USD') ? 'PKR' : (attrs.currency || 'PKR'),
+                cat: catMap[cat] || cat,
+                badge: attrs.badge || '',
+                rating: parseInt(attrs.rating) || 5,
+                img: wp.images?.[0]?.src || '',
+                origPrice: attrs.orig_price ? parseFloat(attrs.orig_price) : null,
+                total_sales: parseInt(wp.total_sales) || 0
+              };
             }
-          </div>
-          <div class="product-details-info">
-            ${badgeHTML}
-            <div class="brand">${p.line || p.brand}</div>
-            <h1>${p.name}</h1>
-            <p class="product-subtitle">By <strong>${p.brand}</strong> &nbsp;|&nbsp; ${p.cat}</p>
-            <div class="stars">${starsHTML}<span class="rating-num">(${p.rating}.0)</span></div>
-            <div class="price">${priceDisplay}${origHTML}</div>
-            ${p.desc ? `<p class="product-desc">${p.desc}</p>` : ''}
-            <div class="product-actions">
-              <button class="btn btn-primary" onclick="addToCart(${p.id})">
-                <i class="fas fa-shopping-bag"></i> Add to Cart
-              </button>
-              <button class="btn btn-wishlist" onclick="toggleWishlistItem(${p.id})">
-                <i class="far fa-heart"></i>
-              </button>
-            </div>
-            <div class="product-usp">
-              <span><i class="fas fa-truck"></i>Free shipping over PKR 5,000</span>
-              <span><i class="fas fa-shield-alt"></i>100% Authentic</span>
-              <span><i class="fas fa-undo"></i>Easy returns</span>
-            </div>
-          </div>
-        </div>`;
+          } catch (e) { console.warn('Direct product fetch failed:', e.message); }
+        }
 
-      updateMeta(p.name, p.desc || 'Premium professional cosmetics by Italia Cosmetics.');
+        if (!p) {
+          // Last resort: search fallbackProducts
+          p = fallbackProducts.find(prod => String(prod.id) === idStr);
+        }
+
+        if (!p) {
+          container.innerHTML = `
+            <div style="text-align:center;padding:60px 20px;">
+              <i class="fas fa-box-open" style="font-size:64px;color:#ccc;margin-bottom:20px;"></i>
+              <h2 style="color:var(--charcoal);">Product Not Found</h2>
+              <p style="color:var(--muted);margin-bottom:24px;">This product may no longer be available.</p>
+              <button class="btn btn-primary" data-navigate="shop" style="cursor:pointer;">Browse All Products</button>
+            </div>`;
+          return;
+        }
+
+        const iconMap = { 'Shampoo': 'fa-wind', 'Mask': 'fa-spray-can', 'Treatment': 'fa-flask', 'Serum': 'fa-oil-can', 'Styling': 'fa-fill-drip', 'Kit': 'fa-box' };
+        const icon = iconMap[p.cat] || 'fa-gift';
+        const starsHTML = Array.from({ length: 5 }, (_, i) => i < p.rating
+          ? '<i class="fas fa-star" style="color:var(--gold);"></i>'
+          : '<i class="far fa-star" style="color:#ddd;"></i>').join('');
+        const origHTML = p.origPrice
+          ? `<span class="orig" style="text-decoration:line-through;color:#999;font-size:1rem;margin-left:10px;">${p.currency} ${p.origPrice.toFixed(2)}</span>`
+          : '';
+        const priceDisplay = p.currency + ' ' + p.price.toFixed(2);
+        const badgeStyles = { 'best': 'background:var(--gold);color:var(--charcoal);', 'new': 'background:var(--purple);color:#fff;', 'sale': 'background:var(--pink);color:#fff;' };
+        const badgeLabels = { 'best': 'Best Seller', 'new': 'New Arrival', 'sale': 'Sale' };
+        const badgeHTML = p.badge ? `<span style="display:inline-block;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700;text-transform:uppercase;margin-bottom:12px;${badgeStyles[p.badge] || 'background:var(--gold);color:var(--charcoal);'}">${badgeLabels[p.badge] || p.badge}</span>` : '';
+
+        // Related products: same brand or same category, exclude current
+        const related = products
+          .filter(prod => String(prod.id) !== idStr && (prod.brand === p.brand || prod.cat === p.cat))
+          .slice(0, 4);
+        const relatedHTML = related.length
+          ? `<div class="related-products"><h3>Related Products</h3><div class="related-grid">${related.map(rp => `
+            <div class="related-card" data-product-id="${rp.id}" style="cursor:pointer;">
+              <div class="related-card-img">${rp.img ? `<img src="${rp.img}" alt="${rp.name}">` : `<i class="fas ${iconMap[rp.cat] || 'fa-gift'}"></i>`}</div>
+              <div class="related-card-info"><strong>${rp.name}</strong><span>${rp.currency} ${rp.price.toFixed(2)}</span></div>
+            </div>`).join('')}</div></div>`
+          : '';
+
+        container.innerHTML = `
+          <div class="product-details-layout fade-up">
+            <div class="product-details-img">
+              ${p.img
+                ? `<img src="${p.img}" alt="${p.name}" style="max-width:100%;max-height:360px;object-fit:contain;">`
+                : `<i class="fas ${icon}" style="font-size:100px;color:var(--purple);"></i>`
+              }
+            </div>
+            <div class="product-details-info">
+              ${badgeHTML}
+              <div class="brand">${p.line || p.brand}</div>
+              <h1>${p.name}</h1>
+              <p class="product-subtitle">By <strong>${p.brand}</strong> &nbsp;|&nbsp; ${p.cat}</p>
+              <div class="stars">${starsHTML}<span class="rating-num">(${p.rating}.0)</span></div>
+              <div class="price">${priceDisplay}${origHTML}</div>
+              ${p.desc ? `<p class="product-desc">${p.desc}</p>` : ''}
+              <div class="product-actions">
+                <button class="btn btn-primary" data-add-to-cart="${p.id}">
+                  <i class="fas fa-shopping-bag"></i> Add to Cart
+                </button>
+                <button class="btn btn-wishlist" data-wishlist-toggle="${p.id}">
+                  <i class="far fa-heart"></i>
+                </button>
+              </div>
+              <div class="product-usp">
+                <span><i class="fas fa-truck"></i>Free shipping over PKR 5,000</span>
+                <span><i class="fas fa-shield-alt"></i>100% Authentic</span>
+                <span><i class="fas fa-undo"></i>Easy returns</span>
+              </div>
+            </div>
+          </div>
+          ${relatedHTML}`;
+
+        updateMeta(p.name, p.desc || 'Premium professional cosmetics by Italia Cosmetics.');
+      } catch (e) {
+        console.error('renderProductDetails error:', e);
+        container.innerHTML = `<div style="text-align:center;padding:60px 20px;color:var(--pink-dark);"><p>Something went wrong loading this product.</p></div>`;
+      }
     }
 
     function renderSingleBlog(id) {
