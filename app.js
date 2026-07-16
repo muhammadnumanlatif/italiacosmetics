@@ -756,7 +756,11 @@
       if (page === 'about') { if (typeof fetchAbout === 'function') fetchAbout(); }
       if (page === 'blog') { if (typeof fetchBlogPosts === 'function') fetchBlogPosts(); }
       if (page === 'contact') { if (typeof renderFaqs === 'function') renderFaqs(); }
-      if (page === 'product-details' && id) { if (typeof renderProductDetails === 'function') renderProductDetails(id); }
+      if (page === 'product-details' && id) {
+        const pdcont = document.getElementById('productDetailsContainer');
+        if (pdcont) pdcont.innerHTML = `<div class="product-details-loading"><i class="fas fa-spinner fa-spin"></i></div>`;
+        if (typeof renderProductDetails === 'function') renderProductDetails(id);
+      }
       if (page === 'single-blog' && id) { if (typeof renderSingleBlog === 'function') renderSingleBlog(id); }
       
       let url = '/';
