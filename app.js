@@ -105,7 +105,9 @@
       // ── After products load, render detail page if user landed directly on it ──
       const _activeDetail = document.getElementById('page-product-details');
       if (_activeDetail && _activeDetail.classList.contains('active')) {
-        const _id = new URLSearchParams(location.search).get('id');
+        const _hashDetail = location.hash.replace('#', '');
+        const _queryDetail = _hashDetail.includes('?') ? _hashDetail.split('?')[1] : location.search.replace('?', '');
+        const _id = new URLSearchParams(_queryDetail).get('id');
         if (_id) renderProductDetails(_id);
       }
     }
@@ -527,7 +529,7 @@
           <div class="cart-item-info">
             <div class="cart-item-name">${item.name}</div>
             <div class="cart-item-brand">${item.brand}</div>
-            <div class="cart-item-price">${item.currency} ${(item.price * item.qty).toFixed(item.price % 1 === 0 && item.price >= 100 ? 0 : 2)}</div>
+            <div class="cart-item-price">${item.currency} ${(item.price * item.qty).toFixed(2)}</div>
             <div class="cart-item-actions">
               <button class="cart-qty-btn" onclick="updateCartQty(${item.id}, -1)">−</button>
               <span class="cart-qty">${item.qty}</span>
@@ -602,7 +604,7 @@
           <div class="cart-item-info">
             <div class="cart-item-name">${item.name}</div>
             <div class="cart-item-brand">${item.brand}</div>
-            <div class="cart-item-price">${item.currency} ${(item.price % 1 === 0 ? item.price.toFixed(item.price < 100 ? 3 : 0) : item.price.toFixed(2))}</div>
+            <div class="cart-item-price">${item.currency} ${item.price.toFixed(2)}</div>
           </div>
           <div style="display:flex;flex-direction:column;gap:4px">
             <button class="cart-item-remove" onclick="toggleWishlistItem(${item.id});renderWishlistDrawer()" title="Remove"><i class="fas fa-trash-alt"></i></button>
@@ -721,7 +723,7 @@
       if (!target) { window.location.hash = ''; return false; }
       target.classList.add('active');
       document.querySelectorAll('.nav a, .mobile-nav a').forEach(a => a.classList.remove('active'));
-      document.querySelectorAll('.nav a[href="/' + page + '"], .mobile-nav a[href="/' + page + '"]').forEach(a => a.classList.add('active'));
+      document.querySelectorAll('.nav a[data-page="' + page + '"], .mobile-nav a[data-page="' + page + '"]').forEach(a => a.classList.add('active'));
       window.scrollTo({ top: 0, behavior: 'smooth' });
       if (page === 'shop') renderShop();
       if (page === 'home') renderBestSellers();
@@ -733,30 +735,42 @@
       if (page === 'product-details' && id) { if (typeof renderProductDetails === 'function') renderProductDetails(id); }
       if (page === 'single-blog' && id) { if (typeof renderSingleBlog === 'function') renderSingleBlog(id); }
       
-      let url = '/' + page;
-      if (page === 'home') url = '/';
-      if (id) url += '?id=' + id;
-      
-      if (location.pathname + location.search !== url) history.pushState(null, '', url);
+      let hash = page;
+      if (id) hash += '?id=' + id;
+      const newHash = '#' + hash;
+      if (location.hash !== newHash) {
+        if (page === 'home' && !id) {
+          if (location.hash) history.pushState(null, '', '/');
+        } else {
+          location.hash = hash;
+        }
+      }
       return false;
     }
 
     window.addEventListener('popstate', () => {
-      const path = location.pathname.replace('/', '') || 'home';
-      const urlParams = new URLSearchParams(location.search);
-      const id = urlParams.get('id');
-      if (document.getElementById('page-' + path)) navigate(path, id);
+      const hash = location.hash.replace('#', '') || 'home';
+      const [hashPage, hashQuery] = hash.split('?');
+      const params = new URLSearchParams(hashQuery || '');
+      const id = params.get('id');
+      if (document.getElementById('page-' + hashPage)) navigate(hashPage, id);
     });
 
     window.addEventListener('hashchange', () => {
-      const page = location.hash.replace('#', '') || 'home';
-      if (document.getElementById('page-' + page)) navigate(page);
+      const hash = location.hash.replace('#', '') || 'home';
+      const [hashPage, hashQuery] = hash.split('?');
+      const params = new URLSearchParams(hashQuery || '');
+      const id = params.get('id');
+      if (document.getElementById('page-' + hashPage)) navigate(hashPage, id);
     });
 
     // Initial hash-based navigation
     if (location.hash) {
-      const page = location.hash.replace('#', '') || 'home';
-      if (document.getElementById('page-' + page)) setTimeout(() => navigate(page), 50);
+      const hash = location.hash.replace('#', '');
+      const [hashPage, hashQuery] = hash.split('?');
+      const params = new URLSearchParams(hashQuery || '');
+      const id = params.get('id');
+      if (document.getElementById('page-' + hashPage)) setTimeout(() => navigate(hashPage, id), 50);
     }
 
     function toggleMobileMenu() {
@@ -798,8 +812,8 @@
       };
       const badgeHTML = p.badge && badges[p.badge] ? badges[p.badge] : '';
       const starsHTML = Array.from({ length: 5 }, (_, i) => i < p.rating ? '<i class="fas fa-star"></i>' : '<i class="fas fa-star empty"></i>').join('');
-      const origHTML = p.origPrice ? `<span class="orig">${p.currency} ${p.origPrice.toFixed(p.origPrice % 1 === 0 ? 0 : 2)}</span>` : '';
-      const priceDisplay = p.currency + ' ' + (p.price % 1 === 0 ? p.price.toFixed(p.price < 100 ? 3 : 0) : p.price.toFixed(2));
+      const origHTML = p.origPrice ? `<span class="orig">${p.currency} ${p.origPrice.toFixed(2)}</span>` : '';
+      const priceDisplay = p.currency + ' ' + p.price.toFixed(2);
       return `
     <div class="product-card fade-up ${delayClass}">
       <div class="product-card-img" style="cursor:pointer;" onclick="navigate('product-details', ${p.id})">
@@ -1426,9 +1440,11 @@
       renderTestimonials();
       renderBlog();
 
-      // ── Resolve starting page from pathname + query params ──
-      const _initPath = location.pathname.replace(/^\//, '') || 'home';
-      const _initParams = new URLSearchParams(location.search);
+      // ── Resolve starting page from hash ──
+      const _initHash = location.hash.replace('#', '') || '';
+      const [_initPathRaw, _initQueryRaw] = _initHash.split('?');
+      const _initPath = _initPathRaw || location.pathname.replace(/^\//, '') || 'home';
+      const _initParams = new URLSearchParams(_initQueryRaw || location.search.replace('?', ''));
       const _initId = _initParams.get('id');
       const _initPageEl = document.getElementById('page-' + _initPath);
 
@@ -1436,11 +1452,6 @@
         // Activate the correct page immediately (before async fetch)
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         _initPageEl.classList.add('active');
-      } else if (location.hash) {
-        // Legacy hash-based routing fallback
-        const hashPage = location.hash.replace('#', '');
-        const hashEl = document.getElementById('page-' + hashPage);
-        if (hashEl) { document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); hashEl.classList.add('active'); }
       }
 
       // Fetch products — detail rendering happens inside fetchProducts() after data is ready
@@ -1533,9 +1544,9 @@
         ? '<i class="fas fa-star" style="color:var(--gold);"></i>'
         : '<i class="far fa-star" style="color:#ddd;"></i>').join('');
       const origHTML = p.origPrice
-        ? `<span class="orig" style="text-decoration:line-through;color:#999;font-size:1rem;margin-left:10px;">${p.currency} ${p.origPrice.toFixed(p.origPrice % 1 === 0 ? 0 : 2)}</span>`
+        ? `<span class="orig" style="text-decoration:line-through;color:#999;font-size:1rem;margin-left:10px;">${p.currency} ${p.origPrice.toFixed(2)}</span>`
         : '';
-      const priceDisplay = p.currency + ' ' + (p.price % 1 === 0 ? p.price.toFixed(p.price < 100 ? 3 : 0) : p.price.toFixed(2));
+      const priceDisplay = p.currency + ' ' + p.price.toFixed(2);
       const badgeHTML = p.badge ? `<span class="badge-${p.badge}" style="display:inline-block;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700;text-transform:uppercase;margin-bottom:12px;background:var(--gold);color:#fff;">${p.badge === 'best' ? 'Best Seller' : p.badge === 'new' ? 'New Arrival' : p.badge}</span>` : '';
 
       container.innerHTML = `
