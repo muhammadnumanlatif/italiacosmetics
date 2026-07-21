@@ -813,9 +813,9 @@
 
     /* Hero */
     .hero {
-      background: linear-gradient(135deg, var(--lavender) 0%, #F0E8F8 50%, var(--white) 100%);
+      background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url('hero_section_background.png') center/cover no-repeat;
       padding: var(--spacing-xl) 0;
-      overflow: hidden
+      overflow: hidden;
     }
 
     .hero-grid {
