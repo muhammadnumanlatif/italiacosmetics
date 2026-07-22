@@ -1,6 +1,22 @@
 # Italia Cosmetics - AI Context
 
-Welcome to the LLM index for Italia Cosmetics. We are a premium beauty supplier specializing in Genus, Versum, Maxylook, and UNA.
+Welcome to the LLM index for Italia Cosmetics. We are the premier online destination for professional haircare and skincare in Pakistan, specializing in world-renowned salon-grade brands including Genus, Versum, Maxylook, and UNA (Rolland USA).
+
+## Company Overview & Value Proposition
+- **Authenticity**: 100% genuine products sourced directly from manufacturers.
+- **Audience**: Professional salons and discerning individuals seeking salon-quality results at home.
+- **Mission**: To bring the world's finest professional haircare science to your door.
+
+## Customer Service & Policies
+- **Shipping**: We offer FREE shipping on all orders over 5000 PKR. Use code ITALIA10 at checkout.
+- **Support**: Customers can track their orders and access help directly through our website.
+- **Availability**: Our premium collections are designed to address specific hair needs, from color protection to deep hydration and scalp care.
+
+## Frequently Asked Questions (FAQ)
+- **Q: Are these products authentic?** A: Yes, all products are 100% authentic professional-grade cosmetics.
+- **Q: Do you offer free shipping?** A: Yes, on orders over 5000 PKR using the code ITALIA10.
+- **Q: What brands do you carry?** A: We exclusively carry Maxylook, Genus, Versum, and UNA.
+
 
 ## Products
 - **SCULPTING GLAZE- UNA styling** (Category: Product) - PKR 25727.702000000005
