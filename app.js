@@ -818,15 +818,22 @@
     }
 
     function toggleMobileMenu() {
-      document.getElementById('mobileMenu').classList.toggle('open');
+      const menu = document.getElementById('mobileMenu');
+      const open = !menu.classList.contains('open');
+      menu.classList.toggle('open', open);
+      document.body.style.overflow = open ? 'hidden' : '';
     }
 
     function toggleShopSidebar() {
-      document.getElementById('shopSidebar').classList.toggle('open');
-      document.getElementById('sidebarOverlay').classList.toggle('open');
+      const sidebar = document.getElementById('shopSidebar');
+      const overlay = document.getElementById('sidebarOverlay');
+      const open = !sidebar.classList.contains('open');
+      sidebar.classList.toggle('open', open);
+      overlay.classList.toggle('open', open);
+      document.body.style.overflow = open && window.innerWidth < 768 ? 'hidden' : '';
       const closeBtn = document.querySelector('.sidebar-close-btn');
       if (closeBtn) {
-        closeBtn.style.display = document.getElementById('shopSidebar').classList.contains('open') && window.innerWidth < 768 ? 'block' : 'none';
+        closeBtn.style.display = open && window.innerWidth < 768 ? 'block' : 'none';
       }
     }
 
@@ -1048,6 +1055,7 @@
     function closeShopSidebar() {
       document.getElementById('shopSidebar').classList.remove('open');
       document.getElementById('sidebarOverlay').classList.remove('open');
+      document.body.style.overflow = '';
     }
 
     function renderThankYou(orderId) {
