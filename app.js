@@ -483,6 +483,15 @@
       saveCart();
       updateCartUI();
       showToast(p.name + ' added to cart!');
+      if (typeof fbq === 'function') {
+        fbq('track', 'AddToCart', {
+          content_ids: [String(p.id)],
+          content_name: p.name,
+          content_type: 'product',
+          value: p.price,
+          currency: p.currency || 'PKR'
+        });
+      }
     }
 
     function removeFromCart(id) {
@@ -741,6 +750,7 @@
       if (pageTitles[page]) {
         updateMeta(pageTitles[page], 'Discover ' + pageTitles[page] + ' at Italia Cosmetics.');
       }
+      if (typeof fbq === 'function') fbq('track', 'PageView');
 
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
       const target = document.getElementById('page-' + page);
@@ -751,7 +761,18 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
       if (page === 'shop') renderShop();
       if (page === 'home') renderBestSellers();
-      if (page === 'checkout') renderCheckout();
+      if (page === 'checkout') {
+        renderCheckout();
+        if (typeof fbq === 'function' && cart.length) {
+          fbq('track', 'InitiateCheckout', {
+            content_ids: cart.map(item => String(item.id)),
+            content_type: 'product',
+            num_items: getCartCount(),
+            value: getCartTotal(),
+            currency: cart[0].currency || 'PKR'
+          });
+        }
+      }
       if (page === 'brands') { if (typeof renderBrandCards === 'function' && window.wpBrands) renderBrandCards(); else fetchBrands(); }
       if (page === 'about') { if (typeof fetchAbout === 'function') fetchAbout(); }
       if (page === 'blog') { if (typeof fetchBlogPosts === 'function') fetchBlogPosts(); }
@@ -1242,6 +1263,15 @@
         if (res.ok && result.id) {
           msg.className = 'checkout-msg success';
           msg.textContent = 'Order placed successfully!';
+          if (typeof fbq === 'function') {
+            fbq('track', 'Purchase', {
+              content_ids: cart.map(item => String(item.id)),
+              content_type: 'product',
+              num_items: getCartCount(),
+              value: subtotal + shipping,
+              currency: cart[0].currency || 'PKR'
+            }, { eventID: 'order_' + result.id });
+          }
           cart = [];
           saveCart();
           updateCartUI();
@@ -1665,6 +1695,15 @@
           ${relatedHTML}`;
 
         updateMeta(p.name, p.desc || 'Premium professional cosmetics by Italia Cosmetics.');
+        if (typeof fbq === 'function') {
+          fbq('track', 'ViewContent', {
+            content_ids: [String(p.id)],
+            content_name: p.name,
+            content_type: 'product',
+            value: p.price,
+            currency: p.currency || 'PKR'
+          });
+        }
       } catch (e) {
         console.error('renderProductDetails error:', e);
         container.innerHTML = `<div style="text-align:center;padding:60px 20px;color:var(--pink-dark);"><p>Something went wrong loading this product.</p></div>`;
