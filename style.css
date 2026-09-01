@@ -2672,12 +2672,130 @@
 .single-blog-img { width: 100%; height: 400px; border-radius: var(--radius-lg); object-fit: cover; margin-bottom: 40px; box-shadow: var(--shadow-sm); }
 .single-blog-content { font-size: 1.1rem; line-height: 1.8; color: #444; }
 .single-blog-content p { margin-bottom: 20px; }
-.single-blog-content h2, .single-blog-content h3 { color: var(--purple-dark); margin-top: 40px; margin-bottom: 20px; }
+.single-blog-content h2, .single-blog-content h3 { color: var(--purple-dark); margin-top: 40px; margin-bottom: 20px; font-family: var(--font-display); }
+.single-blog-content h2 { font-size: 1.85rem; border-bottom: 2px solid var(--hairline); padding-bottom: 10px; }
+.single-blog-content h3 { font-size: 1.35rem; color: var(--purple); }
+.single-blog-content ul, .single-blog-content ol { margin-bottom: 24px; padding-left: 28px; line-height: 1.8; }
+.single-blog-content li { margin-bottom: 8px; }
+
+/* Editorial Custom Components */
+.blog-highlight-box {
+  background: var(--lavender);
+  border-left: 4px solid var(--purple);
+  padding: 24px 28px;
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  margin: 32px 0;
+}
+.blog-highlight-box h4 {
+  color: var(--purple-dark);
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.blog-highlight-box ul {
+  margin-bottom: 0;
+  padding-left: 20px;
+}
+
+.blog-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 32px 0;
+  font-size: 0.95rem;
+  background: var(--white);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--hairline);
+}
+.blog-table th {
+  background: var(--purple-dark);
+  color: var(--white);
+  padding: 14px 18px;
+  text-align: left;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+.blog-table td {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--hairline);
+  color: #444;
+  vertical-align: top;
+}
+.blog-table tr:last-child td {
+  border-bottom: none;
+}
+.blog-table tr:nth-child(even) {
+  background: #FAF8FD;
+}
+
+.blog-step-card {
+  display: flex;
+  gap: 20px;
+  background: var(--white);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-md);
+  padding: 20px 24px;
+  margin: 20px 0;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.blog-step-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+.blog-step-number {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--purple), var(--purple-dark));
+  color: var(--white);
+  font-weight: 700;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.blog-step-info h4 {
+  margin: 0 0 8px 0;
+  color: var(--purple-dark);
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+}
+.blog-step-info p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #555;
+  line-height: 1.6;
+}
+
+.blog-faq-item {
+  background: var(--white);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-md);
+  padding: 20px 24px;
+  margin: 16px 0;
+}
+.blog-faq-item h3 {
+  margin-top: 0 !important;
+  margin-bottom: 8px !important;
+  font-size: 1.15rem;
+  color: var(--purple-dark);
+}
+.blog-faq-item p {
+  margin-bottom: 0 !important;
+  font-size: 0.95rem;
+  color: #555;
+}
 
 .related-products { margin-top: 60px; padding-top: 40px; border-top: 1px solid var(--hairline); }
 .related-products h3 { font-family: var(--font-display); font-size: 1.5rem; margin-bottom: 24px; color: var(--charcoal); }
 .related-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--spacing-sm); }
-@media(max-width:768px) { .related-grid { grid-template-columns: repeat(2, 1fr); } }
+@media(max-width:768px) { .related-grid { grid-template-columns: repeat(2, 1fr); } .blog-step-card { flex-direction: column; } }
 .related-card { background: var(--white); border: 1px solid var(--hairline); border-radius: var(--radius-md); overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
 .related-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
 .related-card-img { height: 140px; background: var(--lavender); display: flex; align-items: center; justify-content: center; padding: 12px; }
