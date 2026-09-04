@@ -3533,6 +3533,7 @@
             currency: p.currency || 'PKR'
           });
         }
+        observeDynamicContent();
       } catch (e) {
         console.error('renderProductDetails error:', e);
         container.innerHTML = `<div style="text-align:center;padding:60px 20px;color:var(--pink-dark);"><p>Something went wrong loading this product.</p></div>`;
@@ -3583,6 +3584,7 @@
         </div>
       `;
       updateMeta(p.title, p.excerpt);
+      observeDynamicContent();
     }
 
     if ('serviceWorker' in navigator) {
