@@ -2224,6 +2224,24 @@
       return cart.reduce((sum, item) => sum + item.qty, 0);
     }
 
+    // One product per brand, best-selling first, for the empty-cart suggestion strip.
+    function getCartSuggestions(n) {
+      const seenBrands = new Set();
+      const picks = [];
+      const byBestSelling = [...products].sort((a, b) => b.total_sales - a.total_sales);
+      for (const p of byBestSelling) {
+        if (picks.length >= n) break;
+        if (p.img && !seenBrands.has(p.brand)) { picks.push(p); seenBrands.add(p.brand); }
+      }
+      if (picks.length < n) {
+        for (const p of products) {
+          if (picks.length >= n) break;
+          if (p.img && !picks.includes(p)) picks.push(p);
+        }
+      }
+      return picks;
+    }
+
     function toggleCart() {
       const drawer = document.getElementById('cartDrawer');
       const overlay = document.getElementById('cartOverlay');
@@ -2240,7 +2258,29 @@
       const totalEl = document.getElementById('cartTotal');
 
       if (!cart.length) {
-        container.innerHTML = '<div class="cart-drawer-empty"><i class="fas fa-shopping-bag"></i><p>Your cart is empty</p></div>';
+        const suggestions = getCartSuggestions(3);
+        const suggestionsHTML = suggestions.length ? `
+          <div class="cart-suggestions">
+            <p class="cart-suggestions-label">You Might Like</p>
+            ${suggestions.map((p, i) => `
+              <div class="cart-suggestion-card" style="animation-delay:${(0.32 + i * 0.08).toFixed(2)}s" role="button" tabindex="0" onclick="toggleCart();navigate('product-details', ${p.id})">
+                <div class="cart-suggestion-img">${p.img ? `<img src="${p.img}" alt="${escapeHtml(p.name)}" loading="lazy" decoding="async">` : '<i class="fas fa-gift"></i>'}</div>
+                <div class="cart-suggestion-info">
+                  <div class="cart-suggestion-name">${escapeHtml(p.name)}</div>
+                  <div class="cart-suggestion-price">${p.currency} ${formatAmount(p.price)}</div>
+                </div>
+                <button class="cart-suggestion-add" onclick="event.stopPropagation();addToCart(${p.id})" aria-label="Add ${escapeHtml(p.name)} to cart"><i class="fas fa-plus"></i></button>
+              </div>
+            `).join('')}
+          </div>` : '';
+        container.innerHTML = `
+          <div class="cart-drawer-empty">
+            <div class="cart-empty-icon"><i class="fas fa-shopping-bag"></i></div>
+            <h4 class="cart-empty-title">Your cart is empty</h4>
+            <p class="cart-empty-copy">Add a few salon-grade favorites and they'll show up right here.</p>
+            <button class="btn btn-primary btn-sm cart-empty-cta" onclick="toggleCart();navigate('shop')">Start Shopping</button>
+            ${suggestionsHTML}
+          </div>`;
         footer.style.display = 'none';
         return;
       }

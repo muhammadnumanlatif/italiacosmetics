@@ -443,14 +443,175 @@
 
     .cart-drawer-empty {
       text-align: center;
-      padding: var(--spacing-xl);
+      padding: 40px 24px 24px;
       color: var(--muted)
     }
 
-    .cart-drawer-empty i {
+    /* Used by the wishlist drawer's empty state (bare icon, no wrapper).
+       The cart's own empty state uses .cart-empty-icon below instead. */
+    .cart-drawer-empty > i {
       font-size: 48px;
       margin-bottom: var(--spacing-xs);
       opacity: 0.3
+    }
+
+    .cart-empty-icon {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 20px;
+      border-radius: 50%;
+      background: var(--lavender);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      color: var(--purple);
+      animation: cartEmptyPop 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    .cart-empty-title {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--charcoal);
+      margin-bottom: 6px;
+      opacity: 0;
+      animation: cartEmptyRise 0.45s ease-out 0.16s both;
+    }
+
+    .cart-empty-copy {
+      font-size: 13px;
+      line-height: 1.5;
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: cartEmptyRise 0.45s ease-out 0.22s both;
+    }
+
+    .cart-empty-cta {
+      opacity: 0;
+      animation: cartEmptyRise 0.45s ease-out 0.28s both;
+    }
+
+    @keyframes cartEmptyPop {
+      0% { transform: scale(0.5); opacity: 0 }
+      100% { transform: scale(1); opacity: 1 }
+    }
+
+    @keyframes cartEmptyRise {
+      from { opacity: 0; transform: translateY(8px) }
+      to { opacity: 1; transform: translateY(0) }
+    }
+
+    .cart-suggestions {
+      margin-top: 32px;
+      padding-top: 20px;
+      border-top: 1px solid var(--hairline);
+      text-align: left;
+      opacity: 0;
+      animation: cartEmptyRise 0.4s ease-out 0.3s both;
+    }
+
+    .cart-suggestions-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: var(--muted);
+      margin-bottom: 10px
+    }
+
+    .cart-suggestion-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px;
+      margin: 0 -8px;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      opacity: 0;
+      animation: cartEmptyRise 0.4s ease-out both;
+      transition: background 0.15s;
+    }
+
+    .cart-suggestion-card:hover, .cart-suggestion-card:focus-visible {
+      background: var(--lavender);
+      outline: none;
+    }
+
+    .cart-suggestion-img {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-sm);
+      background: var(--lavender);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0
+    }
+
+    .cart-suggestion-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain
+    }
+
+    .cart-suggestion-img i {
+      font-size: 17px;
+      color: var(--purple);
+      opacity: 1
+    }
+
+    .cart-suggestion-info {
+      flex: 1;
+      min-width: 0
+    }
+
+    .cart-suggestion-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--charcoal);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis
+    }
+
+    .cart-suggestion-price {
+      font-size: 12px;
+      color: var(--purple);
+      font-weight: 600;
+      margin-top: 2px
+    }
+
+    .cart-suggestion-add {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 1px solid var(--hairline);
+      background: var(--white);
+      color: var(--purple);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      font-size: 12px;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+
+    .cart-suggestion-add:hover {
+      background: var(--purple);
+      color: var(--white);
+      border-color: var(--purple)
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .cart-empty-icon, .cart-empty-title, .cart-empty-copy, .cart-empty-cta,
+      .cart-suggestions, .cart-suggestion-card {
+        animation: none;
+        opacity: 1;
+        transform: none;
+      }
     }
 
     .cart-drawer-item {
