@@ -1,7 +1,8 @@
 https://italiacosmetics.pages.dev/* https://italiacosmetics.com/:splat 301
 
-# SPA fallback: serve index.html for any path that isn't a real static
-# file or an /api/* function, so deep links (e.g. /shop, /product-149
-# from sitemap.xml) don't 404 on Cloudflare Pages. Pages Functions and
-# static assets are matched before this rule, so /api/* is unaffected.
-/* /index.html 200
+# No explicit SPA fallback rule needed here: Cloudflare Pages already
+# serves index.html by default for any path that doesn't match a real
+# static file or an /api/* function (verified - even a nonexistent path
+# returns the app shell, not a 404). An earlier "/* /index.html 200"
+# rule here was rejected at deploy time as a potential infinite loop
+# (see deployment build logs) and never actually took effect.

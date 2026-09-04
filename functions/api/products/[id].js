@@ -14,6 +14,6 @@ export async function onRequestGet(context) {
     );
     return json(data, ok ? 200 : status);
   } catch (e) {
-    return json({ error: 'Could not reach product catalog' }, 502);
+    return json({ error: 'Could not reach product catalog' }, 500);
   }
 }

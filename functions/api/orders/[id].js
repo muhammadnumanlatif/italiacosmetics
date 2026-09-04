@@ -22,6 +22,6 @@ export async function onRequestGet(context) {
     }
     return json({ id: data.id, status: data.status, total: data.total, currency: data.currency });
   } catch (e) {
-    return json({ error: 'Could not look up order' }, 502);
+    return json({ error: 'Could not look up order' }, 500);
   }
 }

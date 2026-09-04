@@ -33,6 +33,6 @@ export async function onRequestGet(context) {
 
     return json(all);
   } catch (e) {
-    return json({ error: 'Could not reach product catalog' }, 502);
+    return json({ error: 'Could not reach product catalog' }, 500);
   }
 }

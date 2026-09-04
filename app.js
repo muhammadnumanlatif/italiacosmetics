@@ -170,7 +170,7 @@
       try {
         const data = await wpFetch('/posts?per_page=10&_fields=id,title,content,excerpt,date,_links');
         if (data && data.length) {
-          window.wpBlogPosts = data.map(p => ({
+          const livePosts = data.map(p => ({
             id: p.id,
             title: p.title?.rendered || '',
             content: p.content?.rendered || '',
@@ -180,6 +180,16 @@
             gradient: ['linear-gradient(135deg,var(--purple),var(--purple-dark))', 'linear-gradient(135deg,var(--pink),var(--pink-dark))', 'linear-gradient(135deg,var(--gold),var(--gold-light))', 'linear-gradient(135deg,var(--charcoal),var(--charcoal-soft))'][Math.floor(Math.random() * 4)],
             icon: ['fa-wind','fa-oil-can','fa-leaf','fa-shield-alt'][Math.floor(Math.random() * 4)]
           }));
+          // Merge with local posts rather than replacing them outright — several
+          // local posts are richer, expanded versions of the same articles that
+          // also exist as thin stubs on the live WP backend (same title). Prefer
+          // the local version on a title match, and always keep local-only posts
+          // (e.g. the SEO batch that was never published to WP) rather than
+          // letting a successful-but-partial WP fetch make them disappear.
+          const localTitles = new Set(fallbackBlogPosts.map(p => p.title.trim().toLowerCase()));
+          const distinctLive = livePosts.filter(p => !localTitles.has(p.title.trim().toLowerCase()));
+          window.wpBlogPosts = [...fallbackBlogPosts, ...distinctLive]
+            .sort((a, b) => new Date(b.date) - new Date(a.date));
           renderBlog();
           // Handle direct URL access to /single-blog?id=X
           if (window._pendingSingleBlogId) {

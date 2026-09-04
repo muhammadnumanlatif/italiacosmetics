@@ -18,6 +18,6 @@ export async function onRequestPost(context) {
     });
     return json(data, ok ? 200 : status);
   } catch (e) {
-    return json({ error: 'Could not create account' }, 502);
+    return json({ error: 'Could not create account' }, 500);
   }
 }

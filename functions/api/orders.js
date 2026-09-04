@@ -27,6 +27,6 @@ export async function onRequestPost(context) {
     });
     return json(data, ok ? 200 : status);
   } catch (e) {
-    return json({ error: 'Could not place order' }, 502);
+    return json({ error: 'Could not place order' }, 500);
   }
 }
