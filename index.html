@@ -476,6 +476,13 @@
               </div>
               <button class="btn btn-secondary btn-sm" style="width:100%" onclick="clearFilters()">Clear All
                 Filters</button>
+              <div style="margin-top:var(--spacing-md);padding-top:var(--spacing-sm);border-top:1px solid var(--hairline)">
+                <h4 style="margin-bottom:8px;">Explore More</h4>
+                <a href="/brands" onclick="return navigate('brands')" style="display:block;font-size:13px;font-weight:600;color:var(--purple);margin-bottom:8px;">Meet Our Brands <i class="fas fa-arrow-right" style="font-size:11px;"></i></a>
+                <p style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:6px;">From the Blog</p>
+                <a href="/post-202" onclick="return navigate('single-blog', 202)" style="display:block;font-size:13px;color:var(--charcoal);margin-bottom:4px;">Sulfate-Free Shampoo: The Complete Guide</a>
+                <a href="/post-205" onclick="return navigate('single-blog', 205)" style="display:block;font-size:13px;color:var(--charcoal);">Hair Growth Actives Explained</a>
+              </div>
             </aside>
             <div>
               <div class="shop-header">
@@ -560,6 +567,7 @@
                   the anti-frizz power of Arganway, Maxylook transforms hair care into a ritual of well-being.</p>
                 <button class="btn btn-primary btn-sm" onclick="navigate('shop');filterBrand('Maxylook')">Shop
                   Maxylook</button>
+                <a href="/post-3" onclick="return navigate('single-blog', 3)" style="display:inline-block;margin-left:12px;font-size:13px;font-weight:600;color:var(--purple);">Read: Superfoods for Your Hair <i class="fas fa-arrow-right" style="font-size:11px;"></i></a>
               </div>
             </div>
           </div>
@@ -574,6 +582,7 @@
                   (vitality). A reference point in the cosmetic sector internationally.</p>
                 <button class="btn btn-primary btn-sm" onclick="navigate('shop');filterBrand('Genus')">Shop
                   Genus</button>
+                <a href="/post-207" onclick="return navigate('single-blog', 207)" style="display:inline-block;margin-left:12px;font-size:13px;font-weight:600;color:var(--purple);">Read: Keratin Maintenance Guide <i class="fas fa-arrow-right" style="font-size:11px;"></i></a>
               </div>
             </div>
           </div>
@@ -589,6 +598,7 @@
                   age-defying lamellar elixirs. Every product is designed to transform your hair.</p>
                 <button class="btn btn-primary btn-sm" onclick="navigate('shop');filterBrand('Versum')">Shop
                   Versum</button>
+                <a href="/post-2" onclick="return navigate('single-blog', 2)" style="display:inline-block;margin-left:12px;font-size:13px;font-weight:600;color:var(--purple);">Read: Versum Hair 2.0 <i class="fas fa-arrow-right" style="font-size:11px;"></i></a>
               </div>
             </div>
           </div>
@@ -602,6 +612,7 @@
                   treatments (Garlic Treatment, Coconut Oil Mask, Etnika). Trusted by salons for visible results — every
                   product delivers professional-grade performance you can feel.</p>
                 <button class="btn btn-primary btn-sm" onclick="navigate('shop');filterBrand('UNA')">Shop UNA</button>
+                <a href="/post-205" onclick="return navigate('single-blog', 205)" style="display:inline-block;margin-left:12px;font-size:13px;font-weight:600;color:var(--purple);">Read: Hair Growth Actives Explained <i class="fas fa-arrow-right" style="font-size:11px;"></i></a>
               </div>
             </div>
           </div>
@@ -692,6 +703,27 @@
                 <div class="blog-category-list" id="blogCategoriesList">
                   <!-- Rendered via JS (renderBlogSidebar in app.js) -->
                 </div>
+              </div>
+              <div class="sidebar-widget">
+                <h4>Shop by Category</h4>
+                <div class="blog-category-list">
+                  <button class="blog-category-row" onclick="navigate('shop');filterCategory('Shampoo')"><span>Shampoo</span></button>
+                  <button class="blog-category-row" onclick="navigate('shop');filterCategory('Mask')"><span>Mask</span></button>
+                  <button class="blog-category-row" onclick="navigate('shop');filterCategory('Treatment')"><span>Treatment</span></button>
+                  <button class="blog-category-row" onclick="navigate('shop');filterCategory('Serum')"><span>Serum</span></button>
+                  <button class="blog-category-row" onclick="navigate('shop');filterCategory('Styling')"><span>Styling</span></button>
+                  <button class="blog-category-row" onclick="navigate('shop');filterCategory('Kit')"><span>Kits &amp; Sets</span></button>
+                </div>
+              </div>
+              <div class="sidebar-widget">
+                <h4>Shop by Brand</h4>
+                <div class="blog-category-list">
+                  <button class="blog-category-row" onclick="navigate('shop');filterBrand('Maxylook')"><span>Maxylook</span></button>
+                  <button class="blog-category-row" onclick="navigate('shop');filterBrand('Genus')"><span>Genus</span></button>
+                  <button class="blog-category-row" onclick="navigate('shop');filterBrand('Versum')"><span>Versum</span></button>
+                  <button class="blog-category-row" onclick="navigate('shop');filterBrand('UNA')"><span>UNA</span></button>
+                </div>
+                <a href="/brands" onclick="return navigate('brands')" style="display:block;margin-top:10px;font-size:13px;font-weight:600;color:var(--purple);">Explore All Brands <i class="fas fa-arrow-right" style="font-size:11px;"></i></a>
               </div>
               <div class="sidebar-widget">
                 <h4>Newsletter</h4>
