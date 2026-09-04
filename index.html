@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-  <script>if(location.pathname!=='/'&&!location.search.includes('page=')){var p=location.pathname.replace(/^\//,'');var q=location.search.replace('?','');location.replace('/?page='+p+(q?'&'+q:''))}</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Italia Cosmetics — Premium Professional Haircare & Skincare</title>
@@ -10,6 +9,7 @@
     content="Italia Cosmetics: premium haircare and skincare from Maxylook, Genus, Versum, and UNA. Shop professional salon-grade beauty products online.">
   <meta name="keywords"
     content="Premium haircare, Genus hair products, Versum hair 2.0, Maxylook cosmetics, UNA Rolland USA, buy professional hair cosmetics online">
+  <link rel="canonical" id="canonicalLink" href="https://italiacosmetics.com/">
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#d4af37">
 
@@ -34,10 +34,13 @@
   <meta name="twitter:card"       content="summary_large_image">
   <meta name="twitter:image"      content="https://italiacosmetics.com/og-image.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
     href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Poppins:wght@300;400;500;600;700&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!-- Loaded non-render-blocking: icons aren't needed for first paint -->
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"></noscript>
     <link rel="stylesheet" href="style.css">
 
   <!-- Meta Pixel -->
@@ -80,6 +83,57 @@
     }
   }
   </script>
+  <!-- Matches the visible copy on #page-faq exactly — keep both in sync if that content changes -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Are your products authentic?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, all our products from Maxylook, Genus, Versum, and UNA are 100% authentic, imported directly from Italy. We guarantee the highest professional salon-grade quality across all our haircare and skincare lines."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do you offer wholesale?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, we offer exclusive wholesale pricing for salons, professional stylists, and authorized distributors. Please use our contact form or email us at support@italiacosmetics.com with your business details to inquire."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What payment methods do you accept?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Currently, we exclusively offer Cash on Delivery (COD) to ensure a safe and trustworthy shopping experience. You can comfortably pay the courier directly when your order is delivered to your doorstep."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How can I track my order?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Once your order is dispatched, you will receive an SMS and an email with your courier tracking number. You can use this number on the courier's website to monitor your shipment's progress in real time."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I know which product is right for my hair?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Our website categorizes products by brand and hair concern. If you need personalized advice, feel free to reach out to our support team via WhatsApp with details about your hair type, and we'll recommend the perfect professional regimen for you."
+        }
+      }
+    ]
+  }
+  </script>
+  <!-- Populated per-product by renderProductDetails() in app.js; empty on every other page -->
+  <script type="application/ld+json" id="productSchema"></script>
 </head>
 
 <body>
@@ -163,7 +217,7 @@
       </div>
       <div class="search-input-wrap">
         <i class="fas fa-search"></i>
-        <input type="text" id="searchInput" placeholder="Search by name, brand, or category..." oninput="doSearch(this.value)" autofocus>
+        <input type="text" id="searchInput" placeholder="Search by name, brand, or category..." oninput="doSearch(this.value)">
       </div>
       <div class="search-results" id="searchResults">
         <div class="search-hint">Type at least 2 characters to search</div>
@@ -271,37 +325,37 @@
             <p>Explore our wide range of professional beauty products for your specific needs.</p>
           </div>
           <div class="category-grid fade-up">
-            <div class="category-card fade-up-delay-1" onclick="navigate('shop');filterCategory('Shampoo')">
+            <div class="category-card fade-up-delay-1" onclick="navigate('shop');filterCategory('Shampoo')" role="button" tabindex="0">
               <div class="category-card-img"><i class="fas fa-wind"></i></div>
               <div class="category-card-body">
                 <h3>Shampoo</h3>
               </div>
             </div>
-            <div class="category-card fade-up-delay-2" onclick="navigate('shop');filterCategory('Mask')">
+            <div class="category-card fade-up-delay-2" onclick="navigate('shop');filterCategory('Mask')" role="button" tabindex="0">
               <div class="category-card-img"><i class="fas fa-spray-can"></i></div>
               <div class="category-card-body">
                 <h3>Mask</h3>
               </div>
             </div>
-            <div class="category-card fade-up-delay-3" onclick="navigate('shop');filterCategory('Treatment')">
+            <div class="category-card fade-up-delay-3" onclick="navigate('shop');filterCategory('Treatment')" role="button" tabindex="0">
               <div class="category-card-img"><i class="fas fa-flask"></i></div>
               <div class="category-card-body">
                 <h3>Treatment</h3>
               </div>
             </div>
-            <div class="category-card fade-up-delay-4" onclick="navigate('shop');filterCategory('Serum')">
+            <div class="category-card fade-up-delay-4" onclick="navigate('shop');filterCategory('Serum')" role="button" tabindex="0">
               <div class="category-card-img"><i class="fas fa-oil-can"></i></div>
               <div class="category-card-body">
                 <h3>Serum / Oil</h3>
               </div>
             </div>
-            <div class="category-card" onclick="navigate('shop');filterCategory('Styling')">
+            <div class="category-card" onclick="navigate('shop');filterCategory('Styling')" role="button" tabindex="0">
               <div class="category-card-img"><i class="fas fa-fill-drip"></i></div>
               <div class="category-card-body">
                 <h3>Styling</h3>
               </div>
             </div>
-            <div class="category-card" onclick="navigate('shop');filterCategory('Kit')">
+            <div class="category-card" onclick="navigate('shop');filterCategory('Kit')" role="button" tabindex="0">
               <div class="category-card-img"><i class="fas fa-box"></i></div>
               <div class="category-card-body">
                 <h3>Kits / Sets</h3>
@@ -621,81 +675,22 @@
       </div>
       <section class="section">
         <div class="container">
+          <div class="blog-filter-pills" id="blogFilterPills"></div>
           <div class="blog-grid">
             <div class="blog-posts fade-up" id="blogPosts">
-              <article class="blog-card">
-                <div class="blog-card-img" style="background:linear-gradient(135deg,#8B5FBF,#6B3FA0); cursor:pointer;" onclick="navigate('single-blog', 101)">
-                  <i class="fas fa-pump-soap"></i></div>
-                <div class="blog-card-body">
-                  <div class="blog-card-meta"><span><i class="far fa-calendar"></i> Aug 24, 2026</span><span><i
-                        class="far fa-user"></i> Dr. Ayesha Malik</span></div>
-                  <h3 style="cursor:pointer;" onclick="navigate('single-blog', 101)">Best Shampoo for Hair Fall, Hair Growth & Color Care in Pakistan: The Ultimate 2026 Guide</h3>
-                  <p>An authoritative 3,200+ word masterclass analyzing the best shampoos for hair fall, rapid growth, biotin vs keratin treatments, sulfate-free formulations, and color care in Pakistan.</p>
-                  <button class="btn btn-secondary btn-sm" onclick="navigate('single-blog', 101)">Read More</button>
-                </div>
-              </article>
-              <article class="blog-card">
-                <div class="blog-card-img" style="background:linear-gradient(135deg,#D4AF37,#E8C84A); cursor:pointer;" onclick="navigate('single-blog', 102)"><i
-                    class="fas fa-sparkles"></i></div>
-                <div class="blog-card-body">
-                  <div class="blog-card-meta"><span><i class="far fa-calendar"></i> Aug 20, 2026</span><span><i
-                        class="far fa-user"></i> Marco Bellini</span></div>
-                  <h3 style="cursor:pointer;" onclick="navigate('single-blog', 102)">The Ultimate Guide to Hair Masks, Keratin Treatments & Scalp Serums in Pakistan</h3>
-                  <p>A comprehensive 3,500+ word master guide exploring hair masks, keratin repair, lamellar water technology, rosemary scalp serums, and anti-frizz protocols for Pakistani hair.</p>
-                  <button class="btn btn-secondary btn-sm" onclick="navigate('single-blog', 102)">Read More</button>
-                </div>
-              </article>
-              <article class="blog-card">
-                <div class="blog-card-img" style="background:linear-gradient(135deg,var(--purple),var(--purple-dark)); cursor:pointer;" onclick="navigate('single-blog', 1)">
-                  <i class="fas fa-wind"></i></div>
-                <div class="blog-card-body">
-                  <div class="blog-card-meta"><span><i class="far fa-calendar"></i> Jun 28, 2026</span><span><i
-                        class="far fa-user"></i> Italia Team</span></div>
-                  <h3 style="cursor:pointer;" onclick="navigate('single-blog', 1)">The Ultimate Guide to Professional Hair Masks</h3>
-                  <p>Not all hair masks are created equal. From collagen-infused treatments to protein-rich formulas,
-                    discover which mask is right for your hair type and concerns.</p>
-                  <button class="btn btn-secondary btn-sm" onclick="navigate('single-blog', 1)">Read More</button>
-                </div>
-              </article>
-              <article class="blog-card">
-                <div class="blog-card-img" style="background:linear-gradient(135deg,var(--pink),var(--pink-dark)); cursor:pointer;" onclick="navigate('single-blog', 2)"><i
-                    class="fas fa-oil-can"></i></div>
-                <div class="blog-card-body">
-                  <div class="blog-card-meta"><span><i class="far fa-calendar"></i> Jun 15, 2026</span><span><i
-                        class="far fa-user"></i> Italia Team</span></div>
-                  <h3 style="cursor:pointer;" onclick="navigate('single-blog', 2)">Versum Hair 2.0: A New Era in Haircare Science</h3>
-                  <p>We dive deep into the revolutionary lamellar technology behind Versum's new line. Age-defying
-                    elixirs, charcoal detox, and the science of beautiful hair.</p>
-                  <button class="btn btn-secondary btn-sm" onclick="navigate('single-blog', 2)">Read More</button>
-                </div>
-              </article>
+              <!-- Featured post + card grid rendered via JS (renderBlog in app.js) -->
             </div>
             <aside class="blog-sidebar">
               <div class="sidebar-widget">
                 <h4>Popular Posts</h4>
-                <div class="popular-post" style="cursor:pointer;" onclick="navigate('single-blog', 101)">
-                  <div
-                    style="width:60px;height:60px;border-radius:var(--radius-sm);background:linear-gradient(135deg,#8B5FBF,#6B3FA0);display:flex;align-items:center;justify-content:center;font-size:20px;color:#fff">
-                    <i class="fas fa-pump-soap"></i></div>
-                  <div>
-                    <h5>Best Shampoo for Hair Fall & Growth in Pakistan</h5><span>Aug 24, 2026</span>
-                  </div>
+                <div id="popularPostsList">
+                  <!-- Rendered via JS (renderBlogSidebar in app.js) -->
                 </div>
-                <div class="popular-post" style="cursor:pointer;" onclick="navigate('single-blog', 102)">
-                  <div
-                    style="width:60px;height:60px;border-radius:var(--radius-sm);background:linear-gradient(135deg,#D4AF37,#E8C84A);display:flex;align-items:center;justify-content:center;font-size:20px;color:#232323">
-                    <i class="fas fa-sparkles"></i></div>
-                  <div>
-                    <h5>Hair Masks, Keratin & Serums: Pakistan Guide</h5><span>Aug 20, 2026</span>
-                  </div>
-                </div>
-                <div class="popular-post" style="cursor:pointer;" onclick="navigate('single-blog', 1)">
-                  <div
-                    style="width:60px;height:60px;border-radius:var(--radius-sm);background:var(--lavender);display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--purple)">
-                    <i class="fas fa-wind"></i></div>
-                  <div>
-                    <h5>The Ultimate Guide to Professional Hair Masks</h5><span>Jun 28, 2026</span>
-                  </div>
+              </div>
+              <div class="sidebar-widget">
+                <h4>Categories</h4>
+                <div class="blog-category-list" id="blogCategoriesList">
+                  <!-- Rendered via JS (renderBlogSidebar in app.js) -->
                 </div>
               </div>
               <div class="sidebar-widget">
@@ -775,25 +770,24 @@
                   style="font-family:var(--font-display);font-size:20px;font-weight:700;margin-bottom:var(--spacing-xs)">
                   Frequently Asked Questions</h3>
                 <div class="faq-item">
-                  <div class="faq-question" onclick="toggleFaq(this)">What payment methods do you accept? <i
+                  <div class="faq-question" onclick="toggleFaq(this)" role="button" tabindex="0" aria-expanded="false">What payment methods do you accept? <i
                       class="fas fa-chevron-down" style="font-size:12px;transition:transform 0.3s"></i></div>
-                  <div class="faq-answer">We accept all major credit cards (Visa, Mastercard, American Express), PayPal,
-                    Apple Pay, and Google Pay. All transactions are securely processed.</div>
+                  <div class="faq-answer">Currently, we exclusively offer Cash on Delivery (COD) to ensure a safe and trustworthy shopping experience. You can comfortably pay the courier directly when your order is delivered to your doorstep.</div>
                 </div>
                 <div class="faq-item">
-                  <div class="faq-question" onclick="toggleFaq(this)">How long does shipping take? <i
+                  <div class="faq-question" onclick="toggleFaq(this)" role="button" tabindex="0" aria-expanded="false">How long does shipping take? <i
                       class="fas fa-chevron-down" style="font-size:12px;transition:transform 0.3s"></i></div>
                   <div class="faq-answer">Standard shipping takes 3-5 business days within Italy and 5-10 business days
                     for international orders. Express shipping is available at checkout.</div>
                 </div>
                 <div class="faq-item">
-                  <div class="faq-question" onclick="toggleFaq(this)">Can I return a product? <i
+                  <div class="faq-question" onclick="toggleFaq(this)" role="button" tabindex="0" aria-expanded="false">Can I return a product? <i
                       class="fas fa-chevron-down" style="font-size:12px;transition:transform 0.3s"></i></div>
                   <div class="faq-answer">Yes! We offer a 7-day satisfaction guarantee. If you're not happy with your
                     purchase, contact us for a full refund or exchange.</div>
                 </div>
                 <div class="faq-item">
-                  <div class="faq-question" onclick="toggleFaq(this)">Are your products authentic? <i
+                  <div class="faq-question" onclick="toggleFaq(this)" role="button" tabindex="0" aria-expanded="false">Are your products authentic? <i
                       class="fas fa-chevron-down" style="font-size:12px;transition:transform 0.3s"></i></div>
                   <div class="faq-answer">Absolutely. We source directly from official brand distributors. Every product
                     is 100% authentic and covered by manufacturer warranty.</div>
@@ -857,22 +851,22 @@
       <section class="section">
         <div class="container container-narrow">
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:var(--spacing-sm);">
-            <div class="value-card" onclick="navigate('faq')">
+            <div class="value-card" onclick="navigate('faq')" role="button" tabindex="0">
               <i class="fas fa-question-circle"></i>
               <h4>FAQ</h4>
               <p>Frequently asked questions</p>
             </div>
-            <div class="value-card" onclick="navigate('shipping')">
+            <div class="value-card" onclick="navigate('shipping')" role="button" tabindex="0">
               <i class="fas fa-truck"></i>
               <h4>Shipping Info</h4>
               <p>Delivery times & costs</p>
             </div>
-            <div class="value-card" onclick="navigate('returns')">
+            <div class="value-card" onclick="navigate('returns')" role="button" tabindex="0">
               <i class="fas fa-undo"></i>
               <h4>Returns</h4>
               <p>Our return policy</p>
             </div>
-            <div class="value-card" onclick="navigate('contact')">
+            <div class="value-card" onclick="navigate('contact')" role="button" tabindex="0">
               <i class="fas fa-envelope"></i>
               <h4>Contact Us</h4>
               <p>Get in touch with our team</p>
@@ -1066,8 +1060,8 @@
         </div>
       </div>
       <div class="footer-bottom">
-        &copy; 2026 Italia Cosmetics. All rights reserved. Made with <i class="fas fa-heart"
-          style="color:var(--pink)"></i> in Milan.
+        &copy; 2026 Italia Cosmetics. All rights reserved. Italian formulas, delivered with <i class="fas fa-heart"
+          style="color:var(--pink)"></i> from Lahore.
       </div>
     </div>
   </footer>

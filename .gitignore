@@ -4,6 +4,10 @@
 *.pdf
 *.csv
 image.png
+.htaccess
+
+# Internal docs — moved out of the deployed tree (see ../italiacosmetics-docs)
+docs/
 
 # Deploy package
 /italiacosmetics-DEPLOY/

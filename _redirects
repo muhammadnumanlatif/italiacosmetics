@@ -1,1 +1,7 @@
 https://italiacosmetics.pages.dev/* https://italiacosmetics.com/:splat 301
+
+# SPA fallback: serve index.html for any path that isn't a real static
+# file or an /api/* function, so deep links (e.g. /shop, /product-149
+# from sitemap.xml) don't 404 on Cloudflare Pages. Pages Functions and
+# static assets are matched before this rule, so /api/* is unaffected.
+/* /index.html 200

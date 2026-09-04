@@ -1,4 +1,4 @@
-const CACHE_NAME = 'italia-v5';
+const CACHE_NAME = 'italia-v6';
 const ASSETS = [
   '/',
   '/index.html',
@@ -32,14 +32,32 @@ self.addEventListener('activate', (e) => {
 });
 
 self.addEventListener('fetch', (e) => {
-  // Network First for API, JS, CSS — always get latest code
-  if (e.request.url.includes('/wp-json/') || e.request.url.includes('api.italiacosmetics.com') || e.request.url.endsWith('/app.js') || e.request.url.endsWith('/style.css')) {
+  const url = e.request.url;
+
+  // Network First for API/data + JS/CSS — always get latest code and content
+  if (url.includes('/wp-json/') || url.includes('api.italiacosmetics.com') || url.includes('/api/') || url.endsWith('/app.js') || url.endsWith('/style.css')) {
     e.respondWith(
       fetch(e.request).catch(() => caches.match(e.request))
     );
-  } else {
-    e.respondWith(
-      caches.match(e.request).then((res) => res || fetch(e.request))
-    );
+    return;
   }
+
+  // Every route (/shop, /product-149, /post-101, ...) renders from this same
+  // index.html shell — the SPA router reads location.pathname client-side,
+  // so there's no separate HTML per route to precache. Fall back to the
+  // cached shell for any navigation that isn't already cached and can't
+  // reach the network, so the app still opens offline on a route that was
+  // never visited before instead of failing outright.
+  if (e.request.mode === 'navigate') {
+    e.respondWith(
+      caches.match(e.request).then((res) =>
+        res || fetch(e.request).catch(() => caches.match('/index.html'))
+      )
+    );
+    return;
+  }
+
+  e.respondWith(
+    caches.match(e.request).then((res) => res || fetch(e.request))
+  );
 });
