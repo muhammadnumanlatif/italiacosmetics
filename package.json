@@ -1,0 +1,14 @@
+{
+  "name": "italiacosmetics",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Italia Cosmetics storefront (Cloudflare Pages) with a self-hosted D1-backed API and admin dashboard, replacing the WordPress/WooCommerce backend.",
+  "scripts": {
+    "dev": "wrangler pages dev . --d1=DB",
+    "d1:migrate:local": "wrangler d1 migrations apply italiacosmetics-db --local",
+    "d1:migrate:remote": "wrangler d1 migrations apply italiacosmetics-db --remote"
+  },
+  "devDependencies": {
+    "wrangler": "^3.90.0"
+  }
+}

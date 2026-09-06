@@ -1,27 +1,19 @@
-import { wcFetch, json } from '../../_lib/wc.js';
+import { json } from '../../_lib/http.js';
 
-// GET /api/orders/:id?email=... -> order status lookup (mirrors old trackOrder())
-//
-// The email check happens here, server-side, and only status/total/currency
-// are ever returned — never billing name/address/phone. Previously the admin
-// key let anyone fetch the full order object directly and read that PII by
-// guessing an order id; this endpoint can't leak it even if id is guessed,
-// since a wrong email just gets "not found".
-export async function onRequestGet(context) {
-  const { request, env, params } = context;
+// GET /api/orders/:id?email=... -- order status lookup, matching the original
+// contract: only status/total/currency are ever returned, never billing PII,
+// and a wrong email just looks identical to a wrong id (no existence leak).
+export async function onRequestGet({ request, env, params }) {
   const email = new URL(request.url).searchParams.get('email');
-  const id = params.id;
+  if (!params.id || !email) return json({ error: 'Missing order id or email' }, 400);
 
-  if (!id || !email) return json({ error: 'Missing order id or email' }, 400);
+  const order = await env.DB.prepare(
+    'SELECT id, status, total, currency, billing_email FROM orders WHERE id = ?'
+  ).bind(params.id).first();
 
-  try {
-    const { ok, data } = await wcFetch(env, '/orders/' + encodeURIComponent(id));
-    const billingEmail = data && data.billing && data.billing.email;
-    if (!ok || !billingEmail || String(billingEmail).toLowerCase() !== String(email).toLowerCase()) {
-      return json({ error: 'Order not found' }, 404);
-    }
-    return json({ id: data.id, status: data.status, total: data.total, currency: data.currency });
-  } catch (e) {
-    return json({ error: 'Could not look up order' }, 500);
+  if (!order || String(order.billing_email).toLowerCase() !== String(email).toLowerCase()) {
+    return json({ error: 'Order not found' }, 404);
   }
+
+  return json({ id: order.id, status: order.status, total: order.total, currency: order.currency });
 }

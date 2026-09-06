@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard — Italia Cosmetics</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+<div id="loginScreen">
+  <form class="login-card" id="loginForm" autocomplete="on">
+    <h1>Italia <span style="color:var(--purple)">Admin</span></h1>
+    <p class="subtitle">Sign in to manage orders, products, and content.</p>
+    <input type="email" id="loginEmail" placeholder="Email" autocomplete="username" required>
+    <input type="password" id="loginPassword" placeholder="Password" autocomplete="current-password" required>
+    <div class="login-error" id="loginError"></div>
+    <button type="submit" class="btn btn-primary" id="loginBtn">Sign In</button>
+  </form>
+</div>
+
+<div id="dashboard" class="hidden">
+  <aside class="sidebar">
+    <h2>Italia <span>Admin</span></h2>
+    <nav>
+      <button data-view="orders" class="active"><i class="fas fa-receipt"></i> Orders</button>
+      <button data-view="products"><i class="fas fa-flask"></i> Products</button>
+      <button data-view="blog"><i class="fas fa-newspaper"></i> Blog</button>
+      <button data-view="brands"><i class="fas fa-award"></i> Brands</button>
+      <button data-view="testimonials"><i class="fas fa-quote-right"></i> Testimonials</button>
+      <button data-view="messages"><i class="fas fa-envelope"></i> Messages</button>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="email" id="sidebarEmail"></div>
+      <button class="btn btn-secondary btn-sm" style="width:100%" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Log Out</button>
+    </div>
+  </aside>
+
+  <main class="main" id="mainContent">
+    <!-- populated by admin.js -->
+  </main>
+</div>
+
+<div id="modalRoot"></div>
+<div class="toast" id="toast"></div>
+
+<script src="admin.js"></script>
+</body>
+</html>

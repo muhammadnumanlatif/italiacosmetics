@@ -1,44 +1,29 @@
-// ==================== WORDPRESS CONFIG ====================
-    const WP = {
-      url: 'https://api.italiacosmetics.com',
-      rest: 'https://api.italiacosmetics.com/wp-json/wp/v2',
-      wc: 'https://api.italiacosmetics.com/wp-json/wc/v3',
-      acf: 'https://api.italiacosmetics.com/wp-json/acf/v3',
-      graphql: 'https://api.italiacosmetics.com/graphql',
-      cf7: 'https://api.italiacosmetics.com/wp-json/contact-form-7/v1/contact-forms'
-    };
+// ==================== API HELPERS ====================
+// Everything below hits this site's own /api/* Pages Functions, backed by
+// Cloudflare D1 -- there is no external WordPress/WooCommerce dependency.
 
-    async function wpFetch(endpoint, options = {}) {
+    async function apiGet(endpoint) {
       try {
-        const res = await fetch(WP.rest + endpoint, {
-          headers: { 'Content-Type': 'application/json', ...options.headers },
-          ...options
-        });
-        if (!res.ok) throw new Error('WP API error: ' + res.status);
+        const res = await fetch('/api' + endpoint);
+        if (!res.ok) throw new Error('API error: ' + res.status);
         return await res.json();
       } catch (err) {
-        console.warn('WP fetch failed, using fallback:', err.message);
+        console.warn('API fetch failed, using fallback:', err.message);
         return null;
       }
     }
 
-    async function wpPost(endpoint, data, useFormData = false) {
+    async function apiPost(endpoint, data) {
       try {
-        const opts = { method: 'POST' };
-        if (useFormData) {
-          const fd = new FormData();
-          for (const k in data) fd.append(k, data[k]);
-          opts.body = fd;
-        } else {
-          opts.headers = { 'Content-Type': 'application/json' };
-          opts.body = JSON.stringify(data);
-        }
-        const base = useFormData ? WP.url : WP.rest;
-        const res = await fetch(base + endpoint, opts);
-        if (!res.ok) throw new Error('WP POST error: ' + res.status);
+        const res = await fetch('/api' + endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        if (!res.ok) throw new Error('API POST error: ' + res.status);
         return await res.json();
       } catch (err) {
-        console.warn('WP POST failed:', err.message);
+        console.warn('API POST failed:', err.message);
         return null;
       }
     }
@@ -50,38 +35,11 @@
     }
 
     async function fetchProducts() {
-      try {
-        const res = await fetch('/api/products');
-        if (!res.ok) throw new Error('WC API error');
-        const wpProducts = await res.json();
-
-        products = wpProducts.map((p, i) => {
-          const attrs = {};
-          (p.attributes || []).forEach(a => { attrs[a.name.toLowerCase()] = a.options?.[0] || ''; });
-          const cat = p.categories?.[0]?.name || 'Product';
-          const catMap = { 'Shampoo': 'Shampoo', 'Mask': 'Mask', 'Treatment': 'Treatment', 'Serum': 'Serum', 'Styling': 'Styling', 'Kit': 'Kit' };
-          return {
-            id: p.id || (i + 1),
-            brand: attrs.brand || 'Italia Cosmetics',
-            name: p.name || 'Product',
-            line: attrs.line || attrs.product_line || '',
-            desc: p.description?.replace(/<[^>]*>/g, '') || '',
-            price: parseFloat(p.price) || 0,
-            currency: (attrs.currency === '$' || attrs.currency === 'USD') ? 'PKR' : (attrs.currency || 'PKR'),
-            cat: catMap[cat] || cat,
-            badge: attrs.badge || '',
-            rating: parseInt(attrs.rating) || 5,
-            img: p.images?.[0]?.src || (p.meta_data?.find(m => m.key === 'product_image_url')?.value) || '',
-            origPrice: attrs.orig_price ? parseFloat(attrs.orig_price) : null,
-            total_sales: parseInt(p.total_sales) || 0
-          };
-        });
-
-        if (!products.length) throw new Error('No products returned');
-      } catch (err) {
-        console.warn('WC fetch failed, using fallback:', err.message);
-        products = [...fallbackProducts];
-      }
+      // /api/products already returns the same flat shape as fallbackProducts
+      // (it's backed by the same D1 table the admin dashboard edits), so no
+      // WooCommerce-attribute unpacking is needed here anymore.
+      const data = await apiGet('/products');
+      products = (data && data.length) ? data : [...fallbackProducts];
 
       renderBestSellers();
       renderFeaturedProducts();
@@ -109,95 +67,38 @@
     }
 
     async function fetchBrands() {
-      try {
-        const data = await wpFetch('/brands?per_page=10&_fields=id,title,meta,slug');
-        if (data && data.length) {
-          const defaultGradients = { mx: 'linear-gradient(135deg,#8B5FBF,#A07DD6)', gn: 'linear-gradient(135deg,#232323,#3A3A3A)', vs: 'linear-gradient(135deg,#D4AF37,#E8C84A)', una: 'linear-gradient(135deg,#F37AA2,#E05A86)' };
-          window.wpBrands = data.map((b, i) => ({
-            id: b.meta?.brand_css_id || ['mx','gn','vs','una'][i] || ('b' + i),
-            name: b.meta?.brand_person_name || b.title?.rendered || b.title,
-            gradient: b.meta?.brand_color || defaultGradients[['mx','gn','vs','una'][i]] || defaultGradients.mx,
-            desc: b.meta?.brand_desc || '',
-            textColor: b.meta?.brand_text_color || '#fff',
-            img: b.meta?.brand_image || ''
-          }));
-          renderBrandCards();
-        }
-      } catch (e) { console.warn('Brand fetch failed, using fallback'); }
+      const data = await apiGet('/brands');
+      if (data && data.length) {
+        window.wpBrands = data;
+        renderBrandCards();
+      }
     }
 
     async function fetchTestimonials() {
-      try {
-        const data = await wpFetch('/testimonials?per_page=100&_fields=id,title,content,meta,slug');
-        if (data && data.length) {
-          window.wpTestimonials = data.map(t => ({
-            id: t.id,
-            name: t.meta?.testimonial_person_name || t.title?.rendered || t.title,
-            role: t.meta?.testimonial_role || '',
-            text: t.content?.rendered?.replace(/<[^>]*>/g, '') || '',
-            rating: parseInt(t.meta?.testimonial_rating) || 5,
-            avatar: t.meta?.testimonial_avatar_initials || ((t.title?.rendered || t.title)?.charAt(0).toUpperCase() || 'U')
-          }));
-          renderTestimonials();
-        }
-      } catch (e) { console.warn('Testimonial fetch failed, using fallback'); }
+      const data = await apiGet('/testimonials');
+      if (data && data.length) {
+        window.wpTestimonials = data;
+        renderTestimonials();
+      }
     }
 
     async function fetchAbout() {
-      try {
-        const data = await wpFetch('/pages?slug=about&_fields=id,title,content');
-        if (data && data.length) {
-          const page = data[0];
-          const container = document.querySelector('#page-about .about-story-text');
-          if (container) {
-            const title = container.querySelector('h2');
-            const paragraphs = container.querySelectorAll('p');
-            const content = page.content?.rendered || '';
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(content, 'text/html');
-            const h2 = doc.querySelector('h2');
-            const ps = doc.querySelectorAll('p');
-            if (h2 && title) title.textContent = h2.textContent;
-            if (ps.length && paragraphs.length) {
-              paragraphs.forEach((p, i) => { if (ps[i]) p.textContent = ps[i].textContent; });
-            }
-          }
-        }
-      } catch (e) { console.warn('About fetch failed, using fallback'); }
+      // The About page is static content in index.html -- there is no
+      // admin-editable "pages" table (out of scope; only products, orders,
+      // and blog posts get a CRUD dashboard). Nothing to fetch here anymore.
     }
 
     async function fetchBlogPosts() {
-      try {
-        const data = await wpFetch('/posts?per_page=10&_fields=id,title,content,excerpt,date,_links');
-        if (data && data.length) {
-          const livePosts = data.map(p => ({
-            id: p.id,
-            title: p.title?.rendered || '',
-            content: p.content?.rendered || '',
-            excerpt: p.excerpt?.rendered?.replace(/<[^>]*>/g, '') || '',
-            date: new Date(p.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }),
-            author: 'Italia Team',
-            gradient: ['linear-gradient(135deg,var(--purple),var(--purple-dark))', 'linear-gradient(135deg,var(--pink),var(--pink-dark))', 'linear-gradient(135deg,var(--gold),var(--gold-light))', 'linear-gradient(135deg,var(--charcoal),var(--charcoal-soft))'][Math.floor(Math.random() * 4)],
-            icon: ['fa-wind','fa-oil-can','fa-leaf','fa-shield-alt'][Math.floor(Math.random() * 4)]
-          }));
-          // Merge with local posts rather than replacing them outright — several
-          // local posts are richer, expanded versions of the same articles that
-          // also exist as thin stubs on the live WP backend (same title). Prefer
-          // the local version on a title match, and always keep local-only posts
-          // (e.g. the SEO batch that was never published to WP) rather than
-          // letting a successful-but-partial WP fetch make them disappear.
-          const localTitles = new Set(fallbackBlogPosts.map(p => p.title.trim().toLowerCase()));
-          const distinctLive = livePosts.filter(p => !localTitles.has(p.title.trim().toLowerCase()));
-          window.wpBlogPosts = [...fallbackBlogPosts, ...distinctLive]
-            .sort((a, b) => new Date(b.date) - new Date(a.date));
-          renderBlog();
-          // Handle direct URL access to /single-blog?id=X
-          if (window._pendingSingleBlogId) {
-            renderSingleBlog(window._pendingSingleBlogId);
-            window._pendingSingleBlogId = null;
-          }
+      const data = await apiGet('/blog');
+      if (data && data.length) {
+        window.wpBlogPosts = data;
+        renderBlog();
+        // Handle direct URL access to /single-blog?id=X
+        if (window._pendingSingleBlogId) {
+          renderSingleBlog(window._pendingSingleBlogId);
+          window._pendingSingleBlogId = null;
         }
-      } catch (e) { console.warn('Blog fetch failed, using fallback'); }
+      }
     }
 
     // ==================== PRODUCT DATA ====================
@@ -2156,6 +2057,1153 @@
 </div>
 </div>`
       },
+      {
+        id: 301,
+        title: 'Macadamia Hydrating Shampoo: The Fix for Dry, Frizzy Hair in Pakistan (Complete 2026 Guide)',
+        date: 'Aug 26, 2026',
+        author: 'Sana Farooq & Italia Cosmetics Formulation Team',
+        cat: 'Shampoo',
+        excerpt: 'A complete guide to Maxylook Macadamia Hydrating Shampoo: why Pakistani hair turns dry and frizzy, what macadamia oil actually does at the cuticle level, and how to build a weekly routine that works in local hard water.',
+        gradient: 'linear-gradient(135deg,#8B5FBF,#A07DD6)',
+        icon: 'fa-tint',
+        content: `<div class="blog-longform">
+<h2>Why So Much Hair in Pakistan Is Dry, Frizzy and Dull</h2>
+<p>Type "<strong>shampoo for dry hair</strong>" or "<strong>best shampoo for dry hair</strong>" into Google from Karachi, Lahore, or Islamabad and you will land on dozens of generic listicles. What almost none of them explain is <em>why</em> Pakistani hair leans dry and frizzy in the first place, which is the actual reason so many women cycle through five different bottles a year without solving the problem. Two forces are doing most of the damage: municipal and borewell water carrying 800 to 1,500+ ppm of dissolved calcium and magnesium salts, and a climate that swings between intense, moisture-stripping UV exposure in summer and dry, static-prone air in winter. Add daily dupatta or hijab friction at the hairline, frequent blow-drying before work or university, and the popularity of chemical straightening, and the cuticle — the hair's outer protective layer — ends up permanently roughed up and unable to hold moisture.</p>
+
+<p>This is the exact gap the <strong>Maxylook Macadamia line</strong> was engineered for. It is not a "smells nice, feels soft for a day" shampoo; it is a professional Italian hydration system built around macadamia seed oil, a lipid that is unusually close in structure to human sebum, meaning it absorbs into the hair shaft instead of sitting on top of it like heavier mineral or silicone-based oils.</p>
+
+<div class="blog-highlight-box">
+  <h4><i class="fas fa-chart-line"></i> What Pakistani Search Data Tells Us</h4>
+  <ul>
+    <li><strong>"Best shampoo"</strong> and <strong>"best shampoo for hair"</strong> are the two highest-volume haircare searches in the country, at search-interest scores of 100 and 81 — most people are actively unhappy with what they are currently using.</li>
+    <li><strong>"Dry hair shampoo"</strong> and <strong>"shampoo for dry hair"</strong> both sit at a search-interest score of 21-28, a consistently large, steady segment rather than a passing trend.</li>
+    <li><strong>"Frizzy hair"</strong> and <strong>"sulphate free shampoo"</strong> are both climbing, up 1% and 40% respectively, as more Pakistani women connect frizz specifically to harsh, stripping surfactants rather than "just the weather".</li>
+  </ul>
+</div>
+
+<p>Note that <strong>"dry shampoo"</strong> is a different product entirely — a no-rinse powder or spray used to refresh oily roots between washes, not a shampoo for chronically dry hair. If that no-rinse product is what you were actually looking for, our <a href="#" onclick="navigate('single-blog', 204);return false;">Dry Shampoo 101 guide</a> covers exactly when and how to use it. This article is about the opposite problem: hair that is genuinely dehydrated at the strand level.</p>
+
+<h2>What Macadamia Oil Actually Does to a Hair Strand</h2>
+<p>Macadamia seed oil is rich in palmitoleic acid, an omega-7 fatty acid that mimics the composition of the skin and scalp's own natural oils far more closely than coconut, mineral, or argan oil. Because the molecule is small and structurally familiar to the hair, it penetrates into the cortex rather than forming a heavy surface film. That matters enormously in Pakistan's climate: a shampoo that only coats the hair will feel soft in the shower and then frizz up within two hours of stepping outside into humidity or dry heat, while one that actually restructures the internal moisture balance keeps working all day.</p>
+
+<table class="blog-table">
+  <thead>
+    <tr><th>Ingredient</th><th>What It Does</th><th>Best For</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>Macadamia Seed Oil</strong></td><td>Penetrates the cortex to restore internal lipid balance; reduces water loss through the cuticle.</td><td>Dry, brittle, static-prone hair.</td></tr>
+    <tr><td><strong>Mild Non-Sulfate Cleansing Base</strong></td><td>Removes dirt and product buildup without stripping the natural oils macadamia is trying to replace.</td><td>Color-treated or chemically processed hair.</td></tr>
+    <tr><td><strong>Panthenol (Pro-Vitamin B5)</strong></td><td>Draws and holds moisture inside the shaft, adding visible softness and slip.</td><td>Frizz-prone, humidity-reactive hair.</td></tr>
+    <tr><td><strong>Amino Acid Complex</strong></td><td>Fills micro-gaps along a rough cuticle so it lies flatter and reflects more light.</td><td>Dull hair that has lost natural shine.</td></tr>
+  </tbody>
+</table>
+
+<h2>Macadamia Hydrating Shampoo vs. an Everyday Drugstore Shampoo</h2>
+<p>Most mass-market shampoos sold in Pakistan — the ones people search for by name alongside "best shampoo" — are formulated for one job: dense, satisfying lather at the lowest possible cost. That usually means Sodium Lauryl Sulfate or Sodium Laureth Sulfate as the primary cleanser, which is excellent at cutting oil and terrible at leaving anything behind for dry hair to hold onto.</p>
+
+<table class="blog-table">
+  <thead>
+    <tr><th>Factor</th><th>Typical Mass-Market Shampoo</th><th>Maxylook Macadamia Hydrating Shampoo</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Primary surfactant</td><td>Harsh sulfates (SLS/SLES)</td><td>Gentle, moisture-preserving cleansing base</td></tr>
+    <tr><td>Effect on hard water minerals</td><td>Minerals bind to hair, adding to dryness</td><td>Formulated to rinse cleaner, reducing mineral film buildup</td></tr>
+    <tr><td>Result after 3-4 hours in humidity</td><td>Frizz returns as surface coating wears off</td><td>Cuticle stays smoother since moisture is internal, not just coating</td></tr>
+    <tr><td>Compatible with weekly deep mask?</td><td>Often defeats mask benefits by re-stripping hair next wash</td><td>Designed as a system with the Macadamia Hydrating Mask</td></tr>
+  </tbody>
+</table>
+
+<h2>Building a Weekly Routine for Pakistani Weather</h2>
+<div class="blog-step-card">
+  <div class="blog-step-number">1</div>
+  <div class="blog-step-info">
+    <h4>Wash 3-4x a week in summer, 2-3x in winter</h4>
+    <p>Over-washing dry hair strips what little natural oil it has left. In Karachi or Lahore's humid months, use the <a href="#" onclick="navigate('product-details', 1);return false;">Hydrating Shampoo 1000 ml</a> at the roots and let the lather run through the lengths rather than scrubbing ends directly.</p>
+  </div>
+</div>
+<div class="blog-step-card">
+  <div class="blog-step-number">2</div>
+  <div class="blog-step-info">
+    <h4>Mask once or twice weekly</h4>
+    <p>Follow with the <a href="#" onclick="navigate('product-details', 14);return false;">Macadamia Hydrating Mask</a> from mid-lengths to ends, leaving it for 8-10 minutes. This is where most of the deep repair actually happens — shampoo cleans, the mask rebuilds.</p>
+  </div>
+</div>
+<div class="blog-step-card">
+  <div class="blog-step-number">3</div>
+  <div class="blog-step-info">
+    <h4>Protect before heat styling</h4>
+    <p>Since dry hair is the most heat-vulnerable, always use a heat protectant before straightening or blow-drying — skipping this step is the fastest way to undo a week of hydration work in one styling session.</p>
+  </div>
+</div>
+
+<h2>Which Size Should You Buy?</h2>
+<p>The Hydrating Shampoo comes in a 300 ml bottle and a 1000 ml salon-size bottle. If you are trying the Macadamia line for the first time, our <a href="#" onclick="navigate('single-blog', 311);return false;">300 ml size guide</a> breaks down exactly who should start small versus commit to the larger bottle, along with the price-per-use math in PKR. The Hydrating Mask follows the same logic — see the <a href="#" onclick="navigate('single-blog', 312);return false;">300 ml Mask guide</a> and <a href="#" onclick="navigate('single-blog', 313);return false;">1000 ml Mask guide</a> for a size-by-size breakdown.</p>
+
+<h2>Frequently Asked Questions</h2>
+<div class="blog-faq-item">
+  <h3>Will Macadamia Hydrating Shampoo make oily roots worse?</h3>
+  <p>No — it is formulated to hydrate mid-lengths and ends without over-oiling the scalp, since the cleansing base still fully removes root oil. If your scalp gets oily within a day of washing regardless of which shampoo you use, that is a separate concern; our <a href="#" onclick="navigate('single-blog', 307);return false;">Fresh Mint Revitalizing Shampoo guide</a> is built specifically for that.</p>
+</div>
+<div class="blog-faq-item">
+  <h3>Is this shampoo sulfate-free?</h3>
+  <p>It uses a mild, moisture-preserving cleansing base rather than harsh SLS/SLES sulfates, which is exactly what the rising "sulphate free shampoo" search trend in Pakistan is looking for. For a full breakdown of why that switch matters, see our <a href="#" onclick="navigate('single-blog', 202);return false;">Sulfate-Free Shampoo buying guide</a>.</p>
+</div>
+<div class="blog-faq-item">
+  <h3>My hair is frizzy, not just dry — is this still the right shampoo?</h3>
+  <p>Yes. Frizz in Pakistani humidity is almost always a symptom of a rough, moisture-starved cuticle, which is precisely what macadamia oil smooths. For additional anti-humidity styling tactics, pair this routine with our <a href="#" onclick="navigate('single-blog', 209);return false;">Frizzy Hair in Pakistan Humidity guide</a>.</p>
+</div>
+<div class="blog-faq-item">
+  <h3>Can I use this if my hair is color-treated?</h3>
+  <p>Yes, the gentle cleansing base is color-safe. If your color has gone brassy or yellow rather than just dry, you likely also need a toning shampoo — see our <a href="#" onclick="navigate('single-blog', 303);return false;">Violet Pigment No Yellow Shampoo guide</a>.</p>
+</div>
+
+<div class="blog-cta-box">
+  <h4>Start hydrating from the roots down</h4>
+  <p>The Macadamia Hydrating Shampoo and Mask are designed to be used together as a system, not standalone products.</p>
+  <button class="btn btn-primary" onclick="navigate('shop');filterCategory('Shampoo')">Shop All Shampoos</button>
+</div>
+</div>`
+      },
+      {
+        id: 302,
+        title: 'Protein Nourishing Shampoo: Best Shampoo for Hair Fall, Growth and Thickness in Pakistan',
+        date: 'Aug 27, 2026',
+        author: 'Dr. Ayesha Malik & Italia Cosmetics Master Stylists',
+        cat: 'Shampoo',
+        excerpt: 'Why hair fall and slow growth are usually a protein problem, not a growth-serum problem, and how the Maxylook Protein Nourishing Shampoo is built to rebuild strand strength from the inside.',
+        gradient: 'linear-gradient(135deg,#D4AF37,#E8C84A)',
+        icon: 'fa-seedling',
+        content: `<div class="blog-longform">
+<h2>Hair Fall, Growth and Thickness: The Most-Searched Hair Problem in Pakistan</h2>
+<p>Across every major Pakistani city, <strong>"hair fall shampoo"</strong> (search-interest score 60) and <strong>"shampoo for hair fall"</strong> (31) sit near the very top of haircare search volume, closely followed by <strong>"hair growth shampoo"</strong> (39) and <strong>"shampoo for hair growth"</strong> (28). A newer, more specific query — <strong>"which shampoo is best for hair growth and thickness"</strong> — is also climbing, and it points to something important: most people are not actually asking for faster biological growth, they are asking for hair that <em>looks</em> thicker and stops shedding in the shower drain.</p>
+
+<div class="blog-highlight-box">
+  <h4><i class="fas fa-chart-line"></i> What the Data Shows</h4>
+  <ul>
+    <li><strong>"Best hair fall shampoo"</strong> (21) and <strong>"best shampoo for hair fall"</strong> (18) are both trending upward, up 6% and 10%.</li>
+    <li><strong>"Best shampoo for hair growth"</strong> is searched almost as often as "best hair fall shampoo," showing the two concerns overlap heavily in people's minds.</li>
+    <li>Ingredient-specific searches like <strong>"biotin shampoo"</strong> and <strong>"hair serum"</strong> (up 110%) show a shift toward wanting to understand <em>why</em> a product works, not just buying on a brand name.</li>
+  </ul>
+</div>
+
+<p>That distinction matters because most visible hair fall in Pakistan is not androgenetic (pattern) hair loss at all — it is breakage. Hair that is structurally weak from hard water mineral buildup, over-washing with harsh sulfates, heat styling, or nutritional gaps snaps partway down the shaft or right at a weakened root, and it looks and feels exactly like "hair fall" even though the follicle itself is healthy. This is exactly the mechanism the <strong>Maxylook Protein line</strong> targets.</p>
+
+<h2>Why Protein, Specifically</h2>
+<p>Hair is roughly 90% keratin, a fibrous protein. Every wash cycle, every UV exposure, every blow-dry session strips a small amount of this structural protein out of the cuticle and cortex, leaving microscopic gaps. Over months, those gaps compound into visibly thinner, weaker strands that break under normal brushing tension — which is what gets reported as "hair fall" even when the scalp and follicles are perfectly fine.</p>
+
+<table class="blog-table">
+  <thead><tr><th>Sign You're Seeing</th><th>Likely Cause</th><th>What Actually Helps</th></tr></thead>
+  <tbody>
+    <tr><td>Hair snapping mid-length, not from the root</td><td>Protein/structural depletion</td><td>Protein-replenishing shampoo + mask (this line)</td></tr>
+    <tr><td>Whole strands with a white bulb falling from the root</td><td>Follicle-level shedding cycle</td><td>Scalp stimulation, medical evaluation if persistent</td></tr>
+    <tr><td>Hair feels "thin" and flat by midday</td><td>Weak cuticle unable to hold body/volume</td><td>Protein + light styling serum for lift</td></tr>
+    <tr><td>Breakage worse after heat styling or chemical color</td><td>Cumulative protein loss from processing</td><td>Weekly protein mask, reduced heat frequency</td></tr>
+  </tbody>
+</table>
+
+<p>The <strong><a href="#" onclick="navigate('product-details', 3);return false;">Nourishing Shampoo 1000 ml</a></strong> is built around a hydrolyzed protein complex — protein broken down into small enough molecules to actually penetrate the hair shaft rather than sitting uselessly on the surface the way whole-protein "keratin-infused" drugstore shampoos often do. Used consistently, it fills in the micro-damage responsible for most day-to-day breakage, which is what most Pakistani women searching "best shampoo for hair fall" are actually experiencing.</p>
+
+<h2>Protein vs. Biotin vs. Growth Serums: What Each One Actually Does</h2>
+<p>Search trends show rising interest in biotin shampoo, hair serum, and rosemary oil alongside classic hair-fall searches, which understandably causes confusion about which ingredient solves which problem.</p>
+<ul>
+  <li><strong>Protein (this line):</strong> Rebuilds the physical structure of the hair strand you already have — stops breakage, adds thickness and body to existing hair.</li>
+  <li><strong>Biotin:</strong> A B-vitamin that supports keratin synthesis from within the body; most useful as a dietary/supplement approach rather than a topical shampoo ingredient, since biotin is poorly absorbed through the hair shaft itself.</li>
+  <li><strong>Rosemary oil / growth actives:</strong> Targets the scalp and follicle to encourage new growth cycles — a completely different mechanism from strand repair. Our <a href="#" onclick="navigate('single-blog', 206);return false;">Rosemary Oil for Hair guide</a> and <a href="#" onclick="navigate('single-blog', 205);return false;">Hair Growth Actives Explained</a> article both go deep on this.</li>
+</ul>
+<p>Most people benefit from combining categories: protein care to stop the breakage that's making hair look sparse today, and scalp-focused actives for genuinely new growth over the next few months.</p>
+
+<h2>A 2-Product Weekly System</h2>
+<div class="blog-step-card">
+  <div class="blog-step-number">1</div>
+  <div class="blog-step-info">
+    <h4>Every wash: Nourishing Shampoo</h4>
+    <p>Massage into the scalp for 60-90 seconds to stimulate circulation, then let the lather work through the lengths where the actual protein depletion is worst.</p>
+  </div>
+</div>
+<div class="blog-step-card">
+  <div class="blog-step-number">2</div>
+  <div class="blog-step-info">
+    <h4>2x weekly: Nourishing Mask</h4>
+    <p>Apply the <a href="#" onclick="navigate('product-details', 15);return false;">Nourishing Mask</a> from ears down, focusing on the most breakage-prone lengths and ends, and leave for 10 minutes.</p>
+  </div>
+</div>
+<div class="blog-step-card">
+  <div class="blog-step-number">3</div>
+  <div class="blog-step-info">
+    <h4>Minimize tension styling</h4>
+    <p>Tight buns and ponytails pulled straight after washing put maximum stress on protein-weakened hair right when it's most vulnerable and swollen with water — let hair air-dry partially first.</p>
+  </div>
+</div>
+
+<h2>Which Size Should You Buy?</h2>
+<p>The Nourishing Shampoo is available in a 1000 ml salon size and a 300 ml size — see our <a href="#" onclick="navigate('single-blog', 314);return false;">300 ml size guide</a> for the price-per-wash comparison. The matching Nourishing Mask also comes in two sizes; check the <a href="#" onclick="navigate('single-blog', 315);return false;">1000 ml Mask guide</a> and <a href="#" onclick="navigate('single-blog', 316);return false;">300 ml Mask guide</a> to pick the right one for how often you plan to mask.</p>
+
+<h2>Frequently Asked Questions</h2>
+<div class="blog-faq-item">
+  <h3>Will this regrow hair at the roots?</h3>
+  <p>No single shampoo regrows hair from dormant follicles — that requires scalp-level stimulation over months. What this shampoo does very effectively is stop the strand breakage that makes existing hair look thin and sparse, which is the cause of most "hair fall" complaints. For root-level growth strategies, read our <a href="#" onclick="navigate('single-blog', 205);return false;">Hair Growth Actives Explained</a> guide.</p>
+</div>
+<div class="blog-faq-item">
+  <h3>How is this different from the Collagen Protecting Shampoo?</h3>
+  <p>Both target strength, but from different angles: Protein rebuilds the fiber itself, while <a href="#" onclick="navigate('single-blog', 306);return false;">Collagen Protecting Shampoo</a> focuses more on shielding hair from ongoing environmental and chemical stress. Many women alternate between the two through the week.</p>
+</div>
+<div class="blog-faq-item">
+  <h3>Is protein shampoo safe to use every day?</h3>
+  <p>Yes — unlike leave-in protein treatments, which can cause protein overload (stiff, brittle hair) if overused, a rinse-out protein shampoo is gentle enough for regular use for most hair types.</p>
+</div>
+
+<div class="blog-cta-box">
+  <h4>Stop breakage before it looks like hair fall</h4>
+  <p>Pair the Nourishing Shampoo with its matching mask for the fastest visible improvement in strand strength.</p>
+  <button class="btn btn-primary" onclick="navigate('shop');filterCategory('Shampoo')">Shop All Shampoos</button>
+</div>
+</div>`
+      },
+      {
+        id: 303,
+        title: 'No Yellow Shampoo: The Toning Routine Pakistani Women With Highlights, Balayage and Grey Hair Actually Need',
+        date: 'Aug 28, 2026',
+        author: 'Marco Bellini & Italia Cosmetics Master Stylists',
+        cat: 'Shampoo',
+        excerpt: 'Why highlighted, bleached and grey-blended hair turns brassy or yellow in Pakistan, and how the violet-pigment Maxylook No Yellow Shampoo neutralizes it between salon visits.',
+        gradient: 'linear-gradient(135deg,#232323,#3A3A3A)',
+        icon: 'fa-star',
+        content: `<div class="blog-longform">
+<h2>The Problem Nobody Warns You About Before Getting Highlights</h2>
+<p>Search terms like <strong>"hair colour shampoo"</strong>, <strong>"hair color shampoo"</strong>, and <strong>"hair dye shampoo"</strong> are among the fastest-growing hair queries in Pakistan, and a large share of that demand comes from women who have already been to the salon for highlights, balayage, or a full bleach-and-tone, and are now discovering the part their stylist mentioned briefly: lightened hair does not stay the cool blonde or ash tone it left the salon as. Within two to three weeks, warm undertones — yellow, orange, or brassy gold — start pushing through, especially with Pakistan's hard, mineral-rich water and strong UV exposure. The same brassiness shows up on hair that has gone naturally grey or white and been toned or blended rather than dyed a flat color.</p>
+
+<div class="blog-highlight-box">
+  <h4><i class="fas fa-chart-line"></i> What Pakistani Search Data Shows</h4>
+  <ul>
+    <li><strong>"Shampoo hair color"</strong> (47) and <strong>"hair color shampoo"</strong> (46) are two of the highest-volume color-related searches nationally, both up 60-70%.</li>
+    <li><strong>"Hair colour shampoo"</strong> (19) is up 10%, and <strong>"hair dye shampoo"</strong> (10) is up 10% as well — sustained, not seasonal, interest.</li>
+    <li>Brand-specific searches like <strong>"garnier hair color"</strong> and <strong>"muicin hair color shampoo"</strong> show most people are currently comparing drugstore color-depositing shampoos, not the purple/violet toning shampoos salons actually use to maintain cool tones.</li>
+  </ul>
+</div>
+
+<p>This is an important distinction: color-depositing "5-in-1" drugstore shampoos add pigment to change or refresh a color. A <strong>toning shampoo</strong> like Maxylook No Yellow does the opposite job — it cancels out unwanted warmth so an existing cool, blonde, silver, or grey-blended shade stays true. If you are looking to change your color at home rather than maintain one, our <a href="#" onclick="navigate('single-blog', 203);return false;">Instant Hair Color Shampoo guide</a> covers that category specifically.</p>
+
+<h2>The Science: Why Violet Cancels Yellow</h2>
+<p>Color theory is straightforward once you see it laid out: violet and yellow sit directly opposite each other on the color wheel, which means they neutralize each other when combined. The <strong><a href="#" onclick="navigate('product-details', 5);return false;">No Yellow Shampoo 1000 ml</a></strong> is infused with a concentrated violet pigment that deposits a microscopic, temporary tint onto the hair cuticle with every wash. On its own, that pigment looks purple; layered against yellow or brassy tones already in the hair, it visually cancels them out, leaving a cleaner, cooler-looking finish without a trip back to the salon.</p>
+
+<table class="blog-table">
+  <thead><tr><th>Hair Type</th><th>Why It Turns Brassy</th><th>How Violet Pigment Helps</th></tr></thead>
+  <tbody>
+    <tr><td>Bleached / highlighted hair</td><td>Underlying warm pigment (melanin remnants) is exposed after lightening</td><td>Cancels the warm tone with every wash, extending salon toner life</td></tr>
+    <tr><td>Balayage / babylights</td><td>Fine, porous lightened sections absorb warmth from water and UV fastest</td><td>Targeted toning keeps the blended sections cool without overtoning roots</td></tr>
+    <tr><td>Natural grey or white, chemically blended</td><td>Grey hair is naturally more porous and yellows with hard water minerals and sun</td><td>Restores a brighter, cleaner white/silver look between treatments</td></tr>
+  </tbody>
+</table>
+
+<h2>How to Use It Without Over-Toning</h2>
+<div class="blog-step-card">
+  <div class="blog-step-number">1</div>
+  <div class="blog-step-info">
+    <h4>Start with once or twice a week, not every wash</h4>
+    <p>Violet pigment builds with use. Lighter blondes and silver-grey hair need more frequent toning; darker highlights need less, or the hair can pick up a faint lavender cast.</p>
+  </div>
+</div>
+<div class="blog-step-card">
+  <div class="blog-step-number">2</div>
+  <div class="blog-step-info">
+    <h4>Do not leave it on longer than a normal shampoo</h4>
+    <p>This is a maintenance product, not a toner treatment — a standard 1-2 minute lather and rinse is enough. Leaving it on longer to "tone harder" is the most common cause of a dull, greyish cast on naturally lighter blondes.</p>
+  </div>
+</div>
+<div class="blog-step-card">
+  <div class="blog-step-number">3</div>
+  <div class="blog-step-info">
+    <h4>Follow with the No Yellow Mask for compromised ends</h4>
+    <p>Bleached and highlighted hair is almost always more damaged at the ends than the roots. The <a href="#" onclick="navigate('product-details', 17);return false;">No Yellow Mask</a> combines the same violet-pigment toning with deeper conditioning specifically for chemically lightened lengths.</p>
+  </div>
+</div>
+
+<h2>Protecting Strength While You Tone</h2>
+<p>Lightened and grey hair is structurally more fragile than virgin hair, so toning alone is not enough — it needs to be paired with strength repair. Many clients alternate the No Yellow Shampoo with the <a href="#" onclick="navigate('single-blog', 304);return false;">Egg Proteins & Minerals Restructuring Shampoo</a> through the week: toning on wash days when brassiness is visible, protein-repair on the others to keep the hair from becoming brittle under repeated color processing.</p>
+
+<h2>Which Size Should You Buy?</h2>
+<p>The No Yellow Shampoo comes in 300 ml and 1000 ml sizes — see our <a href="#" onclick="navigate('single-blog', 317);return false;">300 ml size guide</a> for guidance on which to start with, especially if you are unsure how often your specific tone needs toning. The <a href="#" onclick="navigate('single-blog', 318);return false;">No Yellow Mask guide</a> covers the matching mask in detail.</p>
+
+<h2>Frequently Asked Questions</h2>
+<div class="blog-faq-item">
+  <h3>Can I use No Yellow Shampoo on dark, undyed hair?</h3>
+  <p>It will not do anything visible on naturally dark hair with no lightened or grey sections, since there is no underlying yellow/brass tone to cancel. It is specifically for lightened, highlighted, or grey-blended hair.</p>
+</div>
+<div class="blog-faq-item">
+  <h3>Will it turn my hair purple?</h3>
+  <p>Used as directed — a quick lather and rinse, once or twice weekly — it should not. A visible purple cast usually means it was left on too long or used too frequently for how light the hair already is.</p>
+</div>
+<div class="blog-faq-item">
+  <h3>How is this different from a color-depositing shampoo?</h3>
+  <p>Color-depositing shampoos add a new visible color. This shampoo only cancels unwanted warmth in hair that is already blonde, highlighted, or grey — it will not darken or change hair that has no lightened sections.</p>
+</div>
+
+<div class="blog-cta-box">
+  <h4>Keep your tone salon-fresh between visits</h4>
+  <p>The No Yellow Shampoo and Mask duo is the easiest way to stretch time between expensive toning appointments.</p>
+  <button class="btn btn-primary" onclick="navigate('shop');filterCategory('Shampoo')">Shop All Shampoos</button>
+</div>
+</div>`
+      },
+      {
+        id: 304,
+        title: 'Egg Proteins & Minerals Restructuring Shampoo: A Keratin-Style Repair Routine for Damaged Pakistani Hair',
+        date: 'Aug 29, 2026',
+        author: 'Sana Farooq & Italia Cosmetics Formulation Team',
+        cat: 'Shampoo',
+        excerpt: 'How hydrolyzed egg proteins and minerals rebuild chemically and heat-damaged hair, and why this shampoo is the closest rinse-out alternative to an in-salon keratin treatment.',
+        gradient: 'linear-gradient(135deg,var(--pink),var(--pink-dark))',
+        icon: 'fa-egg',
+        content: `<div class="blog-longform">
+<h2>Keratin Searches Are Rising — Here Is What People Actually Want</h2>
+<p>"<strong>Keratin shampoo</strong>" and "<strong>keratin hair shampoo</strong>" both sit at a search-interest score of 21 nationally, up 20-30%, and "<strong>keratin hair mask</strong>" has jumped 100%. Almost all of this demand comes from the same place: women who have had a keratin smoothing treatment, rebonding, or straightening done at a salon and are searching for a way to maintain the results and stop the hair snapping and breaking that follows heavy chemical processing — plus a growing group searching for a <strong>"dermatologist recommended shampoo for hair loss"</strong> caused specifically by that kind of processing damage rather than follicle-level shedding.</p>
+
+<div class="blog-highlight-box">
+  <h4><i class="fas fa-chart-line"></i> What Pakistani Search Data Shows</h4>
+  <ul>
+    <li><strong>Keratin hair mask</strong> searches are up 100% — the fastest-growing repair-category term in the country.</li>
+    <li><strong>Clarifying shampoo pakistan</strong> is up 400%, reflecting how many people book keratin treatments and then need to manage the buildup and regrowth line afterward.</li>
+    <li><strong>Dermatologist recommended shampoo for hair loss</strong> is a rising, specific search — people increasingly want an evidence-based reason to trust a product, not just a brand name.</li>
+  </ul>
+</div>
+
+<h2>Why Egg Protein Instead of Marketing "Keratin"</h2>
+<p>Most drugstore "keratin shampoos" in Pakistan do not actually contain functional keratin — the molecule is too large to penetrate the hair shaft from a rinse-out shampoo, so it mostly sits on the surface providing a temporary smoothing feel that washes away completely by the next shower. The <strong><a href="#" onclick="navigate('product-details', 7);return false;">Restructuring and Nourishing Shampoo 1000 ml</a></strong> takes a different, more technical approach: it uses hydrolyzed egg proteins and minerals — proteins broken down into fragments small enough to actually diffuse into the cortex — combined with mineral cofactors that support the hair's own structural repair.</p>
+
+<table class="blog-table">
+  <thead><tr><th>Damage Type</th><th>Cause</th><th>How This Shampoo Helps</th></tr></thead>
+  <tbody>
+    <tr><td>Post-keratin/rebonding brittleness</td><td>High-heat flat ironing combined with chemical bonds breaking and reforming</td><td>Hydrolyzed proteins fill cortex gaps left by the chemical process</td></tr>
+    <tr><td>Bleach or high-lift color damage</td><td>Oxidative processing strips structural proteins and lipids</td><td>Mineral complex supports rebuilding what bleaching removed</td></tr>
+    <tr><td>General heat-styling fatigue</td><td>Daily straightening/blow-drying above 180°C</td><td>Ongoing protein replenishment with every wash</td></tr>
+  </tbody>
+</table>
+
+<h2>A Realistic Post-Treatment Routine</h2>
+<div class="blog-step-card">
+  <div class="blog-step-number">1</div>
+  <div class="blog-step-info">
+    <h4>Wait before the first wash</h4>
+    <p>If you've had a keratin or smoothing treatment, follow your stylist's wait time (usually 48-72 hours) before the first wash — this is when the treatment fully sets, regardless of which shampoo you eventually use.</p>
+  </div>
+</div>
+<div class="blog-step-card">
+  <div class="blog-step-number">2</div>
+  <div class="blog-step-info">
+    <h4>Switch to a sulfate-free routine afterward</h4>
+    <p>Once you resume washing, a harsh sulfate shampoo will strip the treatment prematurely. The Restructuring Shampoo's gentle base is designed to extend treatment life while still repairing underlying damage.</p>
+  </div>
+</div>
+<div class="blog-step-card">
+  <div class="blog-step-number">3</div>
+  <div class="blog-step-info">
+    <h4>Mask weekly at the regrowth line and ends</h4>
+    <p>The <a href="#" onclick="navigate('product-details', 18);return false;">Restructuring and Nourishing Mask</a> concentrates repair where it's needed most — new growth that hasn't been treated, and ends that carry the most cumulative damage.</p>
+  </div>
+</div>
+
+<h2>Restructuring Shampoo vs. Protein Shampoo: Which One Do You Need?</h2>
+<p>This line and the <a href="#" onclick="navigate('single-blog', 302);return false;">Protein Nourishing line</a> can look similar on paper, but they solve slightly different problems. Choose Egg Proteins & Minerals if your damage is specifically from chemical processing or high heat (keratin, rebonding, bleach, daily straightening); choose Protein Nourishing if your main complaint is everyday breakage and thinning without heavy chemical history. Many women with both concerns simply alternate the two through the week.</p>
+
+<h2>Which Size Should You Buy?</h2>
+<p>This shampoo comes in a 250 ml and 1000 ml size — the <a href="#" onclick="navigate('single-blog', 319);return false;">250 ml size guide</a> walks through which one makes sense depending on how recently you've had chemical treatment done. The matching <a href="#" onclick="navigate('single-blog', 320);return false;">Restructuring Mask guide</a> covers the single-size 350 ml mask.</p>
+
+<h2>Frequently Asked Questions</h2>
+<div class="blog-faq-item">
+  <h3>Does this shampoo contain actual keratin?</h3>
+  <p>It's built around hydrolyzed egg proteins and minerals rather than marketing-grade "keratin," specifically because small-molecule hydrolyzed proteins are able to actually penetrate the hair shaft, unlike whole keratin molecules in most rinse-out products.</p>
+</div>
+<div class="blog-faq-item">
+  <h3>Can I use this if I have not had a chemical treatment?</h3>
+  <p>Yes — anyone with heat-styling damage or general breakage benefits from the same protein-and-mineral repair mechanism, not just post-keratin hair.</p>
+</div>
+<div class="blog-faq-item">
+  <h3>How often should I clarify if I use keratin treatments regularly?</h3>
+  <p>Roughly once a month, using a dedicated clarifying shampoo just once, is enough to prevent buildup without stripping the treatment prematurely. Overdoing clarifying is the more common mistake.</p>
+</div>
+
+<div class="blog-cta-box">
+  <h4>Repair what heat and chemicals took out</h4>
+  <p>Pair this shampoo with its matching mask for the closest at-home equivalent to an in-salon reconstructive treatment.</p>
+  <button class="btn btn-primary" onclick="navigate('shop');filterCategory('Shampoo')">Shop All Shampoos</button>
+</div>
+</div>`
+      },
+      {
+        id: 305,
+        title: 'Arganway Moisture Repair Shampoo: Sulfate-Free Relief for Very Dry, Coarse Pakistani Hair',
+        date: 'Aug 30, 2026',
+        author: 'Sana Farooq & Italia Cosmetics Formulation Team',
+        cat: 'Shampoo',
+        excerpt: 'For hair that stays dry no matter what you try: how argan-oil-based Moisture Repair Shampoo works, and why the sulfate-free switch matters more for coarse, thick Pakistani hair than any other type.',
+        gradient: 'linear-gradient(135deg,#8B5FBF,#6B3FA0)',
+        icon: 'fa-oil-can',
+        content: `<div class="blog-longform">
+<h2>When "Dry Hair" Means Genuinely Dehydrated, Not Just Frizzy</h2>
+<p>There is a specific tier of dryness that ordinary hydrating shampoos do not fully solve: thick, coarse, or very curly/wavy hair that stays rough and straw-like no matter how much product is used. This is the exact audience behind rising searches for <strong>"sulphate free shampoo"</strong> (up 40%) and <strong>"sulfate free shampoo"</strong> — people who have already tried multiple "moisturizing" mass-market shampoos and correctly suspect the sulfates in those formulas are undoing the moisturizing claims on the same bottle.</p>
+
+<div class="blog-highlight-box">
+  <h4><i class="fas fa-chart-line"></i> What Pakistani Search Data Shows</h4>
+  <ul>
+    <li><strong>"Shampoo for dry hair"</strong> (21) and <strong>"best shampoo for dry hair"</strong> (9) remain large, steady search categories.</li>
+    <li><strong>"Sulphate free shampoo"</strong> is up 40%, showing a real shift in what people believe is causing their dryness.</li>
+    <li>Coarse and thick-hair-specific complaints overlap heavily with "frizzy hair" (up 1%) and general "best shampoo" dissatisfaction searches (100 search-interest, still trending down 10% — meaning people keep switching products and still not finding a fix).</li>
+  </ul>
+</div>
+
+<h2>Why Argan Oil Handles Severe Dryness Differently Than Macadamia</h2>
+<p>Both Maxylook's Macadamia and Arganway lines target dryness, but they are not interchangeable. Macadamia oil is lighter and better suited to fine-to-medium hair that is dry but not severely damaged. Argan oil carries a higher concentration of oleic and linoleic fatty acids and vitamin E, giving it more weight and a stronger sealing effect — better suited to thick, coarse, or chemically over-processed hair that needs a heavier moisture barrier to actually feel different.</p>
+
+<table class="blog-table">
+  <thead><tr><th>Hair Type</th><th>Recommended Line</th><th>Why</th></tr></thead>
+  <tbody>
+    <tr><td>Fine to medium, mildly dry or frizzy</td><td><a href="#" onclick="navigate('single-blog', 301);return false;">Macadamia</a></td><td>Lightweight penetration without weighing hair down</td></tr>
+    <tr><td>Thick, coarse, or very curly/wavy</td><td>Arganway (this line)</td><td>Heavier fatty-acid profile seals moisture into a denser hair shaft</td></tr>
+    <tr><td>Severely bleached or chemically damaged</td><td><a href="#" onclick="navigate('single-blog', 304);return false;">Egg Proteins & Minerals</a></td><td>Structural protein rebuilding takes priority over surface moisture</td></tr>
+  </tbody>
+</table>
+
+<h2>The Sulfate-Free Difference on Coarse Hair Specifically</h2>
+<p>Coarse and thick hair textures are disproportionately affected by sulfates because they already have a naturally slower oil transfer from scalp to ends — sulfates strip what little reaches the lengths, and coarse hair's larger cuticle scales make that dryness visibly obvious as roughness and static rather than just dullness. The <strong><a href="#" onclick="navigate('product-details', 8);return false;">Shampoo Moisture Repair 500 ml</a></strong> uses a mild, sulfate-free cleansing base specifically to avoid compounding this problem. For the full breakdown of sulfate-free chemistry and how to transition without a "waxy buildup" adjustment period, see our <a href="#" onclick="navigate('single-blog', 202);return false;">Sulfate-Free Shampoo buying guide</a>.</p>
+
+<h2>Building a Moisture-Repair Routine</h2>
+<div class="blog-step-card">
+  <div class="blog-step-number">1</div>
+  <div class="blog-step-info">
+    <h4>Wash 2-3x weekly, focused at the roots</h4>
+    <p>Coarse, dry hair rarely needs daily washing — over-washing is one of the most common self-inflicted causes of chronic dryness in thick hair types.</p>
+  </div>
+</div>
+<div class="blog-step-card">
+  <div class="blog-step-number">2</div>
+  <div class="blog-step-info">
+    <h4>Deep mask 1-2x weekly, focused on ends</h4>
+    <p>Follow with the <a href="#" onclick="navigate('product-details', 19);return false;">Intense Hydrating Mask</a>, leaving it on for a full 10-15 minutes — coarse hair's dense cuticle needs more contact time to absorb what a fine-hair mask would take in half the time.</p>
+  </div>
+</div>
+<div class="blog-step-card">
+  <div class="blog-step-number">3</div>
+  <div class="blog-step-info">
+    <h4>Detangle wet, not dry</h4>
+    <p>Coarse hair is most breakage-prone when dry and tangled; a wide-tooth comb used while the mask is still in the hair reduces snapping significantly compared to brushing dry.</p>
+  </div>
+</div>
+
+<h2>Frequently Asked Questions</h2>
+<div class="blog-faq-item">
+  <h3>Is this the same as Macadamia Hydrating Shampoo?</h3>
+  <p>No — Arganway is formulated with a heavier fatty-acid profile for thicker, coarser, or more severely dry hair, while <a href="#" onclick="navigate('single-blog', 301);return false;">Macadamia</a> suits fine-to-medium hair with everyday dryness or frizz.</p>
+</div>
+<div class="blog-faq-item">
+  <h3>Why does it only come in one size?</h3>
+  <p>The 500 ml bottle is sized for its intended use as a concentrated, less-frequent-wash formula rather than an everyday high-volume shampoo — most users find it lasts as long as a larger bottle of a milder daily shampoo.</p>
+</div>
+<div class="blog-faq-item">
+  <h3>Will sulfate-free shampoo lather less?</h3>
+  <p>Yes, noticeably — sulfates are what create thick foam, and their absence is not a sign the shampoo is "not working." A smaller amount worked through wet hair cleanses just as effectively.</p>
+</div>
+
+<div class="blog-cta-box">
+  <h4>For hair that stays dry no matter what</h4>
+  <p>Pair the Moisture Repair Shampoo with the Intense Hydrating Mask for the deepest repair the Maxylook range offers.</p>
+  <button class="btn btn-primary" onclick="navigate('shop');filterCategory('Shampoo')">Shop All Shampoos</button>
+</div>
+</div>`
+      },
+      {
+        id: 306,
+        title: 'Collagen Protecting Shampoo: The Anti Hair Fall Routine for Everyday Environmental Damage',
+        date: 'Aug 31, 2026',
+        author: 'Dr. Ayesha Malik & Italia Cosmetics Master Stylists',
+        cat: 'Shampoo',
+        excerpt: 'Pollution, hard water, and sun exposure age hair the same way they age skin. How the collagen-based Protecting Shampoo builds a daily defense layer against anti hair fall triggers.',
+        gradient: 'linear-gradient(135deg,var(--charcoal),var(--charcoal-soft))',
+        icon: 'fa-shield-alt',
+        content: `<div class="blog-longform">
+<h2>Anti Hair Fall Is Not Just About the Shampoo You Wash With</h2>
+<p><strong>"Anti hair fall shampoo"</strong> (search-interest 11) and <strong>"best hair fall shampoo in pakistan"</strong> (9) are searched by people who have often already tried a basic anti-hair-fall shampoo and are still shedding — because wash-day cleansing is only one part of the picture. Between washes, hair in Lahore, Karachi, and Faisalabad is exposed daily to particulate pollution, UV radiation, and hard water splashback from regular ablution and handwashing routines, all of which degrade the hair's protective outer layer continuously, not just in the shower.</p>
+
+<div class="blog-highlight-box">
+  <h4><i class="fas fa-chart-line"></i> What Pakistani Search Data Shows</h4>
+  <ul>
+    <li><strong>"Hair fall shampoo"</strong> (60) is one of the single highest-volume hair searches nationally.</li>
+    <li><strong>"Best hair fall shampoo"</strong> (21) is up 6%, and <strong>"best shampoo for hair fall"</strong> (18) is up 10% — people are actively looking for something that outperforms what they already own.</li>
+    <li>Related searches for <strong>"dermatologist recommended shampoo for hair loss"</strong> show rising demand for products backed by an actual mechanism, not just a hair-fall claim on the label.</li>
+  </ul>
+</div>
+
+<h2>Why Collagen for Protection, Specifically</h2>
+<p>Collagen is best known as a skin ingredient, and for good reason: it forms a supportive structural matrix that helps skin — and, in a haircare formula, the hair cuticle — resist environmental micro-damage. The <strong><a href="#" onclick="navigate('product-details', 9);return false;">Protecting Shampoo 1000 ml</a></strong> uses a collagen complex to coat and reinforce the cuticle surface, creating a smoother, more resilient barrier against the daily wear that gradually thins and weakens hair strands until they snap under normal combing tension — which is what most people experience and describe simply as "hair fall."</p>
+
+<table class="blog-table">
+  <thead><tr><th>Daily Stressor</th><th>Effect on Hair</th><th>How Collagen Protection Helps</th></tr></thead>
+  <tbody>
+    <tr><td>Urban air pollution (Lahore, Karachi)</td><td>Particulates settle into the cuticle, causing dullness and oxidative micro-damage</td><td>Smoother cuticle surface resists particulate adhesion</td></tr>
+    <tr><td>UV exposure during commutes</td><td>Breaks down surface proteins and fades color</td><td>Reinforced cuticle layer reduces UV-driven protein loss</td></tr>
+    <tr><td>Hard water splashback (frequent handwashing/wudu)</td><td>Mineral deposits accumulate on exposed hairline strands</td><td>Protective coating reduces mineral adhesion between full washes</td></tr>
+  </tbody>
+</table>
+
+<h2>Collagen vs. Protein: Two Different Jobs</h2>
+<p>It's worth being precise here since the two are often confused. The <a href="#" onclick="navigate('single-blog', 302);return false;">Protein Nourishing line</a> repairs and rebuilds strand structure from the inside. This Collagen line is more about building a resilient outer shield that reduces how much new damage accumulates day to day. Hair that is already weak benefits most from protein first; hair that is structurally okay but constantly exposed to pollution, sun, and hard water benefits most from collagen protection to stay that way.</p>
+
+<h2>A Daily Defense Routine</h2>
+<div class="blog-step-card">
+  <div class="blog-step-number">1</div>
+  <div class="blog-step-info">
+    <h4>Use as your regular daily or every-other-day shampoo</h4>
+    <p>Unlike a once-weekly treatment, collagen protection works cumulatively — consistency matters more than intensity here.</p>
+  </div>
+</div>
+<div class="blog-step-card">
+  <div class="blog-step-number">2</div>
+  <div class="blog-step-info">
+    <h4>Mask weekly for reinforcement</h4>
+    <p>The <a href="#" onclick="navigate('product-details', 20);return false;">Protecting Mask</a> deposits a more concentrated collagen dose than the shampoo can leave behind in a quick wash-and-rinse.</p>
+  </div>
+</div>
+<div class="blog-step-card">
+  <div class="blog-step-number">3</div>
+  <div class="blog-step-info">
+    <h4>Tie hair loosely on high-pollution or high-sun days</h4>
+    <p>No shampoo fully offsets prolonged direct exposure — a loose braid or scarf on the worst pollution or sun-exposure days meaningfully reduces the damage this shampoo then has to help repair.</p>
+  </div>
+</div>
+
+<h2>Which Size Should You Buy?</h2>
+<p>The Protecting Shampoo comes in 300 ml and 1000 ml sizes — see the <a href="#" onclick="navigate('single-blog', 322);return false;">300 ml size guide</a> for the price-per-use comparison. The matching mask also comes in two sizes: check the <a href="#" onclick="navigate('single-blog', 323);return false;">1000 ml Mask guide</a> and <a href="#" onclick="navigate('single-blog', 324);return false;">300 ml Mask guide</a>.</p>
+
+<h2>Frequently Asked Questions</h2>
+<div class="blog-faq-item">
+  <h3>Will this stop hair fall from a medical or hormonal cause?</h3>
+  <p>No shampoo, including this one, can address follicle-level hair loss driven by hormones, thyroid issues, or nutrient deficiencies — those need medical evaluation. This shampoo is aimed specifically at breakage and damage from daily environmental exposure, which is what accounts for most visible shedding.</p>
+</div>
+<div class="blog-faq-item">
+  <h3>Do I need this and the Protein shampoo?</h3>
+  <p>Many women with both structural weakness and heavy daily exposure use them together — Protein a few times a week for repair, Collagen Protecting as the everyday maintenance shampoo in between.</p>
+</div>
+<div class="blog-faq-item">
+  <h3>Does hard water undo the benefit of this shampoo?</h3>
+  <p>Extremely hard water reduces but does not eliminate the benefit — a monthly clarifying wash (see our <a href="#" onclick="navigate('single-blog', 202);return false;">Sulfate-Free Shampoo guide</a> for clarifying frequency) helps the collagen coating perform as intended by removing mineral buildup first.</p>
+</div>
+
+<div class="blog-cta-box">
+  <h4>Build resistance before the damage shows</h4>
+  <p>Make Collagen Protecting your everyday shampoo and reserve intensive treatments for weekly maintenance.</p>
+  <button class="btn btn-primary" onclick="navigate('shop');filterCategory('Shampoo')">Shop All Shampoos</button>
+</div>
+</div>`
+      },
+      {
+        id: 307,
+        title: 'Fresh Mint Revitalizing Shampoo: The Clarifying Routine for Oily Scalp, Dandruff and Hijab Sweat',
+        date: 'Sep 1, 2026',
+        author: 'Marco Bellini & Italia Cosmetics Master Stylists',
+        cat: 'Shampoo',
+        excerpt: 'Oily roots, dandruff and flat volume by midday are usually the same root cause. How the menthol-based Fresh Mint Revitalizing Shampoo resets an overactive scalp, including for hijab-wearing routines.',
+        gradient: 'linear-gradient(135deg,var(--gold),var(--gold-light))',
+        icon: 'fa-leaf',
+        content: `<div class="blog-longform">
+<h2>Oily Scalp Is Pakistan's Most Underestimated Hair Complaint</h2>
+<p><strong>"Dandruff shampoo"</strong> (search-interest 16, up 20%), <strong>"shampoo for oily hair"</strong> (8), and <strong>"clarifying shampoo"</strong> (3, up 150%) are all searched heavily by people convinced they need a medicated or dandruff-specific product, when a large share of what they are experiencing is simply an overactive, under-cleansed scalp — flat roots by early afternoon, visible white flaking that is dried sebum and product buildup rather than true dandruff, and hair that looks unwashed a day after washing it.</p>
+
+<div class="blog-highlight-box">
+  <h4><i class="fas fa-chart-line"></i> What Pakistani Search Data Shows</h4>
+  <ul>
+    <li><strong>"Clarifying shampoo pakistan"</strong> is up 400%, one of the fastest-rising terms in the entire dataset.</li>
+    <li><strong>"Dandruff shampoo"</strong> (16) is up 20%, and medicated-ingredient searches like <strong>"ketoconazole shampoo"</strong> are rising alongside it.</li>
+    <li><strong>"Medicated shampoo"</strong> is up 50%, though much of this demand is actually for scalp maintenance rather than a diagnosed dermatological condition.</li>
+  </ul>
+</div>
+
+<h2>The Hijab Factor Nobody Writes About</h2>
+<p>For a large share of Pakistani women, oily scalp is made significantly worse by hijab or dupatta wear: covered hair traps heat and humidity against the scalp for hours at a time, has reduced air circulation compared to uncovered hair, and often has more friction and pressure at the roots from pins and fabric. This does not mean hijab-wearers need to change their coverage — it means the scalp routine needs to actively account for it, since a shampoo designed for average airflow conditions under-performs when hair spends 10+ hours a day covered.</p>
+
+<h2>Why Mint, Specifically</h2>
+<p>The <strong><a href="#" onclick="navigate('product-details', 12);return false;">Revitalizing Shampoo 1000 ml</a></strong> uses fresh mint and menthol as its core active. Menthol has a genuine cooling and mild vasodilating effect on the scalp — it is not just a fragrance choice. That cooling sensation signals reduced scalp temperature, which is directly relevant to oil production, since warmth and trapped heat (exactly the condition hijab wear creates) is one of the drivers of increased sebum output. Combined with a clarifying-strength but non-stripping cleansing base, it removes the oil and buildup causing flatness and flaking without over-drying the scalp into a compensatory oil rebound.</p>
+
+<table class="blog-table">
+  <thead><tr><th>Symptom</th><th>Common Misdiagnosis</th><th>Likely Actual Cause</th></tr></thead>
+  <tbody>
+    <tr><td>White flakes in hair by midday</td><td>"Dandruff"</td><td>Dried sebum/product buildup — clarifying, not medicated shampoo, is the first fix</td></tr>
+    <tr><td>Roots look oily/flat within hours of washing</td><td>"My hair is just naturally oily"</td><td>Over-stripping causing an oil-production rebound, or heat-trapping from hijab wear</td></tr>
+    <tr><td>Itchy scalp under hijab by afternoon</td><td>"Dandruff" or allergy</td><td>Heat and moisture buildup — often resolves with a cooling, clarifying scalp routine</td></tr>
+    <tr><td>Persistent flaking with redness, not resolving with clarifying</td><td>—</td><td>Possible seborrheic dermatitis — see a dermatologist and our <a href="#" onclick="navigate('single-blog', 201);return false;">Dandruff & Itchy Scalp guide</a></td></tr>
+  </tbody>
+</table>
+
+<h2>A Routine Built Around Hijab Wear</h2>
+<div class="blog-step-card">
+  <div class="blog-step-number">1</div>
+  <div class="blog-step-info">
+    <h4>Wash the night before or morning of covering hair</h4>
+    <p>Damp hair sealed under fabric for hours traps more moisture and heat than dry hair — a full dry before covering, even if it means washing the night before, noticeably reduces midday oiliness.</p>
+  </div>
+</div>
+<div class="blog-step-card">
+  <div class="blog-step-number">2</div>
+  <div class="blog-step-info">
+    <h4>Focus the shampoo at the roots, not just the lengths</h4>
+    <p>A 60-90 second scalp massage with the Revitalizing Shampoo lifts the oil and buildup that mid-length-focused washing misses entirely.</p>
+  </div>
+</div>
+<div class="blog-step-card">
+  <div class="blog-step-number">3</div>
+  <div class="blog-step-info">
+    <h4>Mask the lengths and ends only, never the scalp</h4>
+    <p>Use the <a href="#" onclick="navigate('product-details', 22);return false;">Revitalizing Mask</a> from ears down — oily-scalp hair is very often simultaneously dry at the ends, and applying a rich mask to the roots undoes the shampoo's clarifying work.</p>
+  </div>
+</div>
+<div class="blog-step-card">
+  <div class="blog-step-number">4</div>
+  <div class="blog-step-info">
+    <h4>Choose breathable inner caps and rotate pin placement</h4>
+    <p>This is not a product fix but matters as much as one: a breathable, moisture-wicking underscarf and varying where pins sit reduces the friction and trapped heat driving both oiliness and breakage at the hairline.</p>
+  </div>
+</div>
+
+<h2>Fresh Mint vs. a Medicated Anti-Dandruff Shampoo</h2>
+<p>If flaking persists after 3-4 weeks of consistent clarifying with Fresh Mint, or comes with redness, soreness, or thick scale, that points toward true dandruff or seborrheic dermatitis rather than simple buildup, and a medicated shampoo with ketoconazole or piroctone olamine (or a dermatologist visit) becomes the more appropriate next step. Our <a href="#" onclick="navigate('single-blog', 201);return false;">Dandruff & Itchy Scalp Shampoo Guide for Pakistan</a> and <a href="#" onclick="navigate('single-blog', 210);return false;">Oily Hair and Oily Scalp guide</a> both go deeper into that distinction.</p>
+
+<h2>Which Size Should You Buy?</h2>
+<p>The Revitalizing Shampoo comes in 300 ml and 1000 ml sizes — see the <a href="#" onclick="navigate('single-blog', 325);return false;">300 ml size guide</a> for guidance. The matching mask is also available in two sizes: the <a href="#" onclick="navigate('single-blog', 326);return false;">300 ml Mask guide</a> and <a href="#" onclick="navigate('single-blog', 327);return false;">1000 ml Mask guide</a> cover both.</p>
+
+<h2>Frequently Asked Questions</h2>
+<div class="blog-faq-item">
+  <h3>Can I use this every day?</h3>
+  <p>Yes, its clarifying strength is balanced to be non-stripping, but most people find every-other-day use, focused on the routine above, is enough to see a real change in oiliness within 3-4 weeks.</p>
+</div>
+<div class="blog-faq-item">
+  <h3>Will menthol make my scalp feel too cold or tingly?</h3>
+  <p>The cooling sensation is mild and temporary, lasting a few minutes after rinsing — it is not a strong medicated tingle and is generally well tolerated even on sensitive scalps.</p>
+</div>
+<div class="blog-faq-item">
+  <h3>Is this a dandruff shampoo?</h3>
+  <p>It is a clarifying and scalp-refreshing shampoo, which resolves a large share of flaking that gets mistaken for dandruff. For diagnosed or persistent dandruff, see our dedicated <a href="#" onclick="navigate('single-blog', 201);return false;">Dandruff & Itchy Scalp guide</a>.</p>
+</div>
+
+<div class="blog-cta-box">
+  <h4>Reset an overworked scalp</h4>
+  <p>Pair the Revitalizing Shampoo with the Revitalizing Mask for balanced care — clarified roots, hydrated ends.</p>
+  <button class="btn btn-primary" onclick="navigate('shop');filterCategory('Shampoo')">Shop All Shampoos</button>
+</div>
+</div>`
+      },
+      {
+        id: 311,
+        title: 'Macadamia Hydrating Shampoo 300 ml: Is the Smaller Bottle Worth It?',
+        date: 'Sep 1, 2026',
+        author: 'Italia Editorial Board',
+        cat: 'Shampoo',
+        excerpt: 'A quick price-per-use comparison between the 300 ml and 1000 ml Macadamia Hydrating Shampoo to help you pick the right size for how often you actually wash your hair.',
+        gradient: 'linear-gradient(135deg,#8B5FBF,#A07DD6)',
+        icon: 'fa-tint',
+        content: `<div class="blog-longform">
+<h2>300 ml vs. 1000 ml: The Actual Numbers</h2>
+<p>The <strong><a href="#" onclick="navigate('product-details', 2);return false;">Hydrating Shampoo 300 ml</a></strong> is priced at PKR 7,036, working out to roughly PKR 2,345 per 100 ml. The <a href="#" onclick="navigate('product-details', 1);return false;">1000 ml salon size</a> costs PKR 13,688 — about PKR 1,369 per 100 ml, nearly half the per-use cost. If you already know Macadamia works for your hair, the 1000 ml bottle is the better long-term value.</p>
+
+<table class="blog-table">
+  <thead><tr><th>Size</th><th>Price</th><th>Price per 100 ml</th><th>Best For</th></tr></thead>
+  <tbody>
+    <tr><td>300 ml</td><td>PKR 7,036</td><td>~PKR 2,345</td><td>First-time buyers, travel, testing if it suits your hair</td></tr>
+    <tr><td>1000 ml</td><td>PKR 13,688</td><td>~PKR 1,369</td><td>Established routine, daily/family use, best long-term value</td></tr>
+  </tbody>
+</table>
+
+<p>For the full case on why macadamia oil works so well for dry, frizzy hair in Pakistan's climate, read the complete <a href="#" onclick="navigate('single-blog', 301);return false;">Macadamia Hydrating Shampoo guide</a>. Once you've settled on the shampoo, the matching <a href="#" onclick="navigate('single-blog', 312);return false;">Hydrating Mask 300 ml</a> and <a href="#" onclick="navigate('single-blog', 313);return false;">Hydrating Mask 1000 ml</a> follow the same sizing logic.</p>
+
+<div class="blog-faq-item">
+  <h3>Should I start with the 300 ml if I've never tried this line?</h3>
+  <p>Yes — it's the more sensible first purchase so you can confirm the formula suits your hair before committing to the larger, better-value bottle.</p>
+</div>
+
+<div class="blog-cta-box">
+  <h4>Try the Hydrating Shampoo</h4>
+  <button class="btn btn-primary" onclick="navigate('product-details', 2)">Shop 300 ml</button>
+  <button class="btn btn-secondary" onclick="navigate('product-details', 1)">Shop 1000 ml</button>
+</div>
+</div>`
+      },
+      {
+        id: 312,
+        title: 'Macadamia Hydrating Mask 300 ml: Who Should Start Here',
+        date: 'Sep 1, 2026',
+        author: 'Italia Editorial Board',
+        cat: 'Mask',
+        excerpt: 'A focused look at the 300 ml Macadamia Hydrating Mask — how it pairs with the Hydrating Shampoo and when the smaller size makes more sense than the 1000 ml.',
+        gradient: 'linear-gradient(135deg,#8B5FBF,#A07DD6)',
+        icon: 'fa-spa',
+        content: `<div class="blog-longform">
+<h2>A Weekly Treatment, Not a Daily One</h2>
+<p>The <strong><a href="#" onclick="navigate('product-details', 14);return false;">Hydrating Mask 300 ml</a></strong> is priced at PKR 7,932 (~PKR 2,644 per 100 ml). Because a hair mask is typically used once or twice a week rather than every wash, a 300 ml jar lasts most people 8-12 weeks — long enough to properly judge results before deciding whether to upgrade to the <a href="#" onclick="navigate('product-details', 24);return false;">1000 ml jar</a>, which drops the cost to roughly PKR 1,386 per 100 ml.</p>
+
+<table class="blog-table">
+  <thead><tr><th>Size</th><th>Price</th><th>Typical Duration (1-2x weekly use)</th></tr></thead>
+  <tbody>
+    <tr><td>300 ml</td><td>PKR 7,932</td><td>~8-12 weeks</td></tr>
+    <tr><td>1000 ml</td><td>PKR 13,859</td><td>~6-9 months</td></tr>
+  </tbody>
+</table>
+
+<p>Use this mask after the <a href="#" onclick="navigate('product-details', 1);return false;">Hydrating Shampoo</a>, applied from mid-lengths to ends and left on for 8-10 minutes. See the full <a href="#" onclick="navigate('single-blog', 301);return false;">Macadamia Hydrating Shampoo guide</a> for the complete weekly routine, and compare against the <a href="#" onclick="navigate('single-blog', 313);return false;">1000 ml jar</a> if you're ready to commit long-term.</p>
+
+<div class="blog-faq-item">
+  <h3>Can I use this mask without the matching shampoo?</h3>
+  <p>You'll still get a hydration benefit, but sulfate-heavy shampoos strip moisture faster than the mask can replace it — pairing both products from the same line gives the most noticeable, lasting result.</p>
+</div>
+
+<div class="blog-cta-box">
+  <h4>Complete the Macadamia routine</h4>
+  <button class="btn btn-primary" onclick="navigate('product-details', 14)">Shop 300 ml Mask</button>
+</div>
+</div>`
+      },
+      {
+        id: 313,
+        title: 'Macadamia Hydrating Mask 1000 ml: The Better Long-Term Value',
+        date: 'Sep 1, 2026',
+        author: 'Italia Editorial Board',
+        cat: 'Mask',
+        excerpt: 'For established Macadamia users: why the 1000 ml Hydrating Mask jar nearly halves your cost per use compared to the 300 ml size.',
+        gradient: 'linear-gradient(135deg,#8B5FBF,#A07DD6)',
+        icon: 'fa-spa',
+        content: `<div class="blog-longform">
+<h2>Built for a Long-Term Weekly Routine</h2>
+<p>The <strong><a href="#" onclick="navigate('product-details', 24);return false;">Hydrating Mask 1000 ml</a></strong> costs PKR 13,859 — about PKR 1,386 per 100 ml, compared to roughly PKR 2,644 per 100 ml for the <a href="#" onclick="navigate('product-details', 14);return false;">300 ml jar</a>. At a typical once-or-twice-weekly masking frequency, the 1000 ml size covers 6-9 months of use, making it the clear choice once you've confirmed the formula works for your hair.</p>
+
+<table class="blog-table">
+  <thead><tr><th>Size</th><th>Price</th><th>Price per 100 ml</th></tr></thead>
+  <tbody>
+    <tr><td>300 ml</td><td>PKR 7,932</td><td>~PKR 2,644</td></tr>
+    <tr><td>1000 ml</td><td>PKR 13,859</td><td>~PKR 1,386</td></tr>
+  </tbody>
+</table>
+
+<p>Pair it with the <a href="#" onclick="navigate('product-details', 1);return false;">Hydrating Shampoo 1000 ml</a> for a matched full-size system, and see the complete routine in our <a href="#" onclick="navigate('single-blog', 301);return false;">Macadamia Hydrating Shampoo guide</a>.</p>
+
+<div class="blog-faq-item">
+  <h3>Does the larger jar go bad before I finish it?</h3>
+  <p>Used weekly, a 1000 ml jar is finished well within the typical 12-month post-opening shelf life of a professional hair mask, so spoilage isn't a practical concern for a regular routine.</p>
+</div>
+
+<div class="blog-cta-box">
+  <h4>Stock up for the long run</h4>
+  <button class="btn btn-primary" onclick="navigate('product-details', 24)">Shop 1000 ml Mask</button>
+</div>
+</div>`
+      },
+      {
+        id: 314,
+        title: 'Protein Nourishing Shampoo 300 ml: A Lower-Commitment Way to Start',
+        date: 'Sep 2, 2026',
+        author: 'Italia Editorial Board',
+        cat: 'Shampoo',
+        excerpt: 'How the 300 ml Nourishing Shampoo compares in value to the 1000 ml, and who should start small before committing to the full-size bottle.',
+        gradient: 'linear-gradient(135deg,#D4AF37,#E8C84A)',
+        icon: 'fa-seedling',
+        content: `<div class="blog-longform">
+<h2>Testing the Protein Line Before You Commit</h2>
+<p>The <strong><a href="#" onclick="navigate('product-details', 13);return false;">Nourishing Shampoo 300 ml</a></strong> is PKR 7,391 (~PKR 2,464 per 100 ml), against PKR 12,267 (~PKR 1,227 per 100 ml) for the <a href="#" onclick="navigate('product-details', 3);return false;">1000 ml bottle</a> — almost exactly double the per-use cost for the smaller size. If your hair is breaking or thinning and you want to confirm a protein-based shampoo actually helps before buying the larger bottle, this is the sensible entry point.</p>
+
+<table class="blog-table">
+  <thead><tr><th>Size</th><th>Price</th><th>Price per 100 ml</th></tr></thead>
+  <tbody>
+    <tr><td>300 ml</td><td>PKR 7,391</td><td>~PKR 2,464</td></tr>
+    <tr><td>1000 ml</td><td>PKR 12,267</td><td>~PKR 1,227</td></tr>
+  </tbody>
+</table>
+
+<p>For the full explanation of why protein specifically targets hair fall caused by breakage rather than follicle shedding, read the <a href="#" onclick="navigate('single-blog', 302);return false;">Protein Nourishing Shampoo guide</a>. Pair it with the <a href="#" onclick="navigate('single-blog', 315);return false;">Nourishing Mask 1000 ml</a> or <a href="#" onclick="navigate('single-blog', 316);return false;">300 ml</a> for the full weekly system.</p>
+
+<div class="blog-faq-item">
+  <h3>How long does a 300 ml bottle last with daily use?</h3>
+  <p>Roughly 6-8 weeks with daily washing — enough time to judge whether breakage is visibly reducing before deciding on the larger size.</p>
+</div>
+
+<div class="blog-cta-box">
+  <h4>Start rebuilding strand strength</h4>
+  <button class="btn btn-primary" onclick="navigate('product-details', 13)">Shop 300 ml</button>
+</div>
+</div>`
+      },
+      {
+        id: 315,
+        title: 'Protein Nourishing Mask 1000 ml: Why It Costs More Per Use Than the 300 ml',
+        date: 'Sep 2, 2026',
+        author: 'Italia Editorial Board',
+        cat: 'Mask',
+        excerpt: 'An honest look at the Nourishing Mask 1000 ml pricing versus the 300 ml jar, and which one actually makes more sense for most routines.',
+        gradient: 'linear-gradient(135deg,#D4AF37,#E8C84A)',
+        icon: 'fa-egg',
+        content: `<div class="blog-longform">
+<h2>An Exception Worth Knowing About</h2>
+<p>Unlike most size pairs in the Maxylook range, the <strong><a href="#" onclick="navigate('product-details', 15);return false;">Nourishing Mask 1000 ml</a></strong> at PKR 28,002 (~PKR 2,800 per 100 ml) does not work out cheaper per use than the <a href="#" onclick="navigate('product-details', 16);return false;">300 ml jar</a> at PKR 7,932 (~PKR 2,644 per 100 ml). Both are positioned closer to a premium concentrate than a bulk-discount size, so choose based on how much product you actually want on hand rather than assuming the bigger jar automatically saves money.</p>
+
+<table class="blog-table">
+  <thead><tr><th>Size</th><th>Price</th><th>Price per 100 ml</th></tr></thead>
+  <tbody>
+    <tr><td>300 ml</td><td>PKR 7,932</td><td>~PKR 2,644</td></tr>
+    <tr><td>1000 ml</td><td>PKR 28,002</td><td>~PKR 2,800</td></tr>
+  </tbody>
+</table>
+
+<p>For most households, the <a href="#" onclick="navigate('single-blog', 316);return false;">300 ml jar</a> is the more practical choice unless you specifically want a large single container. Read the full <a href="#" onclick="navigate('single-blog', 302);return false;">Protein Nourishing Shampoo guide</a> for the complete strengthening routine this mask belongs to.</p>
+
+<div class="blog-faq-item">
+  <h3>Is the 1000 ml formula stronger than the 300 ml?</h3>
+  <p>No — it's the identical formula at a larger fill size; the price difference reflects packaging and positioning, not concentration.</p>
+</div>
+
+<div class="blog-cta-box">
+  <h4>Rebuild strand strength weekly</h4>
+  <button class="btn btn-primary" onclick="navigate('product-details', 15)">Shop 1000 ml Mask</button>
+</div>
+</div>`
+      },
+      {
+        id: 316,
+        title: 'Protein Nourishing Mask 300 ml: The Practical Default Size',
+        date: 'Sep 2, 2026',
+        author: 'Italia Editorial Board',
+        cat: 'Mask',
+        excerpt: 'Why the 300 ml Nourishing Mask is the more sensible everyday choice, and how to fit it into a weekly protein-repair routine.',
+        gradient: 'linear-gradient(135deg,#D4AF37,#E8C84A)',
+        icon: 'fa-egg',
+        content: `<div class="blog-longform">
+<h2>The Better-Value Everyday Choice</h2>
+<p>At PKR 7,932 (~PKR 2,644 per 100 ml), the <strong><a href="#" onclick="navigate('product-details', 16);return false;">Nourishing Mask 300 ml</a></strong> is actually the better per-100ml value in this line compared to the <a href="#" onclick="navigate('product-details', 15);return false;">1000 ml jar</a> (~PKR 2,800 per 100 ml) — an unusual reversal worth knowing before you assume bigger always means cheaper.</p>
+
+<p>Used once or twice weekly after the <a href="#" onclick="navigate('product-details', 3);return false;">Nourishing Shampoo</a>, a 300 ml jar lasts roughly 3-4 months. For the reasoning behind why protein repair matters for hair fall caused by breakage, see the full <a href="#" onclick="navigate('single-blog', 302);return false;">Protein Nourishing Shampoo guide</a>.</p>
+
+<div class="blog-faq-item">
+  <h3>How should I apply this mask?</h3>
+  <p>From mid-lengths to ends only — the scalp doesn't need protein reinforcement, and keeping it off the roots avoids any product buildup at the hairline.</p>
+</div>
+
+<div class="blog-cta-box">
+  <h4>The everyday choice for strength</h4>
+  <button class="btn btn-primary" onclick="navigate('product-details', 16)">Shop 300 ml Mask</button>
+</div>
+</div>`
+      },
+      {
+        id: 317,
+        title: 'No Yellow Shampoo 300 ml: Enough to Find Your Toning Frequency',
+        date: 'Sep 3, 2026',
+        author: 'Italia Editorial Board',
+        cat: 'Shampoo',
+        excerpt: 'How the 300 ml No Yellow Shampoo helps you figure out how often your specific blonde, highlighted, or grey tone needs toning before committing to the 1000 ml bottle.',
+        gradient: 'linear-gradient(135deg,#232323,#3A3A3A)',
+        icon: 'fa-star',
+        content: `<div class="blog-longform">
+<h2>Finding Your Toning Frequency First</h2>
+<p>The <strong><a href="#" onclick="navigate('product-details', 4);return false;">No Yellow Shampoo 300 ml</a></strong> is priced at PKR 7,932 (~PKR 2,644 per 100 ml), against PKR 14,854 (~PKR 1,485 per 100 ml) for the <a href="#" onclick="navigate('product-details', 5);return false;">1000 ml bottle</a>. Because how often a tone needs refreshing varies a lot by how light the hair is and how hard your local water is, the 300 ml size is the smarter first purchase — it gives enough uses to establish your personal toning rhythm before buying in bulk.</p>
+
+<table class="blog-table">
+  <thead><tr><th>Size</th><th>Price</th><th>Price per 100 ml</th></tr></thead>
+  <tbody>
+    <tr><td>300 ml</td><td>PKR 7,932</td><td>~PKR 2,644</td></tr>
+    <tr><td>1000 ml</td><td>PKR 14,854</td><td>~PKR 1,485</td></tr>
+  </tbody>
+</table>
+
+<p>For the full explanation of how violet pigment cancels brassiness and how to avoid over-toning, read the complete <a href="#" onclick="navigate('single-blog', 303);return false;">No Yellow Shampoo guide</a>. Pair it with the <a href="#" onclick="navigate('single-blog', 318);return false;">No Yellow Mask</a> for damaged, lightened ends.</p>
+
+<div class="blog-faq-item">
+  <h3>How many washes are in a 300 ml bottle?</h3>
+  <p>Used once or twice weekly as directed, it typically lasts 2-3 months, which is enough time to see how your specific tone responds before deciding on the 1000 ml size.</p>
+</div>
+
+<div class="blog-cta-box">
+  <h4>Keep your tone cool between salon visits</h4>
+  <button class="btn btn-primary" onclick="navigate('product-details', 4)">Shop 300 ml</button>
+</div>
+</div>`
+      },
+      {
+        id: 318,
+        title: 'No Yellow Mask: Repairing Lightened Ends While You Tone',
+        date: 'Sep 3, 2026',
+        author: 'Italia Editorial Board',
+        cat: 'Mask',
+        excerpt: 'Why bleached and highlighted hair needs a toning mask, not just a toning shampoo, and how the No Yellow Mask fits into a color-maintenance routine.',
+        gradient: 'linear-gradient(135deg,#232323,#3A3A3A)',
+        icon: 'fa-star',
+        content: `<div class="blog-longform">
+<h2>Ends Take the Most Damage — and Fade Fastest</h2>
+<p>The <strong><a href="#" onclick="navigate('product-details', 17);return false;">No Yellow Mask 300 ml</a></strong> (PKR 11,300) combines the same violet-pigment toning as the shampoo with deeper conditioning, because bleached and highlighted ends are almost always more porous and more prone to brassiness than the mid-lengths or roots. A toning shampoo alone often under-treats the ends where warmth shows up most visibly.</p>
+
+<p>Apply once or twice weekly after the <a href="#" onclick="navigate('product-details', 5);return false;">No Yellow Shampoo</a>, concentrating on the last few inches. For the full toning routine and how to avoid over-toning, see the <a href="#" onclick="navigate('single-blog', 303);return false;">No Yellow Shampoo guide</a>.</p>
+
+<div class="blog-faq-item">
+  <h3>Can I use this mask more often than the shampoo?</h3>
+  <p>Yes — since it's rinsed from a smaller section of hair (ends only) and includes conditioning benefits, some users mask 2-3x weekly even if they only shampoo-tone once or twice.</p>
+</div>
+
+<div class="blog-cta-box">
+  <h4>Tone and repair in one step</h4>
+  <button class="btn btn-primary" onclick="navigate('product-details', 17)">Shop No Yellow Mask</button>
+</div>
+</div>`
+      },
+      {
+        id: 319,
+        title: 'Restructuring and Nourishing Shampoo 250 ml: Check the Price Before You Choose This Size',
+        date: 'Sep 3, 2026',
+        author: 'Italia Editorial Board',
+        cat: 'Shampoo',
+        excerpt: 'The 250 ml Restructuring Shampoo costs almost the same as the full 1000 ml bottle — here is the honest breakdown before you buy.',
+        gradient: 'linear-gradient(135deg,var(--pink),var(--pink-dark))',
+        icon: 'fa-egg',
+        content: `<div class="blog-longform">
+<h2>An Important Price Note Before You Choose a Size</h2>
+<p>The <strong><a href="#" onclick="navigate('product-details', 6);return false;">Restructuring and Nourishing Shampoo 250 ml</a></strong> is priced at PKR 13,688 — almost identical to the <a href="#" onclick="navigate('product-details', 7);return false;">1000 ml bottle</a> at PKR 12,267. That works out to roughly PKR 5,475 per 100 ml for the 250 ml versus just PKR 1,227 per 100 ml for the 1000 ml. Unless you specifically need the smaller bottle for travel or a short-term post-treatment routine, the 1000 ml is dramatically better value for the same formula.</p>
+
+<table class="blog-table">
+  <thead><tr><th>Size</th><th>Price</th><th>Price per 100 ml</th></tr></thead>
+  <tbody>
+    <tr><td>250 ml</td><td>PKR 13,688</td><td>~PKR 5,475</td></tr>
+    <tr><td>1000 ml</td><td>PKR 12,267</td><td>~PKR 1,227</td></tr>
+  </tbody>
+</table>
+
+<p>Read the full <a href="#" onclick="navigate('single-blog', 304);return false;">Egg Proteins & Minerals Restructuring Shampoo guide</a> for how this formula repairs keratin-treated and chemically damaged hair.</p>
+
+<div class="blog-faq-item">
+  <h3>Is there any reason to buy the 250 ml over the 1000 ml?</h3>
+  <p>Mainly travel convenience or wanting to trial the formula with a lower upfront cost — for regular home use, the 1000 ml is the clearly more economical option.</p>
+</div>
+
+<div class="blog-cta-box">
+  <h4>Compare both sizes</h4>
+  <button class="btn btn-primary" onclick="navigate('product-details', 7)">Shop 1000 ml (Better Value)</button>
+</div>
+</div>`
+      },
+      {
+        id: 320,
+        title: 'Restructuring and Nourishing Mask: The At-Home Follow-Up to a Keratin Treatment',
+        date: 'Sep 3, 2026',
+        author: 'Italia Editorial Board',
+        cat: 'Mask',
+        excerpt: 'A closer look at the Restructuring and Nourishing Mask 350 ml and where it fits into a post-chemical-treatment recovery routine.',
+        gradient: 'linear-gradient(135deg,var(--pink),var(--pink-dark))',
+        icon: 'fa-egg',
+        content: `<div class="blog-longform">
+<h2>Concentrated Repair for the Hardest-Hit Sections</h2>
+<p>The <strong><a href="#" onclick="navigate('product-details', 18);return false;">Restructuring and Nourishing Mask 350 ml</a></strong> (PKR 12,906) is formulated to sit longer on hair than the shampoo can, delivering a more concentrated dose of hydrolyzed egg proteins and minerals to the regrowth line and ends — the two zones that show the most damage after keratin treatments, rebonding, or repeated bleaching.</p>
+
+<p>Use once or twice weekly, leaving on for 10 minutes, after the <a href="#" onclick="navigate('product-details', 7);return false;">Restructuring Shampoo</a>. See the complete post-treatment routine in our <a href="#" onclick="navigate('single-blog', 304);return false;">Egg Proteins & Minerals guide</a>.</p>
+
+<div class="blog-faq-item">
+  <h3>Does this mask replace an in-salon keratin treatment?</h3>
+  <p>No — it maintains and repairs between treatments rather than replicating the smoothing effect of an actual in-salon keratin service, but it meaningfully extends how long results last and reduces breakage in between.</p>
+</div>
+
+<div class="blog-cta-box">
+  <h4>Extend your treatment results</h4>
+  <button class="btn btn-primary" onclick="navigate('product-details', 18)">Shop Restructuring Mask</button>
+</div>
+</div>`
+      },
+      {
+        id: 321,
+        title: 'Intense Hydrating Mask (Arganway): For Hair That Stays Dry No Matter What',
+        date: 'Sep 4, 2026',
+        author: 'Italia Editorial Board',
+        cat: 'Mask',
+        excerpt: 'The Arganway Intense Hydrating Mask is the heaviest-duty moisture treatment in the Maxylook range — here is who actually needs it.',
+        gradient: 'linear-gradient(135deg,#8B5FBF,#6B3FA0)',
+        icon: 'fa-oil-can',
+        content: `<div class="blog-longform">
+<h2>The Heaviest-Duty Option in the Range</h2>
+<p>The <strong><a href="#" onclick="navigate('product-details', 19);return false;">Intense Hydrating Mask 500 ml</a></strong> (PKR 26,296) is built for thick, coarse, or severely dry hair that does not respond fully to lighter treatments like the <a href="#" onclick="navigate('single-blog', 312);return false;">Macadamia Hydrating Mask</a>. Its argan-oil-based formula carries a heavier fatty-acid profile designed to seal moisture into a denser hair shaft.</p>
+
+<p>Use once or twice weekly after the <a href="#" onclick="navigate('product-details', 8);return false;">Moisture Repair Shampoo</a>, leaving on for a full 10-15 minutes — coarse hair needs the extra contact time to fully absorb the treatment. Read the complete routine in our <a href="#" onclick="navigate('single-blog', 305);return false;">Arganway Moisture Repair Shampoo guide</a>.</p>
+
+<div class="blog-faq-item">
+  <h3>Is this too heavy for fine hair?</h3>
+  <p>It can feel weighty on fine or thin strands. Fine-to-medium hair with everyday dryness is usually better served by the lighter <a href="#" onclick="navigate('single-blog', 301);return false;">Macadamia line</a> instead.</p>
+</div>
+
+<div class="blog-cta-box">
+  <h4>For hair that needs more than the average mask</h4>
+  <button class="btn btn-primary" onclick="navigate('product-details', 19)">Shop Intense Hydrating Mask</button>
+</div>
+</div>`
+      },
+      {
+        id: 322,
+        title: 'Collagen Protecting Shampoo 300 ml: A Lower-Cost Way to Try Daily Protection',
+        date: 'Sep 4, 2026',
+        author: 'Italia Editorial Board',
+        cat: 'Shampoo',
+        excerpt: 'How the 300 ml Protecting Shampoo compares to the 1000 ml, and why this is the line most worth buying in bulk once you commit.',
+        gradient: 'linear-gradient(135deg,var(--charcoal),var(--charcoal-soft))',
+        icon: 'fa-shield-alt',
+        content: `<div class="blog-longform">
+<h2>A Daily Shampoo Is Where Bulk Sizing Pays Off Most</h2>
+<p>The <strong><a href="#" onclick="navigate('product-details', 10);return false;">Protecting Shampoo 300 ml</a></strong> is PKR 7,036 (~PKR 2,345 per 100 ml), against PKR 13,688 (~PKR 1,369 per 100 ml) for the <a href="#" onclick="navigate('product-details', 9);return false;">1000 ml bottle</a>. Because this shampoo is meant to be used as your everyday shampoo rather than an occasional treatment, the 1000 ml size pays for itself fastest here compared to any other line in the range.</p>
+
+<table class="blog-table">
+  <thead><tr><th>Size</th><th>Price</th><th>Price per 100 ml</th></tr></thead>
+  <tbody>
+    <tr><td>300 ml</td><td>PKR 7,036</td><td>~PKR 2,345</td></tr>
+    <tr><td>1000 ml</td><td>PKR 13,688</td><td>~PKR 1,369</td></tr>
+  </tbody>
+</table>
+
+<p>Read the full case for daily collagen protection against pollution, UV, and hard water in our <a href="#" onclick="navigate('single-blog', 306);return false;">Collagen Protecting Shampoo guide</a>.</p>
+
+<div class="blog-faq-item">
+  <h3>Should I buy 300 ml first to test it?</h3>
+  <p>If you're unsure whether you'll like the formula, yes — but since this is designed for daily use, most people who like it quickly move to the 1000 ml for the better ongoing value.</p>
+</div>
+
+<div class="blog-cta-box">
+  <h4>Try daily protection</h4>
+  <button class="btn btn-primary" onclick="navigate('product-details', 10)">Shop 300 ml</button>
+</div>
+</div>`
+      },
+      {
+        id: 323,
+        title: 'Collagen Protecting Mask 1000 ml: The Better Value for Weekly Reinforcement',
+        date: 'Sep 4, 2026',
+        author: 'Italia Editorial Board',
+        cat: 'Mask',
+        excerpt: 'The 1000 ml Protecting Mask nearly halves your cost per use compared to the 300 ml jar for the same collagen-reinforcement formula.',
+        gradient: 'linear-gradient(135deg,var(--charcoal),var(--charcoal-soft))',
+        icon: 'fa-shield-alt',
+        content: `<div class="blog-longform">
+<h2>Built for Consistent Weekly Use</h2>
+<p>The <strong><a href="#" onclick="navigate('product-details', 20);return false;">Protecting Mask 1000 ml</a></strong> is PKR 13,859 (~PKR 1,386 per 100 ml), compared to PKR 7,932 (~PKR 2,644 per 100 ml) for the <a href="#" onclick="navigate('product-details', 21);return false;">300 ml jar</a>. Since collagen protection works best as a consistent weekly habit rather than an occasional treat, the 1000 ml size is the better long-term buy once you know you'll stick with it.</p>
+
+<p>Apply weekly after the <a href="#" onclick="navigate('product-details', 9);return false;">Protecting Shampoo</a> for reinforced defense against pollution, sun, and hard water. Full details in our <a href="#" onclick="navigate('single-blog', 306);return false;">Collagen Protecting Shampoo guide</a>.</p>
+
+<div class="blog-faq-item">
+  <h3>How is this different from the Nourishing Mask (Protein line)?</h3>
+  <p>This mask focuses on building a protective outer barrier against daily environmental damage, while the <a href="#" onclick="navigate('single-blog', 302);return false;">Protein Nourishing Mask</a> rebuilds internal strand structure — different mechanisms for related but distinct concerns.</p>
+</div>
+
+<div class="blog-cta-box">
+  <h4>Reinforce weekly</h4>
+  <button class="btn btn-primary" onclick="navigate('product-details', 20)">Shop 1000 ml Mask</button>
+</div>
+</div>`
+      },
+      {
+        id: 324,
+        title: 'Collagen Protecting Mask 300 ml: A Smaller Way to Start',
+        date: 'Sep 4, 2026',
+        author: 'Italia Editorial Board',
+        cat: 'Mask',
+        excerpt: 'For anyone testing the Collagen line before committing to the larger jar, here is what the 300 ml Protecting Mask offers.',
+        gradient: 'linear-gradient(135deg,var(--charcoal),var(--charcoal-soft))',
+        icon: 'fa-shield-alt',
+        content: `<div class="blog-longform">
+<h2>A Reasonable Trial Size</h2>
+<p>At PKR 7,932, the <strong><a href="#" onclick="navigate('product-details', 21);return false;">Protecting Mask 300 ml</a></strong> gives roughly 2-3 months of weekly use — enough to notice whether your hair feels more resilient against daily pollution and sun exposure before deciding on the better-value <a href="#" onclick="navigate('product-details', 20);return false;">1000 ml jar</a>.</p>
+
+<p>Pair it with the <a href="#" onclick="navigate('product-details', 9);return false;">Protecting Shampoo</a> and read the complete daily-defense routine in our <a href="#" onclick="navigate('single-blog', 306);return false;">Collagen Protecting Shampoo guide</a>.</p>
+
+<div class="blog-faq-item">
+  <h3>Will one jar be enough to see results?</h3>
+  <p>Environmental protection is cumulative, so consistent use over the full 300 ml (roughly 2-3 months) is a reasonable window to judge whether hair feels less brittle and dull than before.</p>
+</div>
+
+<div class="blog-cta-box">
+  <h4>Start building daily resilience</h4>
+  <button class="btn btn-primary" onclick="navigate('product-details', 21)">Shop 300 ml Mask</button>
+</div>
+</div>`
+      },
+      {
+        id: 325,
+        title: 'Fresh Mint Revitalizing Shampoo 300 ml: Test the Clarifying Effect First',
+        date: 'Sep 5, 2026',
+        author: 'Italia Editorial Board',
+        cat: 'Shampoo',
+        excerpt: 'How the 300 ml Revitalizing Shampoo compares to the 1000 ml, and why oily-scalp routines benefit from starting small.',
+        gradient: 'linear-gradient(135deg,var(--gold),var(--gold-light))',
+        icon: 'fa-leaf',
+        content: `<div class="blog-longform">
+<h2>Confirm Your Scalp's Response Before Buying in Bulk</h2>
+<p>The <strong><a href="#" onclick="navigate('product-details', 11);return false;">Revitalizing Shampoo 300 ml</a></strong> is PKR 7,462 (~PKR 2,487 per 100 ml), against PKR 14,143 (~PKR 1,414 per 100 ml) for the <a href="#" onclick="navigate('product-details', 12);return false;">1000 ml bottle</a>. Since oily-scalp routines can take 3-4 weeks to show their full effect and individual response to menthol/clarifying formulas varies, starting with the 300 ml is a sensible way to confirm it's working for you.</p>
+
+<table class="blog-table">
+  <thead><tr><th>Size</th><th>Price</th><th>Price per 100 ml</th></tr></thead>
+  <tbody>
+    <tr><td>300 ml</td><td>PKR 7,462</td><td>~PKR 2,487</td></tr>
+    <tr><td>1000 ml</td><td>PKR 14,143</td><td>~PKR 1,414</td></tr>
+  </tbody>
+</table>
+
+<p>Read the complete oily-scalp and hijab-specific routine in our <a href="#" onclick="navigate('single-blog', 307);return false;">Fresh Mint Revitalizing Shampoo guide</a>.</p>
+
+<div class="blog-faq-item">
+  <h3>How quickly will I notice a difference in oiliness?</h3>
+  <p>Most people notice reduced midday flatness and flaking within 2-3 weeks of consistent, root-focused use.</p>
+</div>
+
+<div class="blog-cta-box">
+  <h4>Reset an overactive scalp</h4>
+  <button class="btn btn-primary" onclick="navigate('product-details', 11)">Shop 300 ml</button>
+</div>
+</div>`
+      },
+      {
+        id: 326,
+        title: 'Fresh Mint Revitalizing Mask 300 ml: Hydrating the Ends Without Oiling the Roots',
+        date: 'Sep 5, 2026',
+        author: 'Italia Editorial Board',
+        cat: 'Mask',
+        excerpt: 'Why oily-scalp hair still needs a mask, and how to use the Revitalizing Mask 300 ml without undoing your clarifying routine.',
+        gradient: 'linear-gradient(135deg,var(--gold),var(--gold-light))',
+        icon: 'fa-leaf',
+        content: `<div class="blog-longform">
+<h2>Oily Roots, Dry Ends Is More Common Than You Think</h2>
+<p>Many people with an oily scalp assume they should skip masks entirely — but the <strong><a href="#" onclick="navigate('product-details', 22);return false;">Revitalizing Mask 300 ml</a></strong> (PKR 8,813) is specifically meant for the ends only, where dryness and oiliness can genuinely coexist in the same head of hair.</p>
+
+<p>Apply from ears down after the <a href="#" onclick="navigate('product-details', 11);return false;">Revitalizing Shampoo</a>, keeping it well away from the roots. Full routine details, including hijab-specific tips, are in the <a href="#" onclick="navigate('single-blog', 307);return false;">Fresh Mint Revitalizing Shampoo guide</a>.</p>
+
+<div class="blog-faq-item">
+  <h3>Won't a mask make my roots oilier?</h3>
+  <p>Only if applied to the scalp — keeping it strictly on the lengths and ends avoids adding any oil near the roots while still treating genuinely dry ends.</p>
+</div>
+
+<div class="blog-cta-box">
+  <h4>Balance oily roots and dry ends</h4>
+  <button class="btn btn-primary" onclick="navigate('product-details', 22)">Shop 300 ml Mask</button>
+</div>
+</div>`
+      },
+      {
+        id: 327,
+        title: 'Fresh Mint Revitalizing Mask 1000 ml: The Better-Value Size for Regular Use',
+        date: 'Sep 5, 2026',
+        author: 'Italia Editorial Board',
+        cat: 'Mask',
+        excerpt: 'For anyone masking weekly as part of an oily-scalp routine, the 1000 ml Revitalizing Mask offers meaningfully better long-term value.',
+        gradient: 'linear-gradient(135deg,var(--gold),var(--gold-light))',
+        icon: 'fa-leaf',
+        content: `<div class="blog-longform">
+<h2>Better Value for a Regular Routine</h2>
+<p>The <strong><a href="#" onclick="navigate('product-details', 23);return false;">Revitalizing Mask 1000 ml</a></strong> is PKR 17,412 (~PKR 1,741 per 100 ml), versus PKR 8,813 (~PKR 2,938 per 100 ml) for the <a href="#" onclick="navigate('product-details', 22);return false;">300 ml jar</a>. If you've confirmed the ends-only masking approach works for your oily-roots, dry-ends combination, the 1000 ml is the more economical long-term choice.</p>
+
+<p>Use weekly after the <a href="#" onclick="navigate('product-details', 12);return false;">Revitalizing Shampoo</a>, applied from ears down only. See the full routine in our <a href="#" onclick="navigate('single-blog', 307);return false;">Fresh Mint Revitalizing Shampoo guide</a>.</p>
+
+<div class="blog-faq-item">
+  <h3>Is this suitable for hijab-wearing daily routines?</h3>
+  <p>Yes — since it's applied only to the lengths and ends, it fits naturally alongside the root-focused clarifying shampoo routine described in our <a href="#" onclick="navigate('single-blog', 307);return false;">Fresh Mint guide</a>, which addresses hijab-specific heat and moisture buildup directly.</p>
+</div>
+
+<div class="blog-cta-box">
+  <h4>Complete the Fresh Mint routine</h4>
+  <button class="btn btn-primary" onclick="navigate('product-details', 23)">Shop 1000 ml Mask</button>
+</div>
+</div>`
+      },
     ];
 
     // Active product data (starts as copy of fallback, replaced by WP fetch)
@@ -3177,12 +4225,11 @@
       e.preventDefault();
       const form = e.target;
       const data = Object.fromEntries(new FormData(form));
-      data._wpcf7_unit_tag = 'cf7-contact-' + Date.now();
       const btn = form.querySelector('button[type="submit"]');
       const msg = form.querySelector('.cf7-msg');
       btn.disabled = true;
       btn.textContent = 'Sending...';
-      const res = await wpPost('/wp-json/contact-form-7/v1/contact-forms/12/feedback', data, true);
+      const res = await apiPost('/contact', data);
       if (msg) {
         msg.textContent = res ? 'Thank you! We\'ll get back to you within 24 hours.' : 'Something went wrong. Please try again.';
         msg.style.display = 'block';
@@ -3196,11 +4243,11 @@
     async function submitNewsletter(e) {
       e.preventDefault();
       const input = e.target.querySelector('input');
-      const data = { 'your-email': input.value, _wpcf7_unit_tag: 'cf7-newsletter-' + Date.now() };
+      const data = { 'your-email': input.value };
       const btn = e.target.querySelector('button');
       btn.disabled = true;
       btn.textContent = 'Subscribing...';
-      const res = await wpPost('/wp-json/contact-form-7/v1/contact-forms/13/feedback', data, true);
+      const res = await apiPost('/contact', data);
       btn.disabled = false;
       btn.textContent = 'Subscribe';
       if (res) {
@@ -3265,13 +4312,13 @@
       btn.disabled = true; btn.textContent = 'SIGNING IN...';
       
       try {
-        const res = await fetch(WP.url + '/wp-json/italia/v1/login', {
+        const res = await fetch('/api/customers/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email: email, password: pass })
         });
         const result = await res.json();
-        
+
         if (res.ok && result.token) {
           localStorage.setItem('italia_user', JSON.stringify(result));
           showToast('Welcome back, ' + (result.name || result.username) + '!');
@@ -3301,7 +4348,7 @@
         if (res.ok && result.id) {
           // Attempt to log them in automatically after registration
           try {
-            const loginRes = await fetch(WP.url + '/wp-json/italia/v1/login', {
+            const loginRes = await fetch('/api/customers/login', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ email: email, password: pass })
@@ -3449,31 +4496,8 @@
               </div>
             </div>`;
 
-          try {
-            const res = await fetch('/api/products/' + id);
-            if (res.ok) {
-              const wp = await res.json();
-              const attrs = {};
-              (wp.attributes || []).forEach(a => { attrs[a.name.toLowerCase()] = a.options?.[0] || ''; });
-              const cat = wp.categories?.[0]?.name || 'Product';
-              const catMap = { 'Shampoo': 'Shampoo', 'Mask': 'Mask', 'Treatment': 'Treatment', 'Serum': 'Serum', 'Styling': 'Styling', 'Kit': 'Kit' };
-              p = {
-                id: wp.id,
-                brand: attrs.brand || 'Italia Cosmetics',
-                name: wp.name || 'Product',
-                line: attrs.line || attrs.product_line || '',
-                desc: wp.description?.replace(/<[^>]*>/g, '') || '',
-                price: parseFloat(wp.price) || 0,
-                currency: (attrs.currency === '$' || attrs.currency === 'USD') ? 'PKR' : (attrs.currency || 'PKR'),
-                cat: catMap[cat] || cat,
-                badge: attrs.badge || '',
-                rating: parseInt(attrs.rating) || 5,
-                img: wp.images?.[0]?.src || (wp.meta_data?.find(m => m.key === 'product_image_url')?.value) || '',
-                origPrice: attrs.orig_price ? parseFloat(attrs.orig_price) : null,
-                total_sales: parseInt(wp.total_sales) || 0
-              };
-            }
-          } catch (e) { console.warn('Direct product fetch failed:', e.message); }
+          const fetched = await apiGet('/products/' + id);
+          if (fetched && !fetched.error) p = fetched;
         }
 
         if (!p) {

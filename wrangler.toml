@@ -1,0 +1,16 @@
+name = "italiacosmetics"
+compatibility_date = "2026-09-06"
+pages_build_output_dir = "."
+
+[[d1_databases]]
+binding = "DB"
+database_name = "italiacosmetics-db"
+database_id = "fcc675b8-ecd5-4ece-87df-7edb2d77960b"
+
+# Admin-uploaded product/blog images, stored as blobs in Workers KV. Chosen
+# over R2 specifically because R2 requires a payment method on file even at
+# $0 usage, while KV's free tier (1,000 writes/day, 1 GB total, 100k reads/day)
+# needs no card and comfortably covers occasional admin image uploads.
+[[kv_namespaces]]
+binding = "MEDIA"
+id = "fffea846ed11401eb7b638a77dd3b785"
