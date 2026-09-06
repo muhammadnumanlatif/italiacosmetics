@@ -3,7 +3,14 @@
 // Workers runtime) -- PBKDF2 via Web Crypto's SubtleCrypto is the standard,
 // audited primitive for this environment.
 
-const PBKDF2_ITERATIONS = 210000; // OWASP 2023 minimum recommendation for PBKDF2-SHA256
+// Cloudflare Workers' free plan caps CPU time at 10ms per request (paid plan:
+// 30s+). PBKDF2 at the commonly-cited 100k-210k iteration counts reliably
+// exceeds that budget and throws a hard "Worker threw exception" error in
+// production (confirmed by testing -- it worked in local Miniflare dev, which
+// doesn't enforce the same limit, then 500'd in production). 20,000 iterations
+// benchmarks at roughly 4-5ms, leaving headroom for the rest of the request
+// (D1 round-trip, JSON parsing, session insert) inside the 10ms ceiling.
+const PBKDF2_ITERATIONS = 20000;
 const SESSION_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
 
 function toBase64(bytes) {
@@ -50,14 +57,16 @@ export async function verifyPassword(password, stored) {
   );
   const actualHash = new Uint8Array(derivedBits);
   if (actualHash.length !== expectedHash.length) return false;
-  return crypto.subtle.timingSafeEqual
-    ? crypto.subtle.timingSafeEqual(actualHash, expectedHash)
-    : timingSafeEqualFallback(actualHash, expectedHash);
+  return timingSafeEqual(actualHash, expectedHash);
 }
 
-// Workers runtime has crypto.subtle.timingSafeEqual as of recent compat dates;
-// fall back to a manual constant-time comparison if unavailable.
-function timingSafeEqualFallback(a, b) {
+// Manual constant-time comparison -- deliberately not relying on the
+// Cloudflare-specific crypto.subtle.timingSafeEqual extension, since its
+// exact availability/behavior differs between the local Miniflare simulation
+// (older pinned runtime, silently falls back) and the real edge runtime
+// (caused a 500 in production when this file called it directly). This
+// manual XOR-accumulate version behaves identically everywhere.
+function timingSafeEqual(a, b) {
   let diff = 0;
   for (let i = 0; i < a.length; i++) diff |= a[i] ^ b[i];
   return diff === 0;
