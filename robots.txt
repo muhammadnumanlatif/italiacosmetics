@@ -3,71 +3,88 @@ Allow: /
 Disallow: /my-account
 Disallow: /checkout
 Disallow: /cart
+Disallow: /admin.html
 Disallow: /api/
 
 # Specifically allow AI bots and SEO crawlers
 User-agent: GPTBot
 Allow: /
+Disallow: /admin.html
 Disallow: /api/
 
 User-agent: ChatGPT-User
 Allow: /
+Disallow: /admin.html
 Disallow: /api/
 
 User-agent: Anthropic-ai
 Allow: /
+Disallow: /admin.html
 Disallow: /api/
 
 User-agent: Claude-Web
 Allow: /
+Disallow: /admin.html
 Disallow: /api/
 
 User-agent: Google-Extended
 Allow: /
+Disallow: /admin.html
 Disallow: /api/
 
 User-agent: CCBot
 Allow: /
+Disallow: /admin.html
 Disallow: /api/
 
 User-agent: OmgiliBot
 Allow: /
+Disallow: /admin.html
 Disallow: /api/
 
 User-agent: FacebookBot
 Allow: /
+Disallow: /admin.html
 Disallow: /api/
 
 User-agent: Bingbot
 Allow: /
+Disallow: /admin.html
 Disallow: /api/
 
 User-agent: Slurp
 Allow: /
+Disallow: /admin.html
 Disallow: /api/
 
 User-agent: DuckDuckBot
 Allow: /
+Disallow: /admin.html
 Disallow: /api/
 
 User-agent: Baiduspider
 Allow: /
+Disallow: /admin.html
 Disallow: /api/
 
 User-agent: YandexBot
 Allow: /
+Disallow: /admin.html
 Disallow: /api/
 
 User-agent: AhrefsBot
 Allow: /
+Disallow: /admin.html
 Disallow: /api/
 
 User-agent: SemrushBot
 Allow: /
+Disallow: /admin.html
 Disallow: /api/
 
 User-agent: MJ12bot
 Allow: /
+Disallow: /admin.html
 Disallow: /api/
 
 Sitemap: https://italiacosmetics.com/sitemap.xml

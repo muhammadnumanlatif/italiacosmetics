@@ -19,424 +19,929 @@ Welcome to the LLM index for Italia Cosmetics. We are the premier online destina
 
 
 ## Products
+
 - **SCULPTING GLAZE- UNA styling** (Category: Product) - PKR 25728
   Professional UNA Rolland USA product.
-  URL: https://italiacosmetics.com/product-237
+  URL: https://italiacosmetics.com/product-339
 
 - **UNA Daily Treatments Set** (Category: Product) - PKR 25728
   Professional UNA Rolland USA product.
-  URL: https://italiacosmetics.com/product-236
+  URL: https://italiacosmetics.com/product-338
 
 - **UNA Pre/Post Technical Services Set** (Category: Product) - PKR 16744
   Professional UNA Rolland USA product.
-  URL: https://italiacosmetics.com/product-235
+  URL: https://italiacosmetics.com/product-337
 
 - **UNA Hydro-In Dry and Frizzy Hair Set** (Category: Product) - PKR 11556
   Professional UNA Rolland USA product.
-  URL: https://italiacosmetics.com/product-234
+  URL: https://italiacosmetics.com/product-336
 
 - **UNA Restoration Radiance Kit: Transforming Damaged Tresses to Brilliance** (Category: Product) - PKR 81035
   Professional UNA Rolland USA product.
-  URL: https://italiacosmetics.com/product-233
+  URL: https://italiacosmetics.com/product-335
 
 - **UNA Balancing Kit for Oily Skin and Hair** (Category: Product) - PKR 81035
   Professional UNA Rolland USA product.
-  URL: https://italiacosmetics.com/product-232
+  URL: https://italiacosmetics.com/product-334
 
 - **Purifying Shampoo - UNA Pure Purifying** (Category: Product) - PKR 13688
   Professional UNA Rolland USA product.
-  URL: https://italiacosmetics.com/product-231
+  URL: https://italiacosmetics.com/product-333
 
 - **NORMALIZING TREATMENT- UNA Balancing** (Category: Product) - PKR 16744
   Professional UNA Rolland USA product.
-  URL: https://italiacosmetics.com/product-230
+  URL: https://italiacosmetics.com/product-332
 
 - **DAILY GENTLE SHAMPOO- UNA Daily Cure** (Category: Product) - PKR 7036
   Professional UNA Rolland USA product.
-  URL: https://italiacosmetics.com/product-229
+  URL: https://italiacosmetics.com/product-331
 
 - **SESAME OIL HAIR MASK-UNA  Hair Food** (Category: Product) - PKR 13859
   Professional UNA Rolland USA product.
-  URL: https://italiacosmetics.com/product-228
+  URL: https://italiacosmetics.com/product-330
 
 - **MOISTURIZING OIL HAIR TREATMENT- UNA Hydro** (Category: Product) - PKR 30134
   Professional UNA Rolland USA product.
-  URL: https://italiacosmetics.com/product-227
+  URL: https://italiacosmetics.com/product-329
 
 - **Acid Hair Conditioner - UNA  Post Chem Chemieally Treated Hair** (Category: Product) - PKR 7107
   Professional UNA Rolland USA product.
-  URL: https://italiacosmetics.com/product-226
+  URL: https://italiacosmetics.com/product-328
 
 - **Neutralizing  Shampoo - UNA  Post Chem Chemieally Treated Hair** (Category: Product) - PKR 13688
   Professional UNA Rolland USA product.
-  URL: https://italiacosmetics.com/product-225
+  URL: https://italiacosmetics.com/product-327
 
 - **PROTEIN HAIR TREATMENT NOURISHING MASK- UNA Hair Food** (Category: Product) - PKR 13859
   Professional UNA Rolland USA product.
-  URL: https://italiacosmetics.com/product-224
+  URL: https://italiacosmetics.com/product-326
 
 - **JOJOBA OIL HAIR MASK- UNA Hair Food** (Category: Product) - PKR 13859
   Professional UNA Rolland USA product.
-  URL: https://italiacosmetics.com/product-223
+  URL: https://italiacosmetics.com/product-325
 
 - **ACID CONDITIONER 1000ML - UNA** (Category: Product) - PKR 15565
   Professional UNA Rolland USA product.
-  URL: https://italiacosmetics.com/product-222
+  URL: https://italiacosmetics.com/product-324
 
 - **SPRAY SHINE - UNA  finish** (Category: Product) - PKR 32266
   Professional UNA Rolland USA product.
-  URL: https://italiacosmetics.com/product-221
+  URL: https://italiacosmetics.com/product-323
 
 - **Hair Detangler - UNA Hydro In For Dry Hair** (Category: Product) - PKR 11556
   Professional UNA Rolland USA product.
-  URL: https://italiacosmetics.com/product-220
+  URL: https://italiacosmetics.com/product-322
 
 - **Energizing shampoo - UNA FORTIFY Energizing** (Category: Product) - PKR 13688
   Professional UNA Rolland USA product.
-  URL: https://italiacosmetics.com/product-219
+  URL: https://italiacosmetics.com/product-321
 
 - **OXYGENATING TREATMENT- UNA stop loss 12 vials** (Category: Product) - PKR 30134
   Professional UNA Rolland USA product.
-  URL: https://italiacosmetics.com/product-218
+  URL: https://italiacosmetics.com/product-320
 
 - **Silker - UNA FINISH Styling & Defining** (Category: Product) - PKR 16744
   Professional UNA Rolland USA product.
-  URL: https://italiacosmetics.com/product-217
+  URL: https://italiacosmetics.com/product-319
 
 - **VITAMINS HAIR TREATMENT- MOISTURIZING MASK- UNA hair food** (Category: Product) - PKR 13859
   Professional UNA Rolland USA product.
-  URL: https://italiacosmetics.com/product-216
+  URL: https://italiacosmetics.com/product-318
 
 - **Drop Restructurizing Hair Treatment - UNA FORTIFY Energizing** (Category: Product) - PKR 30134
   Professional UNA Rolland USA product.
-  URL: https://italiacosmetics.com/product-215
+  URL: https://italiacosmetics.com/product-317
 
 - **Daily Hydro Active Hair Conditioner - UNA  Daily Cure** (Category: Product) - PKR 13262
   Professional UNA Rolland USA product.
-  URL: https://italiacosmetics.com/product-214
+  URL: https://italiacosmetics.com/product-316
 
 - **Vials Restructurizing treatment - UNA FORTIFY I Energizing** (Category: Product) - PKR 30134
   Professional UNA Rolland USA product.
-  URL: https://italiacosmetics.com/product-213
+  URL: https://italiacosmetics.com/product-315
 
 - **COCONUT OIL HAIR MASK - UNA ETNIKA** (Category: Product) - PKR 13859
   Professional UNA Rolland USA product.
-  URL: https://italiacosmetics.com/product-212
+  URL: https://italiacosmetics.com/product-314
 
 - **FREEZING SPRAY- UNA  finish** (Category: Product) - PKR 25728
   Professional UNA Rolland USA product.
-  URL: https://italiacosmetics.com/product-211
+  URL: https://italiacosmetics.com/product-313
 
 - **GARLIC TREATMENT- UNA Hair Food** (Category: Product) - PKR 17171
   Professional UNA Rolland USA product.
-  URL: https://italiacosmetics.com/product-210
+  URL: https://italiacosmetics.com/product-312
 
 - **Re-Build Theraphy Mask - UNA REPAIR** (Category: Product) - PKR 13859
   Professional UNA Rolland USA product.
-  URL: https://italiacosmetics.com/product-209
+  URL: https://italiacosmetics.com/product-311
 
 - **lntensive Protein Hair Treatment - UNA FORTIFY - Energizing** (Category: Product) - PKR 30134
   Professional UNA Rolland USA product.
-  URL: https://italiacosmetics.com/product-208
+  URL: https://italiacosmetics.com/product-310
 
 - **Pure Gloss Polisher - UNA Fish Styling & Defining** (Category: Product) - PKR 18905
   Professional UNA Rolland USA product.
-  URL: https://italiacosmetics.com/product-207
+  URL: https://italiacosmetics.com/product-309
 
 - **Designing Oil Non Oil - UNA FINISH Styling** (Category: Product) - PKR 18905
   Professional UNA Rolland USA product.
-  URL: https://italiacosmetics.com/product-206
+  URL: https://italiacosmetics.com/product-308
 
 - **Vitamin Leave-in  Hair Treatment - UNA Post Chem** (Category: Product) - PKR 11556
   Professional UNA Rolland USA product.
-  URL: https://italiacosmetics.com/product-205
+  URL: https://italiacosmetics.com/product-307
 
 - **DUAL-PHASE TREATMENT- UNA** (Category: Product) - PKR 25728
   Professional UNA Rolland USA product.
-  URL: https://italiacosmetics.com/product-204
+  URL: https://italiacosmetics.com/product-306
 
 - **Hydrating Shampoo -UNA  Hydro In For Dry Hair** (Category: Product) - PKR 13688
   Professional UNA Rolland USA product.
-  URL: https://italiacosmetics.com/product-203
+  URL: https://italiacosmetics.com/product-305
 
 - **Revitalizing Hair Conditioner - UNA Fortify Energizing** (Category: Product) - PKR 14143
   Professional UNA Rolland USA product.
-  URL: https://italiacosmetics.com/product-202
+  URL: https://italiacosmetics.com/product-304
 
 - **Moisturizing Hair Mask - UNA HYDRO-IN For Dry Hair** (Category: Product) - PKR 13859
   Professional UNA Rolland USA product.
-  URL: https://italiacosmetics.com/product-201
+  URL: https://italiacosmetics.com/product-303
 
 - **UNA Stop Loss Anti Hair Loss System Set: Defend and Restore for Stronger, Healthier Hair** (Category: Product) - PKR 13262
   Professional UNA Rolland USA product.
-  URL: https://italiacosmetics.com/product-200
+  URL: https://italiacosmetics.com/product-302
 
 - **COMPENSATING SHAMPOO- UNA Stop Loss** (Category: Product) - PKR 7036
   Professional UNA Rolland USA product.
-  URL: https://italiacosmetics.com/product-199
+  URL: https://italiacosmetics.com/product-301
 
 - **Drop Oxygenating Scalp Treatment - UNA stop loss** (Category: Product) - PKR 30134
   Professional UNA Rolland USA product.
-  URL: https://italiacosmetics.com/product-198
+  URL: https://italiacosmetics.com/product-300
 
 - **Easy Tech Advance Maintaining Mask** (Category: Product) - PKR 13859
   Professional Versum product from the Easy Tech line.
-  URL: https://italiacosmetics.com/product-197
+  URL: https://italiacosmetics.com/product-272
 
 - **Easy Tech Advance Maintaining Shampoo** (Category: Product) - PKR 7036
   Professional Versum product from the Easy Tech line.
-  URL: https://italiacosmetics.com/product-196
+  URL: https://italiacosmetics.com/product-271
 
 - **Easy Tech Advance Preparing Shampoo** (Category: Product) - PKR 7036
   Professional Versum product from the Easy Tech line.
-  URL: https://italiacosmetics.com/product-195
+  URL: https://italiacosmetics.com/product-270
 
 - **Easy Tech Advance Performing Mask** (Category: Product) - PKR 13859
   Professional Versum product from the Easy Tech line.
-  URL: https://italiacosmetics.com/product-194
+  URL: https://italiacosmetics.com/product-269
 
 - **Easy Tech Advance Performing Shampoo** (Category: Product) - PKR 7036
   Professional Versum product from the Easy Tech line.
-  URL: https://italiacosmetics.com/product-193
+  URL: https://italiacosmetics.com/product-268
 
 - **Easy Tech Advance Extra Silver** (Category: Product) - PKR 8287
   Professional Versum product from the Easy Tech line.
-  URL: https://italiacosmetics.com/product-192
+  URL: https://italiacosmetics.com/product-267
 
 - **Est 1024X593** (Category: Product) - PKR 22
   Professional Versum product from the Easy Tech line.
-  URL: https://italiacosmetics.com/product-191
+  URL: https://italiacosmetics.com/product-266
 
 - **B Tech** (Category: Product) - PKR 42259
   Professional Versum product from the Alchemist line.
-  URL: https://italiacosmetics.com/product-190
+  URL: https://italiacosmetics.com/product-265
 
 - **Pink Foam** (Category: Product) - PKR 7107
   Professional Versum product from the Alchemist line.
-  URL: https://italiacosmetics.com/product-189
+  URL: https://italiacosmetics.com/product-264
 
 - **Filler** (Category: Product) - PKR 63367
   Professional Versum product from the Alchemist line.
-  URL: https://italiacosmetics.com/product-188
+  URL: https://italiacosmetics.com/product-263
 
 - **Reconstructing Finalizer** (Category: Product) - PKR 54298
   Professional Versum product from the Alchemist line.
-  URL: https://italiacosmetics.com/product-187
+  URL: https://italiacosmetics.com/product-262
 
 - **Treatment** (Category: Product) - PKR 30134
   Professional Versum product from the Alchemist line.
-  URL: https://italiacosmetics.com/product-186
+  URL: https://italiacosmetics.com/product-261
 
 - **Alchemist Shampoo** (Category: Product) - PKR 14143
   Professional Versum product from the Alchemist line.
-  URL: https://italiacosmetics.com/product-185
+  URL: https://italiacosmetics.com/product-260
 
 - **Conditioning Leave In Cream** (Category: Product) - PKR 14399
   Professional Versum product from the Elements line.
-  URL: https://italiacosmetics.com/product-184
+  URL: https://italiacosmetics.com/product-259
 
 - **Multi Action 15In1** (Category: Product) - PKR 18052
   Professional Versum product from the Elements line.
-  URL: https://italiacosmetics.com/product-183
+  URL: https://italiacosmetics.com/product-258
 
 - **Trifasico** (Category: Product) - PKR 22
   Professional Versum product from the Elements line.
-  URL: https://italiacosmetics.com/product-182
+  URL: https://italiacosmetics.com/product-257
 
 - **Age Defying Lamellar Elixir** (Category: Product) - PKR 25344
   Professional Versum product from the Elements line.
-  URL: https://italiacosmetics.com/product-181
+  URL: https://italiacosmetics.com/product-256
 
 - **Age Defying Mask** (Category: Product) - PKR 12906
   Professional Versum product from the Elements line.
-  URL: https://italiacosmetics.com/product-180
+  URL: https://italiacosmetics.com/product-255
 
 - **Age Defying Shampoo** (Category: Product) - PKR 26225
   Professional Versum product from the Elements line.
-  URL: https://italiacosmetics.com/product-179
+  URL: https://italiacosmetics.com/product-254
 
 - **Moisturizing Mask** (Category: Product) - PKR 28002
   Professional Versum product from the Elements line.
-  URL: https://italiacosmetics.com/product-178
+  URL: https://italiacosmetics.com/product-253
 
 - **Moisturizing Shampoo** (Category: Product) - PKR 26225
   Professional Versum product from the Elements line.
-  URL: https://italiacosmetics.com/product-177
+  URL: https://italiacosmetics.com/product-252
 
 - **Softening Boost** (Category: Product) - PKR 32522
   Professional Versum product from the Elements line.
-  URL: https://italiacosmetics.com/product-176
+  URL: https://italiacosmetics.com/product-251
 
 - **Anti Frizz Mask** (Category: Product) - PKR 12906
   Professional Versum product from the Elements line.
-  URL: https://italiacosmetics.com/product-175
+  URL: https://italiacosmetics.com/product-250
 
 - **Repairing Mask** (Category: Product) - PKR 16801
   Professional Versum product from the Elements line.
-  URL: https://italiacosmetics.com/product-174
+  URL: https://italiacosmetics.com/product-249
+
+- **Nourishing Mask** (Category: Product) - PKR 11727
+  Professional Versum product from the Elements line.
+  URL: https://italiacosmetics.com/product-248
 
 - **Softening Shampoo** (Category: Product) - PKR 24306
   Professional Versum product from the Elements line.
-  URL: https://italiacosmetics.com/product-173
+  URL: https://italiacosmetics.com/product-247
 
 - **Elmk 1024X593** (Category: Product) - PKR 22
   Professional Versum product from the Elements line.
-  URL: https://italiacosmetics.com/product-172
+  URL: https://italiacosmetics.com/product-246
 
 - **Trikology Reinforcing Lotion** (Category: Product) - PKR 36175
   Professional Versum product from the Trikology line.
-  URL: https://italiacosmetics.com/product-171
+  URL: https://italiacosmetics.com/product-245
 
 - **Trikology Reinforcing Shampoo** (Category: Product) - PKR 26296
   Professional Versum product from the Trikology line.
-  URL: https://italiacosmetics.com/product-170
+  URL: https://italiacosmetics.com/product-244
 
 - **Charcoal Detox Mask** (Category: Product) - PKR 11300
   Professional Versum product from the Trikology line.
-  URL: https://italiacosmetics.com/product-169
+  URL: https://italiacosmetics.com/product-243
 
 - **Charcoal Detox Shampoo 1** (Category: Product) - PKR 14854
   Professional Versum product from the Trikology line.
-  URL: https://italiacosmetics.com/product-168
+  URL: https://italiacosmetics.com/product-242
 
 - **Charcoal Detox Peeling** (Category: Product) - PKR 22
   Professional Versum product from the Trikology line.
-  URL: https://italiacosmetics.com/product-167
+  URL: https://italiacosmetics.com/product-241
 
 - **Tk 1024X593** (Category: Product) - PKR 22
   Professional Versum product from the Trikology line.
-  URL: https://italiacosmetics.com/product-166
+  URL: https://italiacosmetics.com/product-240
 
 - **Artis Polishing Spray** (Category: Product) - PKR 8813
   Professional Versum product from the Artis line.
-  URL: https://italiacosmetics.com/product-165
+  URL: https://italiacosmetics.com/product-239
 
 - **Artis Crystal Drops** (Category: Product) - PKR 24448
   Professional Versum product from the Artis line.
-  URL: https://italiacosmetics.com/product-164
+  URL: https://italiacosmetics.com/product-238
 
 - **Artis Mediterranean Oil** (Category: Product) - PKR 19232
   Professional Versum product from the Artis line.
-  URL: https://italiacosmetics.com/product-163
+  URL: https://italiacosmetics.com/product-237
 
 - **Artis Volume Booster** (Category: Product) - PKR 8998
   Professional Versum product from the Artis line.
-  URL: https://italiacosmetics.com/product-162
+  URL: https://italiacosmetics.com/product-236
 
 - **Artis Total Relaxer** (Category: Product) - PKR 22
   Professional Versum product from the Artis line.
-  URL: https://italiacosmetics.com/product-161
+  URL: https://italiacosmetics.com/product-235
 
 - **Artis Termal Protector** (Category: Product) - PKR 15039
   Professional Versum product from the Artis line.
-  URL: https://italiacosmetics.com/product-160
+  URL: https://italiacosmetics.com/product-234
 
 - **Artis Strong Hold Mousse 1** (Category: Product) - PKR 17171
   Professional Versum product from the Artis line.
-  URL: https://italiacosmetics.com/product-159
+  URL: https://italiacosmetics.com/product-233
 
 - **Artis Curls Definer** (Category: Product) - PKR 16275
   Professional Versum product from the Artis line.
-  URL: https://italiacosmetics.com/product-158
+  URL: https://italiacosmetics.com/product-232
 
 - **Artis Gel** (Category: Product) - PKR 10917
   Professional Versum product from the Artis line.
-  URL: https://italiacosmetics.com/product-157
+  URL: https://italiacosmetics.com/product-231
 
 - **Artis Shaping Matt Pomade** (Category: Product) - PKR 22
   Professional Versum product from the Artis line.
-  URL: https://italiacosmetics.com/product-156
+  URL: https://italiacosmetics.com/product-230
 
 - **Artis Bright Wax** (Category: Product) - PKR 21677
   Professional Versum product from the Artis line.
-  URL: https://italiacosmetics.com/product-155
+  URL: https://italiacosmetics.com/product-229
 
 - **Artis Quick Texturizer** (Category: Product) - PKR 22
   Professional Versum product from the Artis line.
-  URL: https://italiacosmetics.com/product-154
+  URL: https://italiacosmetics.com/product-228
 
 - **Artis Thermal Shield Spray** (Category: Product) - PKR 32266
   Professional Versum product from the Artis line.
-  URL: https://italiacosmetics.com/product-153
+  URL: https://italiacosmetics.com/product-227
 
 - **Artis Weather Protector** (Category: Product) - PKR 15039
   Professional Versum product from the Artis line.
-  URL: https://italiacosmetics.com/product-152
+  URL: https://italiacosmetics.com/product-226
 
 - **Artis Supreme Shine Spray** (Category: Product) - PKR 32266
   Professional Versum product from the Artis line.
-  URL: https://italiacosmetics.com/product-151
+  URL: https://italiacosmetics.com/product-225
 
 - **Artis Sculpting Spray** (Category: Product) - PKR 8813
   Professional Versum product from the Artis line.
-  URL: https://italiacosmetics.com/product-150
+  URL: https://italiacosmetics.com/product-224
 
 - **Ar 1024X593** (Category: Product) - PKR 22
   Professional Versum product from the Artis line.
-  URL: https://italiacosmetics.com/product-149
+  URL: https://italiacosmetics.com/product-223
 
 - **Sun Shine Solar Oil** (Category: Product) - PKR 19232
   Professional Versum product from the Sun Shine line.
-  URL: https://italiacosmetics.com/product-148
+  URL: https://italiacosmetics.com/product-222
 
 - **Sun Shine Mask** (Category: Product) - PKR 13859
   Professional Versum product from the Sun Shine line.
-  URL: https://italiacosmetics.com/product-147
+  URL: https://italiacosmetics.com/product-221
 
 - **Sun Shine Shampoo** (Category: Product) - PKR 14143
   Professional Versum product from the Sun Shine line.
-  URL: https://italiacosmetics.com/product-146
+  URL: https://italiacosmetics.com/product-220
 
 - **Es 1024X593** (Category: Product) - PKR 8529
   Professional Versum product from the Sun Shine line.
-  URL: https://italiacosmetics.com/product-145
+  URL: https://italiacosmetics.com/product-219
 
 - **Gradient Tone Gold** (Category: Product) - PKR 18592
   Professional Versum product from the Gradient Tone line.
-  URL: https://italiacosmetics.com/product-144
+  URL: https://italiacosmetics.com/product-218
 
 - **Gradient Tone Beige** (Category: Product) - PKR 18592
   Professional Versum product from the Gradient Tone line.
-  URL: https://italiacosmetics.com/product-143
+  URL: https://italiacosmetics.com/product-217
 
 - **Gradient Tone Chocolate** (Category: Product) - PKR 18592
   Professional Versum product from the Gradient Tone line.
-  URL: https://italiacosmetics.com/product-142
+  URL: https://italiacosmetics.com/product-216
 
 - **Gradient Tone Black** (Category: Product) - PKR 18592
   Professional Versum product from the Gradient Tone line.
-  URL: https://italiacosmetics.com/product-141
+  URL: https://italiacosmetics.com/product-215
 
 - **Gradient Tone Copper** (Category: Product) - PKR 18592
   Professional Versum product from the Gradient Tone line.
-  URL: https://italiacosmetics.com/product-140
+  URL: https://italiacosmetics.com/product-214
 
 - **Gradient Tone Caramel** (Category: Product) - PKR 13262
   Professional Versum product from the Gradient Tone line.
-  URL: https://italiacosmetics.com/product-139
+  URL: https://italiacosmetics.com/product-213
 
 - **Gradient Tone Red** (Category: Product) - PKR 18592
   Professional Versum product from the Gradient Tone line.
+  URL: https://italiacosmetics.com/product-212
+
+- **Gradient Tone Violet** (Category: Product) - PKR 14854
+  Professional Versum product from the Gradient Tone line.
+  URL: https://italiacosmetics.com/product-211
+
+- **Gradient Tone Silver** (Category: Product) - PKR 18592
+  Professional Versum product from the Gradient Tone line.
+  URL: https://italiacosmetics.com/product-210
+
+- **Gt 1024X593** (Category: Product) - PKR 22
+  Professional Versum product from the Gradient Tone line.
+  URL: https://italiacosmetics.com/product-209
+
+- **Easy Blonde Violet** (Category: Product) - PKR 14854
+  Professional Versum product from the Easy Color line.
+  URL: https://italiacosmetics.com/product-208
+
+- **Easy Blond White Powder** (Category: Product) - PKR 22
+  Professional Versum product from the Easy Color line.
+  URL: https://italiacosmetics.com/product-207
+
+- **Easy Blonde Blue Powder** (Category: Product) - PKR 22
+  Professional Versum product from the Easy Color line.
+  URL: https://italiacosmetics.com/product-206
+
+- **Easy Blonde 9 Tones** (Category: Product) - PKR 36246
+  Professional Versum product from the Easy Color line.
+  URL: https://italiacosmetics.com/product-205
+
+- **Easy Oxy Compact** (Category: Product) - PKR 22
+  Professional Versum product from the Easy Color line.
+  URL: https://italiacosmetics.com/product-204
+
+- **Easy Color Ammonia Free** (Category: Product) - PKR 12267
+  Professional Versum product from the Easy Color line.
+  URL: https://italiacosmetics.com/product-203
+
+- **Easy Oxy** (Category: Product) - PKR 7932
+  Professional Versum product from the Easy Color line.
+  URL: https://italiacosmetics.com/product-202
+
+- **Easy Color** (Category: Product) - PKR 6752
+  Professional Versum product from the Easy Color line.
+  URL: https://italiacosmetics.com/product-201
+
+- **Et 1024X593** (Category: Product) - PKR 22
+  Professional Versum product from the Easy Color line.
+  URL: https://italiacosmetics.com/product-200
+
+- **Watch The Videoredefine Your Curls In A Single Gesture** (Category: Product) - PKR 11556
+  Professional Genus product from the Seet Curls line.
+  URL: https://italiacosmetics.com/product-141
+
+- **Camelina Oil** (Category: Product) - PKR 19232
+  Professional Genus product from the Seet Curls line.
+  URL: https://italiacosmetics.com/product-140
+
+- **Linseed Oil** (Category: Product) - PKR 19232
+  Professional Genus product from the Seet Curls line.
+  URL: https://italiacosmetics.com/product-139
+
+- **Mongongo Oil** (Category: Product) - PKR 19232
+  Professional Genus product from the Seet Curls line.
   URL: https://italiacosmetics.com/product-138
 
+- **Curl Reactivating Spray** (Category: Product) - PKR 13262
+  Professional Genus product from the Seet Curls line.
+  URL: https://italiacosmetics.com/product-137
+
+- **Shampoo Silver** (Category: Product) - PKR 8287
+  Professional Genus product from the Silver line.
+  URL: https://italiacosmetics.com/product-136
+
+- **Purifying Shampoo** (Category: Product) - PKR 7818
+  Professional Genus product from the Purity line.
+  URL: https://italiacosmetics.com/product-135
+
+- **Extra Silver Treatment For Thick Hair** (Category: Product) - PKR 19161
+  Professional Genus product from the Extra Silver line.
+  URL: https://italiacosmetics.com/product-134
+
+- **Extra Silver Treatment For Fine  Hair** (Category: Product) - PKR 19161
+  Professional Genus product from the Extra Silver line.
+  URL: https://italiacosmetics.com/product-133
+
+- **Silky Cream Ice Effect** (Category: Product) - PKR 15039
+  Professional Genus product from the Extra Silver line.
+  URL: https://italiacosmetics.com/product-132
+
+- **Mousse Ice Effect** (Category: Product) - PKR 15039
+  Professional Genus product from the Extra Silver line.
+  URL: https://italiacosmetics.com/product-131
+
+- **Maschera Ice Effect** (Category: Product) - PKR 59813
+  Professional Genus product from the Extra Silver line.
+  URL: https://italiacosmetics.com/product-130
+
+- **Shampoo Ice Effect** (Category: Product) - PKR 14143
+  Professional Genus product from the Extra Silver line.
+  URL: https://italiacosmetics.com/product-129
+
+- **Nourishing Mask** (Category: Product) - PKR 11727
+  Professional Genus product from the Milk line.
+  URL: https://italiacosmetics.com/product-128
+
+- **Nourishing Shampoo** (Category: Product) - PKR 12267
+  Professional Genus product from the Milk line.
+  URL: https://italiacosmetics.com/product-127
+
+- **Supreme Filmer Spray** (Category: Product) - PKR 14570
+  Professional Genus product from the Laminescent line.
+  URL: https://italiacosmetics.com/product-126
+
+- **Supreme Filmer Treatment** (Category: Product) - PKR 20440
+  Professional Genus product from the Laminescent line.
+  URL: https://italiacosmetics.com/product-125
+
+- **Restructuring Treatment For Split Ends** (Category: Product) - PKR 16275
+  Professional Genus product from the Keratin line.
+  URL: https://italiacosmetics.com/product-124
+
+- **Restructuring Leave-In Lotion** (Category: Product) - PKR 14399
+  Professional Genus product from the Keratin line.
+  URL: https://italiacosmetics.com/product-123
+
+- **Anti-Frizz Restructuring Cream** (Category: Product) - PKR 10845
+  Professional Genus product from the Keratin line.
+  URL: https://italiacosmetics.com/product-122
+
+- **Restructuring Mask** (Category: Product) - PKR 8457
+  Professional Genus product from the Keratin line.
+  URL: https://italiacosmetics.com/product-121
+
+- **Restructuring Shampoo** (Category: Product) - PKR 7391
+  Professional Genus product from the Keratin line.
+  URL: https://italiacosmetics.com/product-120
+
+- **Intense Restoring Lotion** (Category: Product) - PKR 28897
+  Professional Genus product from the Intense Restoring line.
+  URL: https://italiacosmetics.com/product-119
+
+- **Intense Restoring Mask** (Category: Product) - PKR 13617
+  Professional Genus product from the Intense Restoring line.
+  URL: https://italiacosmetics.com/product-118
+
+- **Intense Restoring Fluid Oil** (Category: Product) - PKR 21790
+  Professional Genus product from the Intense Restoring line.
+  URL: https://italiacosmetics.com/product-117
+
+- **Intense Restoring Shampoo** (Category: Product) - PKR 8998
+  Professional Genus product from the Intense Restoring line.
+  URL: https://italiacosmetics.com/product-116
+
+- **Color Sealing Cream** (Category: Product) - PKR 12722
+  Professional Genus product from the Hyaluronic line.
+  URL: https://italiacosmetics.com/product-115
+
+- **Color Protection Conditioner** (Category: Product) - PKR 7036
+  Professional Genus product from the Hyaluronic line.
+  URL: https://italiacosmetics.com/product-114
+
+- **Color Protection Mask** (Category: Product) - PKR 8457
+  Professional Genus product from the Hyaluronic line.
+  URL: https://italiacosmetics.com/product-113
+
+- **Color Protection Shampoo** (Category: Product) - PKR 7391
+  Professional Genus product from the Hyaluronic line.
+  URL: https://italiacosmetics.com/product-112
+
+- **Revitalizing Mask** (Category: Product) - PKR 8813
+  Professional Genus product from the Garlic line.
+  URL: https://italiacosmetics.com/product-111
+
+- **Revitalizing Shampoo** (Category: Product) - PKR 14143
+  Professional Genus product from the Garlic line.
+  URL: https://italiacosmetics.com/product-110
+
+- **Energizing Lotion With Cren** (Category: Product) - PKR 14399
+  Professional Genus product from the Energy line.
+  URL: https://italiacosmetics.com/product-109
+
+- **Energizing Lotion** (Category: Product) - PKR 14399
+  Professional Genus product from the Energy line.
+  URL: https://italiacosmetics.com/product-108
+
+- **Reinforcing Clay Mask** (Category: Product) - PKR 19829
+  Professional Genus product from the Energy line.
+  URL: https://italiacosmetics.com/product-107
+
+- **Energizing Shampoo** (Category: Product) - PKR 7818
+  Professional Genus product from the Energy line.
+  URL: https://italiacosmetics.com/product-106
+
+- **Sebum Regulating Shampoo** (Category: Product) - PKR 14854
+  Professional Genus product from the Balance line.
+  URL: https://italiacosmetics.com/product-105
+
+- **Moisturizing Serum** (Category: Product) - PKR 17171
+  Professional Genus product from the Argan line.
+  URL: https://italiacosmetics.com/product-104
+
+- **Multi-Action Leave-In Mask** (Category: Product) - PKR 16872
+  Professional Genus product from the Argan line.
+  URL: https://italiacosmetics.com/product-103
+
+- **Hydrating Mask** (Category: Product) - PKR 7932
+  Professional Genus product from the Argan line.
+  URL: https://italiacosmetics.com/product-102
+
+- **Hydrating Shampoo** (Category: Product) - PKR 13688
+  Professional Genus product from the Argan line.
+  URL: https://italiacosmetics.com/product-101
+
+- **Repairing Treatment Leave-In** (Category: Product) - PKR 19161
+  Professional Genus product from the 24/7 line.
+  URL: https://italiacosmetics.com/product-100
+
+- **8 Biondo Chiaro 100 ml** (Category: Product) - PKR 21947
+  Professional Maxylook product from the Harmonic Color line.
+  URL: https://italiacosmetics.com/product-70
+
+- **7 Biondo 100 ml** (Category: Product) - PKR 21947
+  Professional Maxylook product from the Harmonic Color line.
+  URL: https://italiacosmetics.com/product-69
+
+- **6 Biondo Scuro 100 ml** (Category: Product) - PKR 21947
+  Professional Maxylook product from the Harmonic Color line.
+  URL: https://italiacosmetics.com/product-68
+
+- **5 Castano Chiaro 100 ml** (Category: Product) - PKR 21947
+  Professional Maxylook product from the Harmonic Color line.
+  URL: https://italiacosmetics.com/product-67
+
+- **4 Castano 100 ml** (Category: Product) - PKR 21947
+  Professional Maxylook product from the Harmonic Color line.
+  URL: https://italiacosmetics.com/product-66
+
+- **3 Castano Scuro 100 ml** (Category: Product) - PKR 21947
+  Professional Maxylook product from the Harmonic Color line.
+  URL: https://italiacosmetics.com/product-65
+
+- **1 Nero 100 ml** (Category: Product) - PKR 6752
+  Professional Maxylook product from the Harmonic Color line.
+  URL: https://italiacosmetics.com/product-64
+
+- **6.34 Biondo Scuro Dorato Rame 100 ml** (Category: Product) - PKR 7932
+  Professional Maxylook product from the Harmonic Color line.
+  URL: https://italiacosmetics.com/product-63
+
+- **Perfumed Oxidizing Emulsion Cream 40 volumi** (Category: Product) - PKR 7932
+  Professional Maxylook product from the Ossigeni line.
+  URL: https://italiacosmetics.com/product-62
+
+- **Perfumed Oxidizing Emulsion Cream 30 volumi** (Category: Product) - PKR 7932
+  Professional Maxylook product from the Ossigeni line.
+  URL: https://italiacosmetics.com/product-61
+
+- **Perfumed Oxidizing Emulsion Cream 20 volumi** (Category: Product) - PKR 7932
+  Professional Maxylook product from the Ossigeni line.
+  URL: https://italiacosmetics.com/product-60
+
+- **Perfumed Oxidizing Emulsion Cream 10 volumi** (Category: Product) - PKR 11556
+  Professional Maxylook product from the Ossigeni line.
+  URL: https://italiacosmetics.com/product-59
+
+- **Direct Coloring Acid Green** (Category: Product) - PKR 25728
+  Professional Maxylook product from the Harmonic Color line.
+  URL: https://italiacosmetics.com/product-58
+
+- **Direct Coloring Blue** (Category: Product) - PKR 7107
+  Professional Maxylook product from the Harmonic Color line.
+  URL: https://italiacosmetics.com/product-57
+
+- **Direct Coloring Clear** (Category: Product) - PKR 7107
+  Professional Maxylook product from the Harmonic Color line.
+  URL: https://italiacosmetics.com/product-56
+
+- **Direct Coloring Ethereal White** (Category: Product) - PKR 7107
+  Professional Maxylook product from the Harmonic Color line.
+  URL: https://italiacosmetics.com/product-55
+
+- **Direct Coloring Green** (Category: Product) - PKR 7107
+  Professional Maxylook product from the Harmonic Color line.
+  URL: https://italiacosmetics.com/product-54
+
+- **Direct Coloring Orange** (Category: Product) - PKR 13262
+  Professional Maxylook product from the Harmonic Color line.
+  URL: https://italiacosmetics.com/product-53
+
+- **Direct Coloring Pearl Grey** (Category: Product) - PKR 13262
+  Professional Maxylook product from the Harmonic Color line.
+  URL: https://italiacosmetics.com/product-52
+
+- **Direct Coloring Pink** (Category: Product) - PKR 7107
+  Professional Maxylook product from the Harmonic Color line.
+  URL: https://italiacosmetics.com/product-51
+
+- **Direct Coloring Plum** (Category: Product) - PKR 7107
+  Professional Maxylook product from the Harmonic Color line.
+  URL: https://italiacosmetics.com/product-50
+
+- **Direct Coloring Red** (Category: Product) - PKR 7107
+  Professional Maxylook product from the Harmonic Color line.
+  URL: https://italiacosmetics.com/product-49
+
+- **Direct Coloring Turquoise** (Category: Product) - PKR 13262
+  Professional Maxylook product from the Harmonic Color line.
+  URL: https://italiacosmetics.com/product-48
+
+- **Direct Coloring Yellow** (Category: Product) - PKR 14854
+  Professional Maxylook product from the Harmonic Color line.
+  URL: https://italiacosmetics.com/product-47
+
+- **Protective Shining Spray 125 ml** (Category: Product) - PKR 32266
+  Professional Maxylook product from the Arganway line.
+  URL: https://italiacosmetics.com/product-46
+
+- **Instant Repair Leave-in Oil 100 ml** (Category: Product) - PKR 7932
+  Professional Maxylook product from the Arganway line.
+  URL: https://italiacosmetics.com/product-45
+
+- **Extreme Hair Spray 300 ml** (Category: Product) - PKR 20753
+  Professional Maxylook product from the Maxy Style line.
+  URL: https://italiacosmetics.com/product-44
+
+- **Extreme Glossy Spray 115 ml** (Category: Product) - PKR 32522
+  Professional Maxylook product from the Maxy Style line.
+  URL: https://italiacosmetics.com/product-43
+
+- **Heat Protector Spray 150 ml** (Category: Product) - PKR 32522
+  Professional Maxylook product from the Maxy Style line.
+  URL: https://italiacosmetics.com/product-42
+
+- **Extreme Liss Cream 100 ml** (Category: Product) - PKR 20753
+  Professional Maxylook product from the Maxy Style line.
+  URL: https://italiacosmetics.com/product-41
+
+- **Extreme Mousse 250 ml** (Category: Product) - PKR 13262
+  Professional Maxylook product from the Maxy Style line.
+  URL: https://italiacosmetics.com/product-40
+
+- **Curl Control Cream 100 ml** (Category: Product) - PKR 20753
+  Professional Maxylook product from the Maxy Style line.
+  URL: https://italiacosmetics.com/product-39
+
+- **Hydrating Crystal Fluid (Hydrating Crystal) 100ml** (Category: Product) - PKR 17697
+  Professional Maxylook product from the Macadamia line.
+  URL: https://italiacosmetics.com/product-38
+
+- **Revitalizing Treatment Lotion 100ml** (Category: Product) - PKR 24804
+  Professional Maxylook product from the Fresh Mint line.
+  URL: https://italiacosmetics.com/product-37
+
+- **Revitalizing Treatment Lotion 7ml x 12** (Category: Product) - PKR 30134
+  Professional Maxylook product from the Fresh Mint line.
+  URL: https://italiacosmetics.com/product-36
+
+- **N&bull;Factor Kit** (Category: Product) - PKR 55464
+  Professional Maxylook product from the N • Factor line.
+  URL: https://italiacosmetics.com/product-35
+
+- **FORTIFIER Strengthening Cream For Wet Hair 250ml** (Category: Product) - PKR 7932
+  Professional Maxylook product from the N • Factor line.
+  URL: https://italiacosmetics.com/product-34
+
+- **EXTENDER Maintenance Cream 100ml** (Category: Product) - PKR 26296
+  Professional Maxylook product from the N • Factor line.
+  URL: https://italiacosmetics.com/product-33
+
+- **FILLER Reconstructing Fluid 100ml** (Category: Product) - PKR 9239
+  Professional Maxylook product from the N • Factor line.
+  URL: https://italiacosmetics.com/product-32
+
+- **Deep Restructuring A+B Lotion** (Category: Product) - PKR 14399
+  Professional Maxylook product from the Proteins & Minerals Of Egg line.
+  URL: https://italiacosmetics.com/product-31
+
+- **Hydrating Treatment Lotion 100ml** (Category: Product) - PKR 17697
+  Professional Maxylook product from the Macadamia line.
+  URL: https://italiacosmetics.com/product-30
+
+- **Hydrating Treatment Lotion 7ml x 12** (Category: Product) - PKR 30134
+  Professional Maxylook product from the Macadamia line.
+  URL: https://italiacosmetics.com/product-29
+
+- **Restructuring and Nourishing Cream to Milk Formula 125ml** (Category: Product) - PKR 12267
+  Professional Maxylook product from the Proteins & Minerals Of Egg line.
+  URL: https://italiacosmetics.com/product-28
+
+- **Protecting Dual-phase Spray 300ml** (Category: Product) - PKR 8813
+  Professional Maxylook product from the Collagen line.
+  URL: https://italiacosmetics.com/product-27
+
+- **Nourishing Conditioner Leave-in** (Category: Product) - PKR 11556
+  Professional Maxylook product from the Protein line.
+  URL: https://italiacosmetics.com/product-26
+
+- **Multi Action 10 in 1 Leave in 200 ml** (Category: Product) - PKR 11556
+  Professional Maxylook product from the Macadamia line.
+  URL: https://italiacosmetics.com/product-25
+
+- **Hydrating Mask 1000ml** (Category: Product) - PKR 13859
+  Professional Maxylook product from the Macadamia line.
+  URL: https://italiacosmetics.com/product-24
+
+- **Revitalizing Mask 1000 ml** (Category: Product) - PKR 17412
+  Professional Maxylook product from the Fresh Mint line.
+  URL: https://italiacosmetics.com/product-23
+
+- **Revitalizing Mask 300 ml** (Category: Product) - PKR 8813
+  Professional Maxylook product from the Fresh Mint line.
+  URL: https://italiacosmetics.com/product-22
+
+- **Protecting Mask 300 ml** (Category: Product) - PKR 7932
+  Professional Maxylook product from the Collagen line.
+  URL: https://italiacosmetics.com/product-21
+
+- **Protecting Mask 1000 ml** (Category: Product) - PKR 13859
+  Professional Maxylook product from the Collagen line.
+  URL: https://italiacosmetics.com/product-20
+
+- **Intense Hydrating Mask 500 ml** (Category: Product) - PKR 26296
+  Professional Maxylook product from the Arganway line.
+  URL: https://italiacosmetics.com/product-19
+
+- **Restructuring and Nourishing Mask 350 ml** (Category: Product) - PKR 12906
+  Professional Maxylook product from the Proteins & Minerals Of Egg line.
+  URL: https://italiacosmetics.com/product-18
+
+- **No Yellow Mask 300ml** (Category: Product) - PKR 11300
+  Professional Maxylook product from the Violet Pigment line.
+  URL: https://italiacosmetics.com/product-17
+
+- **Nourishing Mask 300 ml** (Category: Product) - PKR 7932
+  Professional Maxylook product from the Protein line.
+  URL: https://italiacosmetics.com/product-16
+
+- **Nourishing Mask 1000 ml** (Category: Product) - PKR 28002
+  Professional Maxylook product from the Protein line.
+  URL: https://italiacosmetics.com/product-15
+
+- **Hydrating Mask 300ml** (Category: Product) - PKR 7932
+  Professional Maxylook product from the Macadamia line.
+  URL: https://italiacosmetics.com/product-14
+
+- **Nourishing Shampoo 300 ml** (Category: Product) - PKR 7391
+  Professional Maxylook product from the Protein line.
+  URL: https://italiacosmetics.com/product-13
+
+- **Revitalizing Shampoo 1000 ml** (Category: Product) - PKR 14143
+  Professional Maxylook product from the Fresh Mint line.
+  URL: https://italiacosmetics.com/product-12
+
+- **Revitalizing Shampoo 300 ml** (Category: Product) - PKR 7462
+  Professional Maxylook product from the Fresh Mint line.
+  URL: https://italiacosmetics.com/product-11
+
+- **Protecting Shampoo 300 ml** (Category: Product) - PKR 7036
+  Professional Maxylook product from the Collagen line.
+  URL: https://italiacosmetics.com/product-10
+
+- **Protecting Shampoo 1000ml** (Category: Product) - PKR 13688
+  Professional Maxylook product from the Collagen line.
+  URL: https://italiacosmetics.com/product-9
+
+- **Shampoo Moisture Repair 500 ml** (Category: Product) - PKR 20753
+  Professional Maxylook product from the Arganway line.
+  URL: https://italiacosmetics.com/product-8
+
+- **Restructuring and Nourishing Shampoo 1000 ml** (Category: Product) - PKR 12267
+  Professional Maxylook product from the Proteins & Minerals Of Egg line.
+  URL: https://italiacosmetics.com/product-7
+
+- **Restructuring and Nourishing Shampoo 250 ml** (Category: Product) - PKR 13688
+  Professional Maxylook product from the Proteins & Minerals Of Egg line.
+  URL: https://italiacosmetics.com/product-6
+
+- **No Yellow Shampoo 1000ml** (Category: Product) - PKR 14854
+  Professional Maxylook product from the Violet Pigment line.
+  URL: https://italiacosmetics.com/product-5
+
+- **No Yellow Shampoo 300ml** (Category: Product) - PKR 7932
+  Professional Maxylook product from the Violet Pigment line.
+  URL: https://italiacosmetics.com/product-4
+
+- **Nourishing Shampoo 1000 ml** (Category: Product) - PKR 12267
+  Professional Maxylook product from the Protein line.
+  URL: https://italiacosmetics.com/product-3
+
+- **Hydrating Shampoo 300 ml** (Category: Product) - PKR 7036
+  Professional Maxylook product from the Macadamia line.
+  URL: https://italiacosmetics.com/product-2
+
+- **Hydrating Shampoo 1000 ml** (Category: Product) - PKR 13688
+  Professional Maxylook product from the Macadamia line.
+  URL: https://italiacosmetics.com/product-1
+
 ## Pages
+- **Home**
+  URL: https://italiacosmetics.com/
+
+- **Shop**
+  Browse the full catalog of professional haircare and skincare products, filterable by brand, category, and price.
+  URL: https://italiacosmetics.com/shop
+
+- **Our Brands**
+  Overview of Maxylook, Genus, Versum, and UNA — the four professional haircare brands carried by Italia Cosmetics.
+  URL: https://italiacosmetics.com/brands
+
 - **About Us**
   URL: https://italiacosmetics.com/about
 
-- **My account**
-  URL: https://italiacosmetics.com/my-account
+- **Beauty Journal (Blog)**
+  Expert tips, styling guides, and brand spotlights.
+  URL: https://italiacosmetics.com/blog
 
-- **Checkout**
-  URL: https://italiacosmetics.com/checkout
-
-- **Cart**
-  URL: https://italiacosmetics.com/cart
-
-- **Shop**
-  URL: https://italiacosmetics.com/shop
-
-- **Sample Page**
-  URL: https://italiacosmetics.com/sample-page
+- **Contact**
+  Contact information and frequently asked questions.
+  URL: https://italiacosmetics.com/contact
 
 - **FAQ**
   Answers to common questions about product authenticity, wholesale pricing, payment methods (Cash on Delivery only), and order tracking.
@@ -461,66 +966,163 @@ Welcome to the LLM index for Italia Cosmetics. We are the premier online destina
   URL: https://italiacosmetics.com/track-order
 
 ## Blog Posts
-- **Best Shampoo for Hair Fall, Hair Growth & Color Care in Pakistan: The Ultimate 2026 Dermatologist & Salon Guide**
-  Authoritative 3,200+ word masterclass analyzing the best shampoos for hair fall, rapid growth, biotin vs keratin treatments, sulfate-free formulations, hard water protection, and instant hair color shampoos in Pakistan.
-  URL: https://italiacosmetics.com/post-101
 
-- **The Ultimate Guide to Hair Masks, Keratin Treatments & Scalp Serums: Transform Frizzy & Damaged Hair in Pakistan**
-  Comprehensive 3,500+ word master guide exploring hair masks, cortex protein repair, lamellar water technology, rosemary scalp serums, and anti-frizz humidity defense protocols for Pakistani hair.
-  URL: https://italiacosmetics.com/post-102
+- **Fresh Mint Revitalizing Mask 1000 ml: The Better-Value Size for Regular Use**
+  For anyone masking weekly as part of an oily-scalp routine, the 1000 ml Revitalizing Mask offers meaningfully better long-term value.
+  URL: https://italiacosmetics.com/post-327
 
-- **How to Build a Professional Hair Care Routine**
-  URL: https://italiacosmetics.com/post-344
+- **Fresh Mint Revitalizing Mask 300 ml: Hydrating the Ends Without Oiling the Roots**
+  Why oily-scalp hair still needs a mask, and how to use the Revitalizing Mask 300 ml without undoing your clarifying routine.
+  URL: https://italiacosmetics.com/post-326
 
-- **Superfoods for Your Hair: The Maxylook Philosophy**
-  URL: https://italiacosmetics.com/post-343
+- **Fresh Mint Revitalizing Shampoo 300 ml: Test the Clarifying Effect First**
+  How the 300 ml Revitalizing Shampoo compares to the 1000 ml, and why oily-scalp routines benefit from starting small.
+  URL: https://italiacosmetics.com/post-325
 
-- **Versum Hair 2.0: A New Era in Haircare Science**
-  URL: https://italiacosmetics.com/post-342
+- **Collagen Protecting Mask 300 ml: A Smaller Way to Start**
+  For anyone testing the Collagen line before committing to the larger jar, here is what the 300 ml Protecting Mask offers.
+  URL: https://italiacosmetics.com/post-324
 
-- **The Ultimate Guide to Professional Hair Masks**
-  URL: https://italiacosmetics.com/post-341
+- **Collagen Protecting Mask 1000 ml: The Better Value for Weekly Reinforcement**
+  The 1000 ml Protecting Mask nearly halves your cost per use compared to the 300 ml jar for the same collagen-reinforcement formula.
+  URL: https://italiacosmetics.com/post-323
 
-- **Hello world!**
-  URL: https://italiacosmetics.com/post-1
+- **Collagen Protecting Shampoo 300 ml: A Lower-Cost Way to Try Daily Protection**
+  How the 300 ml Protecting Shampoo compares to the 1000 ml, and why this is the line most worth buying in bulk once you commit.
+  URL: https://italiacosmetics.com/post-322
 
-- **Dandruff & Itchy Scalp Shampoo Guide for Pakistan: What Actually Works**
-  Dandruff, dry scalp, and product buildup look identical but need different treatments. A clinical breakdown of what works in Pakistan's climate and hard water.
-  URL: https://italiacosmetics.com/post-201
+- **Intense Hydrating Mask (Arganway): For Hair That Stays Dry No Matter What**
+  The Arganway Intense Hydrating Mask is the heaviest-duty moisture treatment in the Maxylook range — here is who actually needs it.
+  URL: https://italiacosmetics.com/post-321
 
-- **Sulfate-Free Shampoo in Pakistan: The Complete Buying Guide**
-  How to read an ingredient list, who actually needs to switch, and why hard water makes sulfate-free formulas matter more in Pakistan specifically.
-  URL: https://italiacosmetics.com/post-202
+- **Restructuring and Nourishing Mask: The At-Home Follow-Up to a Keratin Treatment**
+  A closer look at the Restructuring and Nourishing Mask 350 ml and where it fits into a post-chemical-treatment recovery routine.
+  URL: https://italiacosmetics.com/post-320
 
-- **Instant Hair Color Shampoo in Pakistan: Does It Actually Work?**
-  An honest look at what instant color shampoos can and can't do, and when professional color care is worth the switch.
-  URL: https://italiacosmetics.com/post-203
+- **Restructuring and Nourishing Shampoo 250 ml: Check the Price Before You Choose This Size**
+  The 250 ml Restructuring Shampoo costs almost the same as the full 1000 ml bottle — here is the honest breakdown before you buy.
+  URL: https://italiacosmetics.com/post-319
 
-- **Dry Shampoo 101: When and How to Actually Use It**
-  What dry shampoo actually does, how often to use it, and why it isn't a substitute for washing.
-  URL: https://italiacosmetics.com/post-204
+- **No Yellow Mask: Repairing Lightened Ends While You Tone**
+  Why bleached and highlighted hair needs a toning mask, not just a toning shampoo, and how the No Yellow Mask fits into a color-maintenance routine.
+  URL: https://italiacosmetics.com/post-318
 
-- **Hair Growth Actives Explained: What Actually Regrows Hair vs. What Just Sounds Scientific**
-  A clear-eyed breakdown of which hair growth ingredients (caffeine, peptides, biotin, rosemary oil) have real evidence behind them.
-  URL: https://italiacosmetics.com/post-205
+- **No Yellow Shampoo 300 ml: Enough to Find Your Toning Frequency**
+  How the 300 ml No Yellow Shampoo helps you figure out how often your specific blonde, highlighted, or grey tone needs toning before committing to the 1000 ml bottle.
+  URL: https://italiacosmetics.com/post-317
 
-- **Rosemary Oil for Hair: The Fastest-Rising Hair Trend in Pakistan, Explained**
-  What the research says about rosemary oil vs. minoxidil, and the right way to use it without irritating your scalp.
-  URL: https://italiacosmetics.com/post-206
+- **Protein Nourishing Mask 300 ml: The Practical Default Size**
+  Why the 300 ml Nourishing Mask is the more sensible everyday choice, and how to fit it into a weekly protein-repair routine.
+  URL: https://italiacosmetics.com/post-316
 
-- **Keratin Shampoo and Keratin Mask: The Maintenance Guide Salons Do Not Tell You About**
-  What determines whether a keratin treatment lasts eight weeks or twenty — the home maintenance routine that follows it.
-  URL: https://italiacosmetics.com/post-207
+- **Protein Nourishing Mask 1000 ml: Why It Costs More Per Use Than the 300 ml**
+  An honest look at the Nourishing Mask 1000 ml pricing versus the 300 ml jar, and which one actually makes more sense for most routines.
+  URL: https://italiacosmetics.com/post-315
 
-- **Do You Actually Need Conditioner? A Practical Guide for Pakistani Hair**
-  What conditioner actually does, who needs it most, and how it differs from a hair mask.
-  URL: https://italiacosmetics.com/post-208
+- **Protein Nourishing Shampoo 300 ml: A Lower-Commitment Way to Start**
+  How the 300 ml Nourishing Shampoo compares in value to the 1000 ml, and who should start small before committing to the full-size bottle.
+  URL: https://italiacosmetics.com/post-314
 
-- **Frizzy Hair in Pakistan Humidity: The Anti-Frizz Product Guide**
-  What actually blocks humidity-driven frizz and how to layer products correctly for Lahore and Karachi conditions.
-  URL: https://italiacosmetics.com/post-209
+- **Macadamia Hydrating Mask 1000 ml: The Better Long-Term Value**
+  For established Macadamia users: why the 1000 ml Hydrating Mask jar nearly halves your cost per use compared to the 300 ml size.
+  URL: https://italiacosmetics.com/post-313
+
+- **Macadamia Hydrating Mask 300 ml: Who Should Start Here**
+  A focused look at the 300 ml Macadamia Hydrating Mask — how it pairs with the Hydrating Shampoo and when the smaller size makes more sense than the 1000 ml.
+  URL: https://italiacosmetics.com/post-312
+
+- **Macadamia Hydrating Shampoo 300 ml: Is the Smaller Bottle Worth It?**
+  A quick price-per-use comparison between the 300 ml and 1000 ml Macadamia Hydrating Shampoo to help you pick the right size for how often you actually wash your hair.
+  URL: https://italiacosmetics.com/post-311
+
+- **Fresh Mint Revitalizing Shampoo: The Clarifying Routine for Oily Scalp, Dandruff and Hijab Sweat**
+  Oily roots, dandruff and flat volume by midday are usually the same root cause. How the menthol-based Fresh Mint Revitalizing Shampoo resets an overactive scalp, including for hijab-wearing routines.
+  URL: https://italiacosmetics.com/post-307
+
+- **Collagen Protecting Shampoo: The Anti Hair Fall Routine for Everyday Environmental Damage**
+  Pollution, hard water, and sun exposure age hair the same way they age skin. How the collagen-based Protecting Shampoo builds a daily defense layer against anti hair fall triggers.
+  URL: https://italiacosmetics.com/post-306
+
+- **Arganway Moisture Repair Shampoo: Sulfate-Free Relief for Very Dry, Coarse Pakistani Hair**
+  For hair that stays dry no matter what you try: how argan-oil-based Moisture Repair Shampoo works, and why the sulfate-free switch matters more for coarse, thick Pakistani hair than any other type.
+  URL: https://italiacosmetics.com/post-305
+
+- **Egg Proteins & Minerals Restructuring Shampoo: A Keratin-Style Repair Routine for Damaged Pakistani Hair**
+  How hydrolyzed egg proteins and minerals rebuild chemically and heat-damaged hair, and why this shampoo is the closest rinse-out alternative to an in-salon keratin treatment.
+  URL: https://italiacosmetics.com/post-304
+
+- **No Yellow Shampoo: The Toning Routine Pakistani Women With Highlights, Balayage and Grey Hair Actually Need**
+  Why highlighted, bleached and grey-blended hair turns brassy or yellow in Pakistan, and how the violet-pigment Maxylook No Yellow Shampoo neutralizes it between salon visits.
+  URL: https://italiacosmetics.com/post-303
+
+- **Protein Nourishing Shampoo: Best Shampoo for Hair Fall, Growth and Thickness in Pakistan**
+  Why hair fall and slow growth are usually a protein problem, not a growth-serum problem, and how the Maxylook Protein Nourishing Shampoo is built to rebuild strand strength from the inside.
+  URL: https://italiacosmetics.com/post-302
+
+- **Macadamia Hydrating Shampoo: The Fix for Dry, Frizzy Hair in Pakistan (Complete 2026 Guide)**
+  A complete guide to Maxylook Macadamia Hydrating Shampoo: why Pakistani hair turns dry and frizzy, what macadamia oil actually does at the cuticle level, and how to build a weekly routine that works in local hard water.
+  URL: https://italiacosmetics.com/post-301
 
 - **Oily Hair and Oily Scalp: The Right Shampoo Routine for Pakistan Climate**
-  A routine built around the real cause of oily hair — breaking the strip-and-rebound cycle, not just using a stronger shampoo.
+  Heat and humidity drive up scalp oil production across Pakistan for most of the year. A routine built around the real cause of oily hair, not just stronger and stronger shampoo.
   URL: https://italiacosmetics.com/post-210
 
+- **Frizzy Hair in Pakistan Humidity: The Anti-Frizz Product Guide**
+  Lahore and Karachi humidity does not just make hair frizzy — it makes most anti-frizz products underperform. What actually blocks humidity-driven frizz and how to layer products correctly.
+  URL: https://italiacosmetics.com/post-209
+
+- **Do You Actually Need Conditioner? A Practical Guide for Pakistani Hair**
+  Conditioner searches are climbing fast, but plenty of people still skip the step entirely or use it wrong. What conditioner actually does, who needs it most, and how it differs from a mask.
+  URL: https://italiacosmetics.com/post-208
+
+- **Keratin Shampoo and Keratin Mask: The Maintenance Guide Salons Do Not Tell You About**
+  Just paid for a keratin smoothing treatment? What you use for the next three months determines whether it lasts eight weeks or twenty. A maintenance guide most salons skip.
+  URL: https://italiacosmetics.com/post-207
+
+- **Rosemary Oil for Hair: The Fastest-Rising Hair Trend in Pakistan, Explained**
+  Rosemary oil searches have surged over 400% in Pakistan. Here is what the actual research says, how it compares to minoxidil, and the right way to use it without irritating your scalp.
+  URL: https://italiacosmetics.com/post-206
+
+- **Hair Growth Actives Explained: What Actually Regrows Hair vs. What Just Sounds Scientific**
+  Caffeine, peptides, biotin, rosemary oil, minoxidil-adjacent actives — a clear-eyed breakdown of which hair growth ingredients have real evidence behind them and which are mostly marketing.
+  URL: https://italiacosmetics.com/post-205
+
+- **Dry Shampoo 101: When and How to Actually Use It**
+  Dry shampoo is one of the most misused products in any hair routine. A practical guide to what it actually does, how often to use it, and why it isn't a substitute for washing.
+  URL: https://italiacosmetics.com/post-204
+
+- **Instant Hair Color Shampoo in Pakistan: Does It Actually Work?**
+  Instant hair color shampoos are one of Pakistan's fastest-growing search categories. An honest look at what they can and can't do — and when professional color care is worth the switch.
+  URL: https://italiacosmetics.com/post-203
+
+- **Sulfate-Free Shampoo in Pakistan: The Complete Buying Guide**
+  Sulfate-free searches are climbing fast in Pakistan, but most shoppers can't actually tell a genuinely sulfate-free formula from a marketing label. Here's how to read an ingredient list and who actually needs to switch.
+  URL: https://italiacosmetics.com/post-202
+
+- **Dandruff & Itchy Scalp Shampoo Guide for Pakistan: What Actually Works**
+  Dandruff, dry scalp, and product buildup look identical in the mirror but need completely different treatments. A clinical breakdown of what actually works in Pakistan's climate and hard water.
+  URL: https://italiacosmetics.com/post-201
+
+- **The Ultimate Guide to Hair Masks, Keratin Treatments & Scalp Serums: Transform Frizzy & Damaged Hair in Pakistan**
+  A comprehensive 3,500+ word master guide exploring hair masks, keratin repair, lamellar water technology, rosemary scalp serums, and anti-frizz protocols for Pakistani hair.
+  URL: https://italiacosmetics.com/post-102
+
+- **Best Shampoo for Hair Fall, Hair Growth & Color Care in Pakistan: The Ultimate 2026 Dermatologist & Salon Guide**
+  An authoritative 3,200+ word masterclass analyzing the best shampoos for hair fall, rapid growth, biotin vs keratin treatments, sulfate-free formulations, and color care in Pakistan.
+  URL: https://italiacosmetics.com/post-101
+
+- **How to Build a Professional Hair Care Routine**
+  Step-by-step guide to creating a salon-grade haircare routine at home. From cleansing to treatment to styling — what professionals recommend.
+  URL: https://italiacosmetics.com/post-4
+
+- **Superfoods for Your Hair: The Maxylook Philosophy**
+  Collagen, Macadamia, Argan, Quinoa Protein — how superfood ingredients are transforming professional haircare and why your hair needs them.
+  URL: https://italiacosmetics.com/post-3
+
+- **Versum Hair 2.0: A New Era in Haircare Science**
+  We dive deep into the revolutionary lamellar technology behind Versum's new line. Age-defying elixirs, charcoal detox, and the science of beautiful hair.
+  URL: https://italiacosmetics.com/post-2
+
+- **The Ultimate Guide to Professional Hair Masks**
+  Not all hair masks are created equal. From collagen-infused treatments to protein-rich formulas, discover which mask is right for your hair type and concerns.
+  URL: https://italiacosmetics.com/post-1
