@@ -336,10 +336,11 @@ async function renderBlogList() {
         <button class="btn btn-primary btn-sm" onclick="openBlogForm()"><i class="fas fa-plus"></i> New Post</button>
       </div>
       <div class="data-table-wrap"><table class="data-table">
-        <thead><tr><th>ID</th><th>Title</th><th>Category</th><th>Date</th><th></th></tr></thead>
+        <thead><tr><th></th><th>ID</th><th>Title</th><th>Category</th><th>Date</th><th></th></tr></thead>
         <tbody>
           ${posts.map(p => `
             <tr>
+              <td>${p.img ? `<img class="thumb" src="${esc(p.img)}" alt="">` : ''}</td>
               <td>${p.id}</td>
               <td class="wrap">${esc(p.title)}</td>
               <td>${esc(p.cat)}</td>
@@ -349,7 +350,7 @@ async function renderBlogList() {
                 <button class="btn btn-danger btn-sm" onclick="deleteBlogPost(${p.id})">Delete</button>
               </td>
             </tr>
-          `).join('') || `<tr><td colspan="5" class="empty-state">No posts yet.</td></tr>`}
+          `).join('') || `<tr><td colspan="6" class="empty-state">No posts yet.</td></tr>`}
         </tbody>
       </table></div>
     `;
@@ -386,6 +387,9 @@ function openBlogForm(p) {
       <div class="form-row"><label>Gradient (CSS)</label><input id="f_gradient" value="${esc(p.gradient || 'linear-gradient(135deg,#8B5FBF,#A07DD6)')}"></div>
       <div class="form-row"><label>Icon (Font Awesome class)</label><input id="f_icon" value="${esc(p.icon || 'fa-star')}"></div>
     </div>
+    <div class="form-row"><label>Image URL</label><input id="f_img" value="${esc(p.img)}">
+      <div class="field-hint">Shown instead of the gradient/icon tile when set. Leave blank to fall back to the gradient.</div>
+    </div>
     <div class="form-row"><label>Excerpt</label><textarea id="f_excerpt" rows="2">${esc(p.excerpt)}</textarea></div>
     <div class="form-row"><label>Content (HTML)</label><textarea id="f_content" rows="12">${esc(p.content)}</textarea>
       <div class="field-hint">Full HTML body, same format as the existing articles (h2/h3/p/blog-highlight-box/etc.).</div>
@@ -407,6 +411,7 @@ async function saveBlogPost(id) {
     cat: document.getElementById('f_cat').value,
     gradient: document.getElementById('f_gradient').value.trim(),
     icon: document.getElementById('f_icon').value.trim(),
+    img: document.getElementById('f_img').value.trim(),
     excerpt: document.getElementById('f_excerpt').value.trim(),
     content: document.getElementById('f_content').value
   };

@@ -11,12 +11,12 @@ export const onRequestPut = withAdmin(async ({ request, env, params }) => {
   if (!b || !b.title || !b.content) return json({ error: 'Missing title or content' }, 400);
 
   const result = await env.DB.prepare(
-    `UPDATE blog_posts SET title=?, date=?, author=?, cat=?, excerpt=?, gradient=?, icon=?,
+    `UPDATE blog_posts SET title=?, date=?, author=?, cat=?, excerpt=?, gradient=?, icon=?, img=?,
      content=?, updated_at=datetime('now') WHERE id=?`
   ).bind(
     b.title, b.date || '', b.author || 'Italia Editorial Board', b.cat || 'Shampoo',
     b.excerpt || '', b.gradient || 'linear-gradient(135deg,#8B5FBF,#A07DD6)',
-    b.icon || 'fa-star', b.content, params.id
+    b.icon || 'fa-star', b.img || '', b.content, params.id
   ).run();
 
   if (!result.meta.changes) return json({ error: 'Post not found' }, 404);

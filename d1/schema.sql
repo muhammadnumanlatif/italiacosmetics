@@ -69,6 +69,7 @@ CREATE TABLE IF NOT EXISTS blog_posts (
   excerpt TEXT NOT NULL DEFAULT '',
   gradient TEXT NOT NULL DEFAULT 'linear-gradient(135deg,#8B5FBF,#A07DD6)',
   icon TEXT NOT NULL DEFAULT 'fa-star',
+  img TEXT NOT NULL DEFAULT '',
   content TEXT NOT NULL DEFAULT '',
   created_at TEXT NOT NULL DEFAULT (datetime('now')),
   updated_at TEXT NOT NULL DEFAULT (datetime('now'))

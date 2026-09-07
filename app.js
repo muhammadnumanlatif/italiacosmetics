@@ -3834,8 +3834,8 @@
       const [featured, ...rest] = posts;
       const featuredHTML = `
         <article class="blog-featured-card fade-up">
-          <div class="blog-featured-img" style="background:${featured.gradient};cursor:pointer;" onclick="navigate('single-blog', ${featured.id})">
-            <i class="fas ${featured.icon}"></i>
+          <div class="blog-featured-img" style="${featured.img ? '' : 'background:' + featured.gradient + ';'}cursor:pointer;" onclick="navigate('single-blog', ${featured.id})">
+            ${featured.img ? `<img src="${featured.img}" alt="${escapeHtml(featured.title)}" loading="lazy">` : `<i class="fas ${featured.icon}"></i>`}
             ${featured.cat ? `<span class="blog-cat-badge">${featured.cat}</span>` : ''}
           </div>
           <div class="blog-featured-body">
@@ -3854,8 +3854,8 @@
         const delayClass = 'fade-up-delay-' + ((i % 4) + 1);
         return `
         <article class="blog-card fade-up ${delayClass}">
-          <div class="blog-card-img" style="background:${p.gradient}; cursor:pointer;" onclick="navigate('single-blog', ${p.id})">
-            <i class="fas ${p.icon}"></i>
+          <div class="blog-card-img" style="${p.img ? '' : 'background:' + p.gradient + ';'}cursor:pointer;" onclick="navigate('single-blog', ${p.id})">
+            ${p.img ? `<img src="${p.img}" alt="${escapeHtml(p.title)}" loading="lazy">` : `<i class="fas ${p.icon}"></i>`}
             ${p.cat ? `<span class="blog-cat-badge">${p.cat}</span>` : ''}
           </div>
           <div class="blog-card-body">
@@ -3882,8 +3882,8 @@
       if (popularEl) {
         popularEl.innerHTML = allPosts.slice(0, 4).map(p => `
           <div class="popular-post" style="cursor:pointer;" onclick="navigate('single-blog', ${p.id})" role="button" tabindex="0">
-            <div style="width:60px;height:60px;border-radius:var(--radius-sm);background:${p.gradient};display:flex;align-items:center;justify-content:center;font-size:20px;color:#fff">
-              <i class="fas ${p.icon}"></i>
+            <div style="width:60px;height:60px;border-radius:var(--radius-sm);${p.img ? '' : 'background:' + p.gradient + ';'}display:flex;align-items:center;justify-content:center;font-size:20px;color:#fff;overflow:hidden;flex-shrink:0;">
+              ${p.img ? `<img src="${p.img}" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover;">` : `<i class="fas ${p.icon}"></i>`}
             </div>
             <div>
               <h5>${p.title}</h5><span>${p.date}</span>
@@ -4630,7 +4630,7 @@
           <div class="related-grid">
             ${related.map(rp => `
               <div class="related-card" onclick="navigate('single-blog', ${rp.id})" role="button" tabindex="0">
-                <div class="related-card-img" style="background:${rp.gradient};"><i class="fas ${rp.icon}" style="color:#fff;"></i></div>
+                <div class="related-card-img" style="${rp.img ? '' : 'background:' + rp.gradient + ';'}">${rp.img ? `<img src="${rp.img}" alt="${escapeHtml(rp.title)}" loading="lazy">` : `<i class="fas ${rp.icon}" style="color:#fff;"></i>`}</div>
                 <div class="related-card-info"><strong>${rp.title}</strong><span>${rp.date}</span></div>
               </div>
             `).join('')}
@@ -4648,8 +4648,8 @@
               <span><i class="far fa-clock"></i> ${estimateReadingTime(p.content)} min read</span>
             </div>
           </div>
-          <div class="single-blog-img" style="background:${p.gradient}; display:flex; align-items:center; justify-content:center;">
-            <i class="fas ${p.icon}" style="font-size:80px;color:rgba(255,255,255,0.8);"></i>
+          <div class="single-blog-img" style="${p.img ? '' : 'background:' + p.gradient + ';'} display:flex; align-items:center; justify-content:center;">
+            ${p.img ? `<img src="${p.img}" alt="${escapeHtml(p.title)}" style="width:100%;height:100%;object-fit:cover;">` : `<i class="fas ${p.icon}" style="font-size:80px;color:rgba(255,255,255,0.8);"></i>`}
           </div>
           <div class="single-blog-content">
             ${p.content || p.excerpt || '<p>Full content is not available.</p>'}

@@ -2,7 +2,7 @@ import { withAdmin, json, readJson } from '../../_lib/http.js';
 
 export const onRequestGet = withAdmin(async ({ env }) => {
   const { results } = await env.DB.prepare(
-    'SELECT id, title, date, author, cat, excerpt, gradient, icon FROM blog_posts ORDER BY id DESC'
+    'SELECT id, title, date, author, cat, excerpt, gradient, icon, img FROM blog_posts ORDER BY id DESC'
   ).all();
   return json(results);
 });
@@ -21,12 +21,12 @@ export const onRequestPost = withAdmin(async ({ request, env }) => {
   if (existing) return json({ error: 'A post with this id already exists' }, 409);
 
   await env.DB.prepare(
-    `INSERT INTO blog_posts (id, title, date, author, cat, excerpt, gradient, icon, content)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`
+    `INSERT INTO blog_posts (id, title, date, author, cat, excerpt, gradient, icon, img, content)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
   ).bind(
     id, b.title, b.date || new Date().toISOString().slice(0, 10), b.author || 'Italia Editorial Board',
     b.cat || 'Shampoo', b.excerpt || '', b.gradient || 'linear-gradient(135deg,#8B5FBF,#A07DD6)',
-    b.icon || 'fa-star', b.content
+    b.icon || 'fa-star', b.img || '', b.content
   ).run();
 
   const created = await env.DB.prepare('SELECT * FROM blog_posts WHERE id = ?').bind(id).first();
